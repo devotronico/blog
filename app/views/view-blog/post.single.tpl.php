@@ -27,7 +27,7 @@
         <!-- <div class="push-md-3 col-md-6 text-md-center"> -->
             <hr>
     <h2>Commenti</h2>      
-    <form class="comment-form" action="/post/8/comment" method="POST">
+    <form class="comment-form" action="/post/<?= $post->id ?>/comment" method="POST">
         <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" name="email" type="email"  name="email" i="email" required>
