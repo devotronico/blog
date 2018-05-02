@@ -1,0 +1,257 @@
+
+
+ 
+ .navbar-brand{ padding:0;margin:0;} 
+
+
+.logo{
+  padding:0;margin:0;
+  line-height: 90px; 
+  font-weight: bolder;
+}
+
+.verify{
+  background-color: pink;
+}
+
+
+
+
+/*************************RISOLUZIONE******************************************/       
+
+  
+/*260***XS****260**************************************************************************************************260*/
+@media(min-width:260px){
+*{padding:0;margin:0;}
+#risoluzione{position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow;}     
+html{color:black;}  
+body{background-color:#999;}  
+.container-fluid {padding:0;margin:0;}
+.btn{color: #fff;background-color:#333;border: none;} 
+.btn:hover{color: #fff;background-color:red;} 
+
+/*********NAVBAR********/  
+
+ nav{padding:0;color:#fff;background-color:#333;}
+ .navbar{padding:0;}
+.navbar-brand{margin-left:20px; height:100px;}
+.navbar-toggler{margin-right: 20px;} 
+#navbar-div{margin:0;padding:0;}      /*DIV*/         
+.nav-item{text-align: center;} /*LI */
+.nav-link{padding:20px 0;font-size:25px;border-top: 1px solid #999999;} 
+.nav-link:hover{background-color: #666666;}  
+
+/*********BLOG********/ 
+article{padding: 20px; background-color:#fff;}
+.comment-form{width:30%;}
+.auth-form{padding:20px;margin: 50px auto;width:30%;background-color:#fff;}
+/*********SEZIONI********/  
+.section{min-height:100vh;}
+.section-title{z-index: -1000; color:white;font-size:30px;text-align:center;margin-bottom:30px;}
+
+/*********COVER********/  
+#cover{background-color:#fff;}   
+#cover-animation{min-height:100vh;}
+#cover-foto{border-radius:50%;width:200px;opacity: 0.5;}
+#cover-text{font-size:30px;font-weight:bolder;color:#fff;} 
+#cover-btn{border: 2px solid #fff;background-color: transparent;border-radius: 0;}
+
+/*********PORTFOLIO********/  
+#portfolio{padding:60px 15px;background-color:#333;}
+.card{height:350px;}
+.card{border-radius:0;}
+.card-header h4{font-size:1.2em;}
+.card-footer{text-align:center;}
+.card-fontawesome{font-size: 14vw;}
+
+/*********SKILL********/ 
+#skill{padding:60px 15px;background-color:#fff;} 
+#skill-title{color: #333;}
+#skill .row{width:90%;margin:auto;}
+.skill-img{height:80px;}
+#skill-bg{text-align:center;margin-top:40px;}
+#skill-bg img{width:200px;}
+
+/*********CONTACT********/ 
+#contact{padding:60px 15px;background-color:#333;}
+.contact-message{color:white;text-align:center;}
+.contact-form{margin:0 auto;padding:15px;} 
+label{color:white;margin-top:30px;} 
+#submit{margin-top:30px;} 
+
+/*********FOOTER********/ 
+footer{padding:70px 0;background-color:#fff;} 
+#copyright{margin:10px;padding:10px;}
+   
+#btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size: 16vw;}
+#btn-scroll:hover{opacity:1;}
+}
+/*576***SM****576***************************************************************************************************/
+@media(min-width:576px){
+#risoluzione{background-color:green;} 
+
+/*********NAVBAR********/  
+.navbar-brand{margin-left:40px;}
+
+/********COVER***********/    
+
+/********PORTFOLIO***********/    
+.card{height:400px;}
+
+/********SKILLS****************/  
+.skill-img{height:100px;} 
+#skill-bg{margin-top:50px;}
+#skill-bg img{width:550px;height:250px;}    
+/***********CONTACT************/
+.contact-form{width:50%;}
+/***********FOOTER************/
+#btn-scroll{font-size: 8vw;}
+}
+/*768***MD****768***************************************************************************************************/
+@media(min-width:768px){
+#risoluzione{background-color:blue;} 
+
+/*********NAVBAR********/     
+.navbar-brand{margin-left:50px;} 
+
+/********COVER***********/
+
+/********PORTFOLIO***********/     
+.card-fontawesome{font-size: 6vw;}
+
+/********SKILLS****************/      
+#skill-bg img{width:680px;height:310px;} 
+
+/***********CONTACT************/
+
+
+/***********FOOTER************/
+#btn-scroll{font-size: 6vw;}
+}
+/*992***LG****992***************************************************************************************************/
+/********APPARE IL PULSANTE NEL NAVBAR****************************************************************************/
+@media(min-width:992px){
+#risoluzione{background-color:red;} 
+
+/*********NAVBAR********/  
+ .nav-top {animation: top-size 1s forwards, top-alpha 1s forwards;}
+.nav-bottom{animation: bottom-size 1s forwards, bottom-alpha 1s forwards;}  
+
+@keyframes top-size {
+  from {height: 60px;}
+  to {height: 100px;}
+}
+@keyframes bottom-size {
+  from {height: 100px;}
+  to {height: 60px;}
+}
+@keyframes top-alpha {
+  from {background-color: rgba(51, 51, 51, 1);}
+  to {background-color: rgba(51, 51, 51, 0.2);}
+}
+@keyframes bottom-alpha  {
+  from {background-color: rgba(51, 51, 51, 0.2);}
+  to {background-color: rgba(51, 51, 51, 1);}
+} 
+
+nav{height: 100px;background-color:rgba(51, 51, 51, 0.2);} 
+.navbar-brand{margin-left:100px;width:60%;height:100%;} 
+#navbar-div{height:100%;margin-left:10px;} 
+
+.navbar-nav{padding:0;} 
+.nav-item{padding:0 30px;} 
+.nav-link{padding:0;font-size:20px;border:none; text-align: left;} 
+.nav-link:hover{background-color:transparent; border-bottom: 1px solid #fff;}  
+
+/********COVER***********/    
+
+/********PORTFOLIO***********/      
+.card-header h4{font-size:1.4em;}
+
+/********SKILLS****************/      
+#skill-bg{margin-top:100px;}
+#skill-bg img{width:900px;height:400px;}
+
+/***********CONTACT************/
+
+/***********FOOTER************/
+#btn-scroll{font-size: 4vw;}
+}
+/*1200*****XL******1200*********************************************************************************************/
+@media(min-width:1200px){  
+#risoluzione{background-color:violet;} 
+
+/*********NAVBAR********/  
+
+/********COVER***********/
+#cover-foto{width:300px;}
+
+/********PORTFOLIO***********/      
+.card{height:300px;}
+.card-fontawesome{font-size: 3vw;}
+
+/********SKILLS****************/   
+#skill-bg{margin-top:80px;}
+#skill-bg img{width:900px;height:400px;margin-bottom:15px;}
+
+/***********CONTACT************/ 
+.contact-form{width:25%;}
+/***********FOOTER************/
+#btn-scroll{font-size: 2vw;}
+}    
+     
+
+/* #portfolio .row{margin:0;padding:0;border: 1px solid red;}
+#portfolio .card-footer{margin:0;padding:0;border: 1px solid pink;}
+#portfolio .card{margin:0;padding:0;border: 1px solid blue;} */
+
+/* .navbar-brand{ border: 1px solid white;}
+#navbar-div{border: 1px solid red;}  
+.nav-item{border: 1px solid yellow;}  
+.nav-link{border: 1px solid blue;}  
+.form-row{border: 1px solid green;}  
+.form-row .col{border: 1px solid pink;}   */
+
+
+
+
+
+/***********************COVER BUTTON 3D******************************************/
+
+/* #btn-contact:hover {animation: shadow-on 0.3s forwards;}
+
+
+ @keyframes shadow-on {
+  0% {
+    box-shadow:none;
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    box-shadow: 1px -1px #3e3e3e, 2px -2px #3e3e3e, 3px -3px #3e3e3e, 4px -4px #3e3e3e, 5px -5px #3e3e3e, 6px -6px #3e3e3e, 7px -7px #3e3e3e, 8px -8px #3e3e3e;
+    transform: translateX(-8px) translateY(8px);
+  }
+}
+
+@keyframes shadow-off {
+  100% {
+    box-shadow:none;
+    transform: translateX(0) translateY(0);
+  }
+  0% {
+    box-shadow: 1px -1px #3e3e3e, 2px -2px #3e3e3e, 3px -3px #3e3e3e, 4px -4px #3e3e3e, 5px -5px #3e3e3e, 6px -6px #3e3e3e, 7px -7px #3e3e3e, 8px -8px #3e3e3e;
+    transform: translateX(-8px) translateY(8px);
+  }
+} */
+
+
+
+
+/******************CARD SLIDE TOP***********************************************/
+/*
+.slide-top {animation: slide-top 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;}
+ @keyframes slide-top {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-100px);}
+}
+
+*/
