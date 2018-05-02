@@ -2,3 +2,5 @@
 # vengono ignorati i file come archivio.zip o cartella/archivio.zip
 *.txt
 /index.php
+*.old.css
+*.old.php

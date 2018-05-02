@@ -130,6 +130,7 @@ class Router
             $controller = $tokens[0]; // assegniamo a $controller la classe PostController
             $method = $tokens[1]; // assegniamo a $method il metodo della classe PostController
             $class =  new $controller($this->conn); // creiamo un istanza della classe PostController
+           // $class =  new $controller; // creiamo un istanza della classe PostController
           
             
             if(method_exists($controller, $method)){

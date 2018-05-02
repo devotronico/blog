@@ -6,7 +6,13 @@ require_once 'db/DBPDO.php';       // carica il file dove sta la classe DBPDO
 
 require_once 'db/DbFactory.php';       // carica il file dove sta la classe DBFactory
 
-require_once 'app/Controllers/PostController.php'; // è uguale a  'C:\xampp\htdocs\blog\public\..\app\Controllers\classe.php''
+require_once 'app/Controllers/Controller.php'; 
+
+require_once 'app/Controllers/HomeController.php'; //
+
+require_once 'app/Controllers/PostController.php'; // 
+
+require_once 'app/Controllers/AuthController.php'; // 
 
 require_once 'app/models/Validate.php'; // In Validitation vengono fatte le validitazioni ai parametri passati ne forms per le autenticazioni
 
