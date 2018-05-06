@@ -9,11 +9,13 @@ class AuthController extends Controller
 {
    
     protected $conn;
+   // protected $Auth;  // [!]
   
 
     public function __construct(PDO $conn){ 
         $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
-        $this->page = 'blog';
+        $this->page = 'auth';
+       // $this->Auth = new $class($this->conn); // [!]
     }
   
 
@@ -71,7 +73,7 @@ public function signupStore(){ //
 ************************************************************************************************/
 public function signupVerify() {  
     $Auth = new Auth($this->conn, $_GET);
-    $Auth->signupEmailActivation(); 
+    $Auth->signupEmailActivation(); // in questo metodo otteniamo anche le  $_SESSION id, email;
  
     $message = !empty( $Auth->getMessage()) ? $Auth->getMessage() : "Registrazione avvenuta con successo!";
 
@@ -136,9 +138,12 @@ else
 *       LOGOUT      |
 ********************/
 public function authLogout(){
-
-    unset($_SESSION["id"]);
-    $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if (session_status() == PHP_SESSION_ACTIVE) { session_destroy(); }
+    // unset($_SESSION["id"]);
+    // unset($_SESSION["email"]);
+    // session_abort();
+    // session_destroy(); 
+  //  $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     redirect("/posts");
 }
 
@@ -227,11 +232,11 @@ public function passwordCheck(){
 public function passwordSave(){
 
     $Auth = new Auth($this->conn, $_POST);
-    $id = $Auth->passSave(); 
+    $Auth->passSave(); // in questo metodo otteniamo anche le  $_SESSION id, email, name;
   
     if (  empty( $Auth->getMessage()) )
     {    
-        $_SESSION['id'] = $id;
+       
         $files=['navbar-auth', 'pass.success'];            
         $this->content = View('auth', $files);  
     }

@@ -5,6 +5,7 @@
 class Router
 {
     protected $conn;
+   // protected $underClass; // [!]
 
     protected $routes = [
 
@@ -14,7 +15,6 @@ class Router
 
   
     
-
     public function __construct(\PDO $conn){ 
 
         $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
@@ -38,25 +38,32 @@ class Router
 
 
 
-       // Gestione dell URL
+       // questo metodo ci da GET/POST e la Path es. 'post/2'
        public function dispatch(){ 
         // LEGGIAMO l URL   
         // $_SERVER['REQUEST_URI'] è la stringa dopo il nome di dominio, es. da 'sito.it/pag?nome=max' ottiene solo '/pag?nome=max'   
         // Con parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)  in 'sito.it/pag?nome=max' ottiene solo '/pag' 
         // quindi dobbiamo eliminare le variabili se ci sono  
-        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // elimina il nome di dominio e le variabili dall 'indirizzo del sito
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); // elimina il nome di dominio e le variabili dall 'indirizzo del sito
 
-        // elimina '/' se si trova all' inizio o alla fine della stringa in $url es. '/pag' diventa 'pag'
-        $url = trim($url, '/'); 
+     
+        $uri = trim($uri, '/'); // elimina il carattere speciale '/' all'inizio e alla fine della stringa | es. '/post/2' diventa 'post/2'
+
+
+/*
+        $str = explode('/', $uri );
+        $this->underClass = ucwords($str[0]);
+   */     
+    
+
+
         $method = $_SERVER['REQUEST_METHOD']; // ottiene se ci sono il metodo POST o GET
 
 
-    
-        return $this->processQueue($url, $method);
+        return $this->processQueue($uri, $method);
 
 
     }
-
 
 
 
@@ -69,48 +76,50 @@ class Router
         // Cicla tutti gli Indici di GET oppure di POST
         // E viene controllato se la rotta esiste
         foreach ( $routes as $route => $callback ) { 
+        // $route = post/:id
+        // $callback = App\Controllers\HomeController@home, App\Controllers\PostController@getPosts, App\Controllers\PostController@create,
+        // $callback è il valore di $route    
+        //Se $method è uguale a 'GET'  $route può essere le seguenti chiavi: "", posts, post/create, post/:id, post/:postid/edit
+        //Se $method è uguale a 'POST' $route può essere le seguenti chiavi: post/save, post/:id/store, post/:id/delete, post/:id/comment
 
+        
+        // fa l escape ai caratteri come ':' in questo modo '\:'
+        // I caratteri speciali per le espressioni regolari sono . + * ? [ ^ ] $ ( ) { } = ! < > | :
+        // Es. la stringa 'post/:id' diventa 'post/\:id'
+        $regMatch = preg_quote($route); 
+        
+          
 
-        //Se $method è uguale a 'GET'  $route può essere le seguenti stringhe: "", posts, post/create, post/:id, post/:postid/edit
-        //Se $method è uguale a 'POST' $route può essere le seguenti stringhe: post/save, post/:id/store, post/:id/delete, post/:id/comment
-
-        // $callback è il valore di $route
-        // 'posts' => 'App\Controllers\PostController@getPosts'
-        // Es. se la chiave di $route è 'posts' allora $callback è uguale a 'App\Controllers\PostController@getPosts'
-
-            // converte url come '/post/:id' in regular expression
-            // I caratteri speciali per le espressioni regolari sono . \\ + * ? [ ^ ] $ ( ) { } = ! < > | :
-            // fa l escape ai caratteri come '/' oppure ':'
-            // Es. la stringa 'post/:id' diventa 'post\\/\\:id'
-            $regMatch = preg_quote($route); 
-  
-
-            // sostituisce qualsiasi cosa che inizia con  :id([a-zA-Z0-9\_\-]+)  con  post/([a-zA-Z0-9\_\-]+)
-
-            // preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)', 'post\\/\\:id');  diventa  'post\\/([a-zA-Z0-9\\-\\_]+)'
-            // se la stringa nella varibile $regMatch è riconosciuta dal primo argomento verrà sostituita dal secondo argomento
-     
-            // Es. Il primo argomento '/\\\:[a-zA-Z0-9\_\-]+/' , in $regMatch = 'post\\/\\:id', trova corrispondenza '\:id'
-            // La corrispondenza '\:id' viene sostituita dal secondo argomento in 'id'
-            $subPattern = preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)',  $regMatch);
+        // preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)', 'post/\:id');  diventa  'post/([a-zA-Z0-9\-\_]+)'
+        // La corrispondenza '\:id' in 'post/\:id' viene sostituita da '([a-zA-Z0-9\-\_]+) quindi diventa 'post/([a-zA-Z0-9\-\_]+)
+        // se una parte della stringa nella varibile $regMatch è riconosciuta dal primo argomento verrà sostituita dal secondo argomento
+        // Es. Il primo argomento '/\\\:[a-zA-Z0-9\_\-]+/' , in $regMatch = ''post/\:id', trova corrispondenza in '\:id'
+        //preg_replace ( pattern di ricerca, con cosa sostituire, dove cercare )
+        $subPattern = preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)',  $regMatch); // $subPattern = 'post/([a-zA-Z0-9\-\_]+)' 
+    
            
-            
-
-            // Se $route è uguale a 'post/:id' allora  $pattern = @^post/([a-zA-Z0-9\_\-]+)$@D
-            $pattern = "@^" . $subPattern. "$@D";
+        //  'post/([a-zA-Z0-9\-\_]+)' diventa  @^post/([a-zA-Z0-9\-\_]+)$@D
+            // Se $route è uguale a 'post/:id' allora  $pattern = @^post/([a-zA-Z0-9\-\_]+)$@D
+            $pattern = "@^" . $subPattern. "$@D"; 
            
-           
+            //print($pattern.'<br>'); //'post/:id = @^post/([a-zA-Z0-9\-\_]+)$@D,  posts = @^posts$@D,
             
             // $pattern = '@^post/([a-zA-Z0-9\_\-]+)$@D'
             // $uri = 'post/8'
             // $matches[0] = 'post/8'
             // $matches[1] = '8'
             $matches = [];
+
+            //preg_replace ( pattern di ricerca, dove cercare, array(post/, 8) )
             if (preg_match($pattern, $uri, $matches)) { // $uri potrebbe essere 'post/2'
                 // rimuove la prima parte trovata
+                GLOBAL $navbarLink;
+                 $navbarLink = $matches[0];   //print($matches[0]);
                 array_shift($matches); // elimina $matches[0] = 'post/8' e quindi rimane solo $matches[1] = '8'
-                return $this->route($callback, $matches);
+                return $this->route($callback, $matches); 
             }
+            // se il path è 'posts' allora $matches[0] = 'posts' e $matches[1] = null 
+            // si può passare un argomento null anche se il metodo non vuole nessun argomento
         }
         throw new Exception('Nessuna rotta trovata col nome '.$uri);
     }
@@ -123,20 +132,22 @@ class Router
     {
         try {
             if ( is_callable($callback) ) { //se trova la funzione
-
+              // al momento non si attiva mai perchè non esitono metodi come App\Controllers\PostController@getPosts'
+              // dobbiamo spezzare dove sta il simbolo '@' per ricavarne il metodo     
                 return call_user_func_array($callback, $matches);
             }
             $tokens = explode('@', $callback); // es. spezziamo 'App\Controllers\PostController@getPosts',
             $controller = $tokens[0]; // assegniamo a $controller la classe PostController
             $method = $tokens[1]; // assegniamo a $method il metodo della classe PostController
-            $class =  new $controller($this->conn); // creiamo un istanza della classe PostController
+            $class = new $controller($this->conn); // creiamo un istanza della classe PostController
+          //  $class = new $controller($this->conn, $this->underClass); // [!]
            // $class =  new $controller; // creiamo un istanza della classe PostController
           
             
-            if(method_exists($controller, $method)){
+            if(method_exists($controller, $method)){ // Se il metodo trovato esiste
               
-                call_user_func_array([$class, $method], $matches); 
-              //  $class->$method();  // PostController->metodo
+                call_user_func_array([$class, $method], $matches); //es. ([PostController, delete], 8)
+           
                 return $class;
             } else {
                 throw new Exception('Il metodo '.$method.' non esiste nella classe '.$controller);

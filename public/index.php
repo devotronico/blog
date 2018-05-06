@@ -1,8 +1,12 @@
 <?php
 session_start();
-//if ( isset($_SESSION['id']) ) { echo 'session id è uguale a '.$_SESSION['id']; } else { echo 'sessione assente'; } echo '<br>';
-
-
+/*
+if ( isset($_SESSION['id']) ) {  echo 'id è uguale a '.$_SESSION['id'].'<br>'; }
+if ( isset($_SESSION['email']) ) {  echo 'email è uguale a '.$_SESSION['email'].'<br>'; }
+if ( isset($_SESSION['name']) ) {  echo 'name è uguale a '.$_SESSION['name'].'<br>'; }
+if (session_status() == PHP_SESSION_ACTIVE) {  echo 'sessione attiva <br>';} else { echo 'sessione assente! <br>'; } 
+*/
+//$navbarLink = 'posts';
 
 // die (__DIR__); //= C:\xampp\htdocs\blog\public
 // __DIR__ restituisce l'intero path/percorso in cui viene richiamata la costante-magica __DIR__ 

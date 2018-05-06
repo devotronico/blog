@@ -1,6 +1,6 @@
-<form action="/auth/password/save" method="POST" class='auth-form' autocomplete='off'>
-    <h2 class="container-title text-center"><i class="fab fa-wpforms"></i>&nbsp;Nuova Password</h2>
-    <?php if (!empty($message)): ?>
+<form id='auth' class='auth-form' action="/auth/password/save" method="POST" autocomplete='off'>
+<h2 class="container-title text-center"><i class="fab fa-wpforms"></i>&nbsp;Nuova Password</h2>
+<?php if (!empty($message)): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <?= $message ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -8,18 +8,39 @@
         </button>
     </div>
     <?php endif?>
-    <p><?=isset($_GET['email'])? $_GET['email'] : $_POST['user_email']?></p>
     <input type="hidden" name="user_email" value="<?=isset($_GET['email'])? $_GET['email'] : $_POST['user_email']?>">
-    <div class="form-group row">
-        <i class="fas fa-key fa-lg col-sm-2"></i> 
-        <input type="password" class="form-control col-sm-10" name="user_pass" placeholder="Password">
-    </div>
 
-    <div class="form-group row">
-        <i class="fas fa-key fa-lg col-sm-2"></i> 
-        <input type="password" class="form-control col-sm-10" name="user_pass_confirm" placeholder="Riscrivi la password">
+  <div class="form-group">
+    <label for="email"></label> 
+    <div class="input-group">
+      <div class="input-group-addon">
+      <i class="fas fa-envelope fa-lg"></i>
+      </div> 
+      <input type="text" class="form-control" placeholder="<?=isset($_GET['email'])? $_GET['email'] : $_POST['user_email']?>" readonly>
     </div>
-    <button type="submit" class="btn btn-primary btn-lg btn-submit" id="submit-signup">Salva</button>
+  </div>
+
+  <div class="form-group">
+    <label for="password"></label> 
+    <div class="input-group">
+      <div class="input-group-addon">
+      <i class="fas fa-key fa-lg"></i>
+      </div> 
+      <input type="password" class="form-control" name="user_pass" placeholder="Password" required="required">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password"></label> 
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fas fa-key fa-lg"></i>
+      </div> 
+      <input type="password" class="form-control" name="user_pass_confirm" placeholder="Riscrivi la password" required="required">
+    </div>
+  </div> 
+  <div class="form-group">
+  <button type="submit" class="btn btn-primary btn-lg btn-submit">Salva</button>
+  </div>
 </form>
 
 

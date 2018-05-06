@@ -62,10 +62,6 @@ class Post
 
 
 
-
-
-
-
      public function save(array $data=[]){
         
         $sql = 'INSERT INTO posts (title, message, datecreated, email ) VALUES (:title, :message, :datecreated, :email)';
@@ -74,16 +70,11 @@ class Post
             'title'=> $data['title'], 
             'message'=>$data['message'], 
             'datecreated'=>date('Y-m-d H:i:s'), 
-            'email'=>$data['email'] 
+            'email'=>$_SESSION['email'] //  'email'=>$data['email']
             ]); 
      
         return $stm->rowCount();
      }
-
-
-
-
-
 
 
 
@@ -104,12 +95,21 @@ class Post
 
 
 
-     public function delete(int $id){
+     public function deleteOne(int $id){
+        // cancelliamo il post
         
         $sql = 'DELETE FROM posts WHERE id = :id';
         $stm = $this->conn->prepare($sql); 
         $stm->bindParam(':id', $id, PDO::PARAM_INT); // gli diciamo che deve essere di tipo integer 
         $stm->execute(); 
+
+
+        // // cancelliamo tutti i commenti relativi al post appena cancellato
+        // $sql = 'DELETE FROM postscomments WHERE post_id = :id'; //
+        // $stm = $this->conn->prepare($sql); 
+        // $stm->bindParam(':id', $id, PDO::PARAM_INT); 
+        // $stm->execute(); 
+
      
         return $stm->rowCount();
      }

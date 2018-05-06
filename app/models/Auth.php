@@ -21,8 +21,8 @@ class Auth extends Validate
         $password = $this->validatePassSignup();
 
         if (empty($this->message)) {
-
-            $this->storeData($email, $password);
+            $name = $this->validateUsername();
+            $this->storeData($name, $email, $password);
         }
 
         // $this->conn = null; // Chiude PDO connection
@@ -32,7 +32,7 @@ class Auth extends Validate
     {
 
         $email = $this->isEmailStored(); 
-        $password = $this->validatePassSignin(); // in
+        $password = $this->validatePassSignin(); // in questo metodo otteniamo anche le  $_SESSION id, email, name;
         //if ( !empty($email) && !empty($password) ) {  // se email e password sono corretti 
         if ( !is_null($email) && !is_null($password) ) {  // se email e password sono corretti 
         if ( !isset($_SESSION['id']) ) { // se $_SESSION['id'] non è settato vuol dire che l'account non è stato confermato
@@ -46,9 +46,8 @@ class Auth extends Validate
     }
 
 
-    public function storeData($email, $password)
+    public function storeData($name, $email, $password)
     {
-        $name = 'Daniele';
         $password= password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
         $hash = md5(rand(0, 1000)); //$hash = $mysqli->escape_string( md5( rand(0,1000) ) );
         $date = date('Y-m-d H:i:s');
@@ -96,7 +95,6 @@ class Auth extends Validate
           
             $email = $this->isEmailStored();   //   $email = $_GET['email'];
             $hash = $this->hash; // la hash passata dal URL col $_GET viene validata nel costruttore della classe 'Validate'
-            //$hash = $this->hashUrlValidate($_GET['hash']); // validiamo questa hash perchè è presa dal URL col $_GET
 
             $sql = "SELECT * FROM users WHERE user_email= :email AND user_activation_key= :hash AND user_status= 0";
 
@@ -110,6 +108,8 @@ class Auth extends Validate
                         $user = [];
                         $user = $stmt->fetch(PDO::FETCH_ASSOC); //  PDO::FETCH_OBJ
                         $_SESSION['id'] = $user['ID'];
+                        $_SESSION['email'] = $user['user_email'];
+                        $_SESSION['name'] = $user['user_name'];
 
                         $sql = "UPDATE users SET user_status = 1 WHERE user_email = :email"; //  attiviamo l' account {set user_status ='1'}
                         if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
@@ -233,7 +233,7 @@ public function passSave() {
         
         //   if ( !is_null($email) && !is_null($password) ) {
 
-                $sql = "SELECT ID FROM users WHERE user_email = :email";
+                $sql = "SELECT ID, user_email, user_name FROM users WHERE user_email = :email";
                 if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
                 { 
                     $stmt->bindParam(':email', $email, PDO::PARAM_STR, 32);
@@ -244,7 +244,7 @@ public function passSave() {
                         {
                             $user = [];
                             $user = $stmt->fetch(PDO::FETCH_ASSOC); //  PDO::FETCH_OBJ
-                           // $_SESSION['id'] = $user['ID'];
+                         
                             $password= password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
                             $sql = "UPDATE users SET user_pass = :password WHERE user_email = :email"; 
                             if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
@@ -253,7 +253,9 @@ public function passSave() {
                                 $stmt->bindParam(':password', $password, PDO::PARAM_STR, 60);    
                                 if ($stmt->execute())  //  Tentiamo di eseguire lo statement
                                 {
-                                    return $user['ID'];
+                                    $_SESSION['id'] = $user['ID'];
+                                    $_SESSION['email'] = $user['user_email'];
+                                    $_SESSION['name'] = $user['user_name'];
                                 }
                                 else
                                 {
