@@ -12,6 +12,10 @@ require_once 'app/Controllers/HomeController.php'; //
 
 require_once 'app/Controllers/PostController.php'; // 
 
+// require_once 'app/models/Validate.php'; // In Validitation vengono fatte le validitazioni ai parametri passati ne forms per le autenticazioni
+
+// require_once 'app/models/Auth.php'; // In Auth vengono eseguite le autenticazioni
+
 require_once 'app/Controllers/AuthController.php'; // 
 
 require_once 'app/models/Validate.php'; // In Validitation vengono fatte le validitazioni ai parametri passati ne forms per le autenticazioni

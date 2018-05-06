@@ -14,10 +14,12 @@
      <!-- CSS -->
     <link rel="stylesheet" href="/css/<?=$this->style?>.css">
      <!-- FONTAWESOME -->
+     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script> -->
-    <title>Il mio blog</title>
+    <title>Il mio sito</title>
   </head>
   <body>
+  <div id='box-sign'><h6 id='sign'>DANIELE MANZI</h6></div>
     <div class="<?=$this->grid?>">
       <?=$this->content?>
     </div>
@@ -25,10 +27,8 @@
   <script src="/js/tether.js" ></script>
   <script src="/js/bootstrap.min.js"></script>  
   <script src="/js/script.js"></script>  
-  <script>
-  FontAwesomeConfig = { searchPseudoElements: true };
-</script>
+  <!-- FONTAWESOME -->
+  <!-- <script>FontAwesomeConfig = { searchPseudoElements: true };</script> -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-
   </body>
 </html>

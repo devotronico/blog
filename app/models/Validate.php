@@ -6,6 +6,7 @@ use \PDO;
 class Validate
 {
     protected $conn;
+    protected $name;
     protected $email;
     protected $password;
     protected $password_conf;
@@ -24,12 +25,26 @@ class Validate
                 $this->hash = preg_match('/^[a-f0-9]{32}$/', $data['hash'])? $data['hash'] : '';
                 break;
             case 'POST':
+                $this->name = isset($data['user_name'])? $data['user_name']: ''; 
                 $this->email = isset($data['user_email'])? $data['user_email']: ''; 
                 $this->password = isset($data['user_pass'])? $data['user_pass']: ''; 
                 $this->password_conf = isset($data['user_pass_confirm'])? $data['user_pass_confirm']: '';
                 break;
         }
     }
+
+
+    public function validateUsername() {
+
+        if ( empty($this->name) ) 
+        {  
+            $name = explode('@', $this->email); // es. spezziamo l'email nel punto del simbolo '@'
+            return $this->name = $name[0];
+           // return $this->name
+        }
+
+    }
+
 
     public function hashUrlValidate($hash)
     {
@@ -191,6 +206,8 @@ public function validateEmail()
                     {  
                         if ($user['user_status'] == 1) {
                             $_SESSION['id'] = $user['ID']; // ($user['user_status']);
+                            $_SESSION['email'] = $user['user_email'];
+                            $_SESSION['name'] = $user['user_name'];
                             return $password;
                             // if ( array_key_exists('setcookie', $_POST) && $_POST['setcookie'] == '1')  {
                             //     setcookie('id', $_SESSION['id'], time()+60*60*24*365);   // }

@@ -1,6 +1,4 @@
 <article>
-    <!-- <div class="row"> -->
-        <!-- <div class="col-md-6 push-md-3"> -->
     <h1><?= $post->title ?></h1>
     <p>
         <time datetime="<?= $post->datecreated ?>"><?= $post->datecreated ?></time>
@@ -8,52 +6,45 @@
     </p>
     <div><?= $post->message ?></div>
     <br>
-    <div class="row">   <!-- BOTTONI EDIT DELETE -->
-        <div class="col-sm-1">
-            <form class="form-inline" action="/post/<?= $post->id ?>/edit" method="GET">
-                <input type="submit" class="btn btn-primary" value="EDIT">
-            </form>
+     <?php if ( isset($_SESSION['id']) &&  $_SESSION['id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
+        <a href="/post/<?= $post->id ?>/edit" class="btn btn-primary">EDIT</a>
+        <a href="/post/<?= $post->id ?>/delete" class="btn btn-danger">DELETE</a>
+    <?php endif; ?>
+<hr>
+<div class="textarea-box">
+    <h2>Commenti</h2>    
+    <?php if ( isset($_SESSION['id']) ) : ?>  
+        <form class="comment-form" action="/post/<?= $post->id ?>/comment" method="POST">
+<!-- <div class="form-group"><label for="email">Email</label><input class="form-control" name="email" type="email" name="email" i="email" required></div> -->
+            <div class="form-group">
+                <label for="comment">Scrivi un messaggio</label>
+                <textarea required class="form-control" name="comment" rows="8"></textarea> <!-- i="message" -->
+            </div>
+            <div class="form-group text-md-center">
+                <button class="btn btn-success">Save</button>   
+            </div>
+        </form>
+    <?php endif; ?>
+</div>
+     
+<?php  if( !empty($comments)  ) : ?>
+    <p>Elenco commenti</p>
+    <?php  foreach ($comments as $comment) : ?>
+        <div class='comment-box'>
+            <div class='comment-head'>
+                <time datetime="<?= $comment->datecreated ?>"><?= $comment->datecreated ?></time>
+                by <span><a  href="mailto:<?= $comment->email ?>"> <?= $comment->username ?></a></span> 
+                <?php if ( $_SESSION['id'] == 1 ) : ?><a href='/comment/<?= $comment->id ?>/delete' class="btn right">X</a><?php endif; ?>
+            <div class='clear'></div>
+            </div> 
+         
+            <p class='comment-body'><?=$comment->comment?></p>
         </div>
-        <div class="col-sm-1">
-            <form class="form-inline"  action="/post/<?= $post->id ?>/delete" method="POST">
-                <input type="submit" class="btn btn-danger" value="DELETE">
-            </form>
-        </div>
-    </div>
-        <!-- </div> -->
-    <!-- </div> -->
+    <?php  endforeach; ?>
+<?php else : ?>
+    <p>Non ci sono commenti</p>
+<?php endif ?>
+    
 
-    <!-- <div class="row"> -->
-        <!-- <div class="push-md-3 col-md-6 text-md-center"> -->
-            <hr>
-    <h2>Commenti</h2>      
-    <form class="comment-form" action="/post/<?= $post->id ?>/comment" method="POST">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input class="form-control" name="email" type="email"  name="email" i="email" required>
-        </div>
-        <div class="form-group">
-            <label for="comment">Message</label>
-            <textarea required name="comment" class="form-control" name="comment" i="message"></textarea> 
-        </div>
-        <div class="form-group text-md-center">
-            <button class="btn btn-success">Save</button>
-        </div>
-    </form>
-    <?php 
-        if(!empty($comments)){ echo 'Elenco commenti';
-            foreach ($comments as $comment){ ?>
-        
-                <p><?=$comment->comment?></p>
-                <p>
-                    <time datetime="<?= $comment->datecreated ?>"><?= $comment->datecreated ?></time>
-                    by <span><a  href="mailto:<?= $comment->email ?>"> <?= $comment->email ?></a> </span>
-                </p> 
-    <?php
-            }
-        }
-    ?>
-        <!-- </div> -->
-    <!-- </div> -->
 </article>
 

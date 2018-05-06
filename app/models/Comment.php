@@ -45,81 +45,42 @@ class Comment
 /***********************|
 *           SAVE        |
 ************************/ 
-    public function save(array $data=[]){
-        
-        $sql = 'INSERT INTO postscomments (post_id, comment, datecreated, email ) VALUES (:post_id, :comment, :datecreated, :email)';
-        $stm = $this->conn->prepare($sql); 
-        $stm->execute([ 
-            'post_id'=> $data['post_id'], 
-            'comment'=>$data['comment'], 
-            'datecreated'=>date('Y-m-d H:i:s'), 
-            'email'=>$data['email'] 
-            ]); 
-     
-        return $stm->rowCount();
-     }
-
-
-
-
-
-
+public function save(array $data=[]){
+    
+    $sql = 'INSERT INTO postscomments (post_id, comment, datecreated, email, username ) VALUES (:post_id, :comment, :datecreated, :email, :username)';
+    $stm = $this->conn->prepare($sql); 
+    $stm->execute([ 
+        'post_id'=> $data['post_id'], 
+        'comment'=>$data['comment'], 
+        'datecreated'=>date('Y-m-d H:i:s'), 
+        'email'=>$_SESSION['email'], //   $_SESSION['email'] = $user['user_email'];
+        'username'=>$_SESSION['name']
+        ]); 
+    
+    return $stm->rowCount();
     }
 
 
+    public function deleteAll(int $postid){
+       // cancelliamo tutti i commenti relativi al post appena cancellato
+       $sql = 'DELETE FROM postscomments WHERE post_id = :id'; //
+       $stm = $this->conn->prepare($sql); 
+       $stm->bindParam(':id', $postid, PDO::PARAM_INT); 
+       $stm->execute(); 
+    }
 
 
-/*  
-    public function delete(int $id){
-
-        $sql = 'DELETE FROM posts WHERE id = :id';
+// cancelliamo solo il commento che ha il suo id univoco
+    public function deleteOne(int $commentid){
+        $sql = 'DELETE FROM postscomments WHERE id = :id'; 
         $stm = $this->conn->prepare($sql); 
-        $stm = bindParam(':id', $id, PDO::PARAM_INT); // gli diciamo che deve essere di tipo integer 
+        $stm->bindParam(':id', $commentid, PDO::PARAM_INT); 
         $stm->execute(); 
+     }
 
-        return $stm->rowCount();
+
     }
-*/
-
-    /*
-    public function find($id){
-        $result = [];
-
-        $sql = 'SELECT * FROM posts WHERE id = :id';
-      
-        $stm = $this->conn->prepare($sql); 
-
-        $stm->execute(['id'=>$id]); 
-
-        if ( $stm ){
-            $result = $stm->fetch(PDO::FETCH_OBJ);
-        }
-       // var_dump($result);
-        return $result;
-     }
-    */
 
 
-
-/*
-     public function store(array $data=[]){
-        
-        $sql = 'UPDATE posts SET title = :title, text = :text, email = :email  WHERE id = :id';
-        $stm = $this->conn->prepare($sql); 
-        $stm->execute([ 
-            'id' => $data['id'],
-            'title'=> $data=['title'], 
-            'text'=>$data=['text'],  
-            'email'=>$data=['email'] 
-            ]); 
-     
-            return $stm->rowCount();
-     }
-
-*/
-/*
-
-
- */
 
 

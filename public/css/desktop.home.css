@@ -1,6 +1,6 @@
 
 
- 
+/*  
  .navbar-brand{ padding:0;margin:0;} 
 
 
@@ -12,21 +12,27 @@
 
 .verify{
   background-color: pink;
+} */
+
+
+
+
+/*0***0****0******************************************************************************************+++++++********0*/    
+@media(min-width:0){
+  .container-fluid{display:none;} 
+  #box-sign{width:80%;margin:10px auto;text-align:center;}
+  #sign{display:inline;writing-mode:vertical-rl;text-orientation:upright;}
 }
-
-
-
-
-/*************************RISOLUZIONE******************************************/       
-
-  
+       
 /*260***XS****260**************************************************************************************************260*/
 @media(min-width:260px){
 *{padding:0;margin:0;}
 #risoluzione{position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow;}     
 html{color:black;}  
 body{background-color:#999;}  
-.container-fluid {padding:0;margin:0;}
+#box-sign{display:none;} 
+/* .container{display:block;} */
+.container-fluid {display:block;padding:0;margin:0;}
 .btn{color: #fff;background-color:#333;border: none;} 
 .btn:hover{color: #fff;background-color:red;} 
 

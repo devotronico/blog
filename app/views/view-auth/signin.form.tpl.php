@@ -1,33 +1,33 @@
-<form action="/auth/signin/access" method="POST" class='auth-form'>
-    <h2 class="container-title text-center"><i class="fab fa-wpforms"></i>&nbsp;Sign In</h2>
+<form id='auth'action='/auth/signin/access' method='POST'>
+<h2 class='container-title text-center'>Accedi</h2>
     <?php if (!empty($message)): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
         <?= $message ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
         </button>
     </div>
-    <?php endif?>
-    <div class="form-group row">
-        <i class="far fa-envelope fa-lg col-sm-2"></i>
-        <input type="email" class="form-control col-sm-10" id="signin-email" name="user_email" aria-describedby="emailHelp" placeholder="Enter email">
+<?php endif; ?>
+  <div class='form-group'>
+    <label for='email'></label> 
+    <div class='input-group'>
+      <div class='input-group-addon'>
+      <i class='fas fa-envelope fa-lg'></i>
+      </div> 
+      <input type='email' name='user_email' placeholder='Email' class='form-control' required='required'>
     </div>
-    <div class="form-group row">
-        <i class="fas fa-key fa-lg col-sm-2"></i>
-        <input type="password" class="form-control col-sm-10" id="signin-password" name="user_pass" placeholder="Password">
-        <a href="/auth/password/form"><small id="password-forgot" class="form-text text-muted">password dimenticata?</small></a>
+  </div>
+  <div class='form-group'>
+  <label for='password'></label>  
+    <div class='input-group'>
+      <div class='input-group-addon'>
+        <i class='fas fa-key fa-lg'></i>
+      </div> 
+      <input type='password' name='user_pass' placeholder='Password' class='form-control' required='required'>
     </div>
-    <div class="form-check">
-        <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" name='setcookie' value=1>&nbsp;Rimani loggato
-        </label>
-    </div>
-    <button type="submit" class="btn btn-primary btn-lg">Accedi</button>
+    <a href='/auth/password/form' class='text-center' style='padding:8px;'><small class='form-text text-muted'>password dimenticata?</small></a>
+  </div> 
+  <div class='form-group text-center'>
+    <button type='submit' name='submit' class='btn'>Accedi</button>
+  </div>
 </form>
-
-
-
-
-
-
-

@@ -9,7 +9,7 @@ foreach ($posts as $post) :
         by <span><a  href="mailto:<?=$post->email?>"> <?=$post->email?></a> </span>
     </p>
     <?= htmlentities($post->message)?>
+    <hr>
 </article>
-<hr>
 <?php
 endforeach;
