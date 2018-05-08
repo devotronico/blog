@@ -170,7 +170,7 @@ public function validateEmail()
 *********************************/
     public function validatePassSignup()
     {
-        $PASSWORD_LENGTH = 8;
+        $PASSWORD_LENGTH = 8; // [!] dichiarare una costante?
 
         $this->password = trim($this->password);
 

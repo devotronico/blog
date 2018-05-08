@@ -4,7 +4,7 @@ namespace App\Controllers;
 use \PDO; // importiamo le classi 'PDO' e 'Post'
 use App\Models\Post;
 use App\Models\Comment;
-
+use App\Models\Image;
 
 
 class PostController extends Controller
@@ -75,11 +75,19 @@ class PostController extends Controller
 ********************/
     public function savePost(){
 
-        $this->Post->save($_POST); // salviamo il post creato nel database 
-        redirect("/posts"); // redirect è una funzione che fa il redirect nella home
-        //echo json_encode($_POST);
-       
-    
+    $Image = new Image($_FILES);
+
+    if ( empty( $Image->getMessage()) )
+    {
+        $imageName = $Image->getNewImageName();
+        $this->Post->save($_POST, $imageName); // salviamo il post creato nel database 
+    }
+    else { die($Image->getMessage()); }
+   
+    redirect("/posts"); // redirect è una funzione che fa il redirect nella home
+    //echo json_encode($_POST);
+
+
     }
 
 

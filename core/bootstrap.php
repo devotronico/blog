@@ -12,21 +12,17 @@ require_once 'app/Controllers/HomeController.php'; //
 
 require_once 'app/Controllers/PostController.php'; // 
 
-// require_once 'app/models/Validate.php'; // In Validitation vengono fatte le validitazioni ai parametri passati ne forms per le autenticazioni
-
-// require_once 'app/models/Auth.php'; // In Auth vengono eseguite le autenticazioni
-
 require_once 'app/Controllers/AuthController.php'; // 
 
 require_once 'app/models/Validate.php'; // In Validitation vengono fatte le validitazioni ai parametri passati ne forms per le autenticazioni
 
 require_once 'app/models/Auth.php'; // In Auth vengono eseguite le autenticazioni
 
-
-
 require_once 'app/models/Email.php';  // Email si occupa di tutto ciò che riguarda l'invio di email per fare le autenticazioni
 
 require_once 'app/models/Post.php'; // In Post si fanno le query al database
+
+require_once 'app/models/Image.php'; // Image gestisce le immagini che carichiamo tramite i form
 
 require_once 'app/models/Comment.php'; // In Post si fanno le query al database
 
