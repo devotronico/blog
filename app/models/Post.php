@@ -9,9 +9,7 @@ use \PDO;
 
 class Post
 {
-    
     protected $conn;
-
 
     public function __construct(PDO $conn){
         
@@ -20,7 +18,6 @@ class Post
        // $posts =  $this->conn->query('SELECT * FROM posts')->fetchAll(PDO::FETCH_OBJ); // prendiamo tutti i post dal database
     }
     
-
 
 
 
@@ -62,19 +59,23 @@ class Post
 
 
 
-     public function save(array $data=[]){
-        
-        $sql = 'INSERT INTO posts (title, message, datecreated, email ) VALUES (:title, :message, :datecreated, :email)';
-        $stm = $this->conn->prepare($sql); 
-        $stm->execute([ 
-            'title'=> $data['title'], 
-            'message'=>$data['message'], 
-            'datecreated'=>date('Y-m-d H:i:s'), 
-            'email'=>$_SESSION['email'] //  'email'=>$data['email']
-            ]); 
-     
-        return $stm->rowCount();
-     }
+
+
+public function save(array $data=[], string $image){
+
+$sql = 'INSERT INTO posts (title, image, message, datecreated, email, username ) VALUES (:title, :image, :message, :datecreated, :email, :username)';
+$stm = $this->conn->prepare($sql); 
+$stm->execute([ 
+    'title'=> $data['title'], 
+    'image'=> $image, 
+    'message'=>$data['message'], 
+    'datecreated'=>date('Y-m-d H:i:s'), 
+    'email'=>$_SESSION['email'], //  'email'=>$data['email']
+    'username'=>$_SESSION['name'],
+]); 
+
+return $stm->rowCount();
+}
 
 
 

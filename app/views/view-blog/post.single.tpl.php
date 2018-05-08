@@ -1,10 +1,11 @@
 <article>
-    <h1><?= $post->title ?></h1>
+    <h1><?=$post->title?></h1>
     <p>
-        <time datetime="<?= $post->datecreated ?>"><?= $post->datecreated ?></time>
-        by <span><a  href="mailto:<?= $post->email ?>"> <?= $post->email ?></a> </span>
+        <time datetime="<?=$post->datecreated?>"><?=$post->datecreated?></time>
+        by&nbsp;<span><a href="mailto:<?=$post->email?>"><?=$post->username?></a></span>
     </p>
-    <div><?= $post->message ?></div>
+    <img src="/img/posts/<?=$post->image?>">
+    <div><?=$post->message?></div>
     <br>
      <?php if ( isset($_SESSION['id']) &&  $_SESSION['id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
         <a href="/post/<?= $post->id ?>/edit" class="btn btn-primary">EDIT</a>
