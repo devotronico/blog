@@ -4,19 +4,20 @@
         <time datetime="<?=$post->datecreated?>"><?=$post->datecreated?></time>
         by&nbsp;<span><a href="mailto:<?=$post->email?>"><?=$post->username?></a></span>
     </p>
-    <img src="/img/posts/<?=$post->image?>">
+    <?php if ( !empty($post->image) ) : ?>
+        <img src="/img/posts/<?=$post->image?>" alt="immagine del post">
+    <?php endif;?>
     <div><?=$post->message?></div>
     <br>
-     <?php if ( isset($_SESSION['id']) &&  $_SESSION['id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
+     <?php if ( isset($_SESSION['user_id']) &&  $_SESSION['user_id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
         <a href="/post/<?= $post->id ?>/edit" class="btn btn-primary">EDIT</a>
         <a href="/post/<?= $post->id ?>/delete" class="btn btn-danger">DELETE</a>
     <?php endif; ?>
 <hr>
 <div class="textarea-box">
-    <h2>Commenti</h2>    
-    <?php if ( isset($_SESSION['id']) ) : ?>  
+    <h3>Partecipa alla discussione</h3>    
+    <?php if ( isset($_SESSION['user_id']) ) : ?>  
         <form class="comment-form" action="/post/<?= $post->id ?>/comment" method="POST">
-<!-- <div class="form-group"><label for="email">Email</label><input class="form-control" name="email" type="email" name="email" i="email" required></div> -->
             <div class="form-group">
                 <label for="comment">Scrivi un messaggio</label>
                 <textarea required class="form-control" name="comment" rows="8"></textarea> <!-- i="message" -->
@@ -33,19 +34,18 @@
     <?php  foreach ($comments as $comment) : ?>
         <div class='comment-box'>
             <div class='comment-head'>
+                <img src="/img/auth/<?=!empty($comment->user_image)?$comment->user_image:'default.jpg'?>" alt="avatar personale">
                 <time datetime="<?= $comment->datecreated ?>"><?= $comment->datecreated ?></time>
-                by <span><a  href="mailto:<?= $comment->email ?>"> <?= $comment->username ?></a></span> 
-                <?php if ( $_SESSION['id'] == 1 ) : ?><a href='/comment/<?= $comment->id ?>/delete' class="btn right">X</a><?php endif; ?>
+                by <span><a  href="mailto:<?= $comment->user_email ?>"> <?= $comment->user_name ?></a></span> 
+                <?php if ( isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1 ) : ?><a href='/comment/<?= $comment->id ?>/delete' class="btn right">X</a><?php endif; ?>
             <div class='clear'></div>
             </div> 
          
             <p class='comment-body'><?=$comment->comment?></p>
         </div>
-    <?php  endforeach; ?>
+    <?php endforeach; ?>
 <?php else : ?>
     <p>Non ci sono commenti</p>
 <?php endif ?>
-    
-
 </article>
 

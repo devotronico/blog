@@ -15,14 +15,14 @@ class Auth extends Validate
         return $this->message;
     }
 
-    public function signup()
+    public function signup($image)
     {
         $email = $this->validateEmailSignup();
         $password = $this->validatePassSignup();
 
         if (empty($this->message)) {
             $name = $this->validateUsername();
-            $this->storeData($name, $email, $password);
+            $this->storeData($name, $email, $password, $image);
         }
 
         // $this->conn = null; // Chiude PDO connection
@@ -32,10 +32,10 @@ class Auth extends Validate
     {
 
         $email = $this->isEmailStored(); 
-        $password = $this->validatePassSignin(); // in questo metodo otteniamo anche le  $_SESSION id, email, name;
+        $password = $this->validatePassSignin(); // in questo metodo otteniamo anche le  $_SESSION user_id, email, name;
         //if ( !empty($email) && !empty($password) ) {  // se email e password sono corretti 
         if ( !is_null($email) && !is_null($password) ) {  // se email e password sono corretti 
-        if ( !isset($_SESSION['id']) ) { // se $_SESSION['id'] non è settato vuol dire che l'account non è stato confermato
+        if ( !isset($_SESSION['user_id']) ) { // se $_SESSION['user_id'] non è settato vuol dire che l'account non è stato confermato
             $hash = $this->hash; // non è necessario validare questa hash perchè è presa dal database col metodo 'isEmailStored'
             $Email = new Email($email, $hash);
             $Email->send();
@@ -46,23 +46,25 @@ class Auth extends Validate
     }
 
 
-    public function storeData($name, $email, $password)
+    public function storeData( $name, $email, $password, $image)
     {
+        //$image = isNull($image)? 'default.jpg' : $image;
         $password= password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
         $hash = md5(rand(0, 1000)); //$hash = $mysqli->escape_string( md5( rand(0,1000) ) );
         $date = date('Y-m-d H:i:s');
         $status = 0;
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (user_name, user_email, user_pass, user_registered, user_activation_key, user_status) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (user_image, user_name, user_email, user_pass, user_registered, user_activation_key, user_status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bindParam(1, $name, PDO::PARAM_STR, 12);
-            $stmt->bindParam(2, $email, PDO::PARAM_STR, 12);
-            $stmt->bindParam(3, $password, PDO::PARAM_STR, 60);
-            $stmt->bindParam(4, $date, PDO::PARAM_STR, 12);
-            $stmt->bindParam(5, $hash, PDO::PARAM_STR, 12);
-            $stmt->bindParam(6, $status, PDO::PARAM_INT);
+            $stmt->bindParam(1, $image, PDO::PARAM_STR, 32);
+            $stmt->bindParam(2, $name, PDO::PARAM_STR, 12);
+            $stmt->bindParam(3, $email, PDO::PARAM_STR, 12);
+            $stmt->bindParam(4, $password, PDO::PARAM_STR, 60);
+            $stmt->bindParam(5, $date, PDO::PARAM_STR, 12);
+            $stmt->bindParam(6, $hash, PDO::PARAM_STR, 12);
+            $stmt->bindParam(7, $status, PDO::PARAM_INT);
 
             if ($stmt->execute()) { //  Tentiamo di eseguire lo statement
                 //Se riusciamo a salvare i dati nel database senza errori allora inviamo un email all'utente per attivare l'account
@@ -107,7 +109,7 @@ class Auth extends Validate
                     if ($stmt->rowCount() == 1) { // se nel database cè una corrispondenza con i parametri passati dal link dell'email
                         $user = [];
                         $user = $stmt->fetch(PDO::FETCH_ASSOC); //  PDO::FETCH_OBJ
-                        $_SESSION['id'] = $user['ID'];
+                        $_SESSION['user_id'] = $user['ID'];
                         $_SESSION['email'] = $user['user_email'];
                         $_SESSION['name'] = $user['user_name'];
 
@@ -253,7 +255,7 @@ public function passSave() {
                                 $stmt->bindParam(':password', $password, PDO::PARAM_STR, 60);    
                                 if ($stmt->execute())  //  Tentiamo di eseguire lo statement
                                 {
-                                    $_SESSION['id'] = $user['ID'];
+                                    $_SESSION['user_id'] = $user['ID'];
                                     $_SESSION['email'] = $user['user_email'];
                                     $_SESSION['name'] = $user['user_name'];
                                 }

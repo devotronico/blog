@@ -205,12 +205,12 @@ public function validateEmail()
                     if (password_verify($password, $user['user_pass'])) // controlliamo se la password è uguale a quella nel database
                     {  
                         if ($user['user_status'] == 1) {
-                            $_SESSION['id'] = $user['ID']; // ($user['user_status']);
+                            $_SESSION['user_id'] = $user['ID']; // ($user['user_status']);
                             $_SESSION['email'] = $user['user_email'];
                             $_SESSION['name'] = $user['user_name'];
                             return $password;
                             // if ( array_key_exists('setcookie', $_POST) && $_POST['setcookie'] == '1')  {
-                            //     setcookie('id', $_SESSION['id'], time()+60*60*24*365);   // }
+                            //     setcookie('id', $_SESSION['user_id'], time()+60*60*24*365);   // }
                         } else {
                             // Se proviamo a fare il login senza aver prima confermato l' account cliccando
                             // sul link all'interno dell'email che il sistema ci ha inviato dopo il durante la fase di registrazione

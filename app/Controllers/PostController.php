@@ -75,7 +75,7 @@ class PostController extends Controller
 ********************/
     public function savePost(){
 
-    $Image = new Image($_FILES);
+    $Image = new Image(300, 200, 1000000, 'posts', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
 
     if ( empty( $Image->getMessage()) )
     {
@@ -112,9 +112,9 @@ class PostController extends Controller
 /***************************************************************************************************************************************|
 * EDIT                                                                                                                                  |
 * Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                      |
-* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['id']   | 
-* Quindi se $_SESSION['id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                      |
-* Il controllo su $_SESSION['id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                       |                                                          |
+* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']   | 
+* Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                      |
+* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                       |                                                          |
 ****************************************************************************************************************************************/
 public function edit($postid){
 
@@ -125,13 +125,13 @@ public function edit($postid){
 }
 
     
-/***************************************************************************************************************************************|
-* DELETE                                                                                                                                |
-* Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                      |
-* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['id']   | 
-* Quindi se $_SESSION['id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                      |
-* Il controllo su $_SESSION['id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                       |                                                          |
-****************************************************************************************************************************************/
+/*******************************************************************************************************************************************|
+* DELETE                                                                                                                                    |
+* Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                          |
+* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']  | 
+* Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                     |
+* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                          |
+********************************************************************************************************************************************/
     public function delete($id){
       
             try {    
@@ -151,13 +151,30 @@ public function edit($postid){
     }
 
 
-/***************************************************************************************************************************************|
-* DELETE SINGLE COMMENT                                                                                                                               |
-* Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                      |
-* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['id']   | 
-* Quindi se $_SESSION['id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                      |
-* Il controllo su $_SESSION['id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                       |                                                          |
-****************************************************************************************************************************************/
+
+
+
+/***********************************************************************************************************|
+* SAVE-COMMENT                                                                                              |    
+* /post/:id/comment                                                                                         |
+* Salviamo il commento relativo a un determinato id di un post che passiamo come argomento a questo metodo  |
+* Oltre al commento salviamo anche l'id del post nella colonna post_id della tabella postscomments          |
+************************************************************************************************************/
+    public function saveComment($postid) {
+
+        $comment = new Comment($this->conn);
+        $_POST['post_id'] = (int) $postid;
+        $comment->save($_POST); // salviamo il post creato nel database 
+        redirect('/post/'.$postid); //  torniamo alla pagina di tutti i post
+    }
+
+/*******************************************************************************************************************************************|
+* DELETE SINGLE COMMENT                                                                                                                     |          |
+* Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                          |
+* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']  | 
+* Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                     |
+* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                          |
+********************************************************************************************************************************************/
 public function deleteComment($commentid){
 
 
@@ -166,21 +183,6 @@ public function deleteComment($commentid){
 
     redirect("/posts"); // redirect è una funzione che fa il redirect nella home
 }    
-
-
-
-/***********************|
-*       SAVE-COMMENT    |
-************************/
-    public function saveComment($postid) {
-
-        $comment = new Comment($this->conn);
-        $_POST['post_id'] = (int) $postid;
-        $comment->save($_POST); // salviamo il post creato nel database 
-        redirect('/post/'.$postid); // redirect è una funzione che fa il redirect nella home
-    }
-
-    
 
 } // chiude classe PostController
 

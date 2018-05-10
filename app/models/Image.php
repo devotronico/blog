@@ -13,28 +13,42 @@ class Image {
     protected $img_resource; // è una risorsa/copia del file originale sul quale andremo a fare le modifiche e salvarlo
     protected $img_width; // larghezza del' immagine
     protected $img_height; // laltezza del' immagine
-    const MAX_FILE_SIZE = 1000000; // massimo peso in byte del file da noi accettato (1000000 byte = 1 megabyte)
-    const MAX_FILE_WIDTH = 200; // massima larghezza del file da noi accettato
-    const MAX_FILE_HEIGHT = 100; // massima altezza del file da noi accettato
-    const IMAGE_DIR = '\..\..\public\img\posts\\'; // percorso del file dove andremo a salvarlo
+    protected $max_width; // massima larghezza del file da noi accettato
+    protected $max_height;  // massima altezza del file da noi accettato
+    protected $folder; // 'public/img/posts/'; // percorso del file dove andremo a salvarlo
 
 
-public function __construct(array $data){
-    $this->message  = empty($data) ? 'nessun file caricato': '';
-    $this->message .= !isset($data['file']) ? 'Non hai inviato nessun file': '';
-    $this->message .= !is_uploaded_file($data['file']['tmp_name']) ? 'Possibile file upload attack': '';
-    $this->message .=  $data['file']['error']  ? 'si è verificato un errore nel caricamento del file': '';
-    $this->message .=  $data['file']['size'] > self::MAX_FILE_SIZE  ? "Il file caricato supera i ".self::MAX_FILE_SIZE." bytes": '';
+public function __construct(int $max_width, int $max_height, int $max_size, string $folder, array $data ){
+
+   // echo '<pre>', print_r($data) ,'</pre>';
+ 
+    if ( !$data['file']['error']  ||  is_uploaded_file($data['file']['tmp_name'])    )  {// { exit;} // file non caricato
    
-    $this->fileName = $data['file']['name'];
-    $this->fileType = $data['file']['type'];
-    $this->fileTmpName = $data['file']['tmp_name'];
-    $this->fileExtension = $this->getExtension();
+        //$this->message  = empty($data) ? 'Nessun file caricato': '';
+        //$this->message .= !isset($data['file']) ? 'Non hai inviato nessun file': '';
+        //$this->message .= !is_uploaded_file($data['file']['tmp_name']) ? 'Possibile file upload attack': '';
+        //$this->message .=  $data['file']['error']  ? 'Si è verificato un errore nel caricamento del file': '';
+        $this->message =  $data['file']['size'] > $max_size ? "Il file caricato supera il limite di ".$max_size." bytes": '';
 
-    $this->resource();
-    $this->rotate();
-    $this->scale();
-    $this->save();
+        $this->fileName = $data['file']['name'];
+        $this->fileType = $data['file']['type'];
+        $this->fileTmpName = $data['file']['tmp_name'];
+
+        $this->max_width = $max_width;
+        $this->max_height = $max_height;
+        $this->folder = "public/img/$folder/"; 
+
+        $this->fileExtension = $this->getExtension(); // +m
+    
+        if ( empty($this->getMessage()) ) {
+        $this->setNewImageName();
+        $this->resource(); // +m
+        $this->rotate();
+        $this->scale();
+        $this->save(); // +m
+        }
+
+    } else { echo 'file non caricato'; }
  }
 
  public function getMessage(){
@@ -52,8 +66,14 @@ public function __construct(array $data){
 * e non meno di 32 perchè la lunghezza della stringa data dalla funzione uniqid più l'estensione può arrivare a 32 caratteri    |
 * es.  5af08b6fe70335.78055591.tiff_ii  {= 32 caratteri}                                                                        |                          
 ********************************************************************************************************************************/  
-public function getNewImageName() {
+public function setNewImageName() {
+
     $this->fileNewName = uniqid('', true).'.'.$this->fileExtension;  
+}
+
+
+public function getNewImageName() {
+
     return $this->fileNewName;
 }
 
@@ -107,7 +127,7 @@ public function resource(){
     switch ($image_type){
         case 2: $this->img_resource = imagecreatefromjpeg($this->fileTmpName); break;  
         case 3: $this->img_resource = imagecreatefrompng($this->fileTmpName);  break;  
-        default: die('Errore!'); break;
+        default: $this->message .='Il formato file '.$image_type.' non è supportato';
     }
     return $this->img_resource;
 }
@@ -148,15 +168,15 @@ public function rotate(){
 public function scale(){                                       
     // RIDIMENSIONARE L IMMAGINE
     $img_ratio = $this->img_width/$this->img_height; // rapporto originale dell immagine | es se 960*640 ratio: 1,5
-    $standard_ratio = self::MAX_FILE_WIDTH/self::MAX_FILE_HEIGHT; // rapporto standard dell immagine es. 800 x 600 ratio: 1.33
+    $standard_ratio = $this->max_width/$this->max_height; // rapporto standard dell immagine es. 800 x 600 ratio: 1.33
 
     if ( $standard_ratio > $img_ratio) { // si verifica quando MAX_FILE_HEIGHT è minore dell'altezza del file caricato
-        $new_width = self::MAX_FILE_WIDTH * $img_ratio;
+        $this->max_width = $this->max_width * $img_ratio;
     } 
     else {
-        $new_height = self::MAX_FILE_WIDTH / $img_ratio; //  600 / 1,5 = 400
+        $this->max_height = $this->max_width / $img_ratio; //  600 / 1,5 = 400
     }
-    $this->img_resource = imagescale($this->img_resource, $new_width, self::MAX_FILE_HEIGHT); // ridimensiona la risorsa dell immagine
+    $this->img_resource = imagescale($this->img_resource,  $this->max_width, $this->max_height); // ridimensiona la risorsa dell immagine
 }    
 
 
@@ -165,23 +185,22 @@ public function scale(){
 /***************************************************************************************************************************************|
 * SAVE                                                                                                                                  |
 * Non salva nel database! ma in una cartella                                                                                            |
-* Dopo aver apportato tutte le modifiche necessarie alla risorsa dell'immagine, possiamo salvarla col nuovo nome che gli abbiamo dato   |                                                                                             
-* Facciamo uno switch per chiamare la funzione adeguata al tipo di estensione del file caricato                                         |
+* Dopo aver apportato tutte le modifiche necessarie alla risorsa dell'immagine, possiamo salvarla col nuovo nome che gli abbiamo dato.  |                                                                                             
+* Facciamo uno switch per chiamare la funzione adeguata al tipo di estensione del file caricato.                                        |
 * imagejpeg e imagepng creano un immagine in base alla risorsa dell'immagine e la posizionano nella path della directory da noi scelta  |
-* come secondo parametro delle funzioni possiamo scegliere la qualità del file che va da 0(bassa) a 100(alta)                           |          
+* come secondo parametro delle funzioni possiamo scegliere la qualità del file che va da 0(bassa) a 100(alta).                          |          
 ****************************************************************************************************************************************/   
-public function save(){           
-
-    switch ($this->fileExtension)  { // riscrive l immagine ruotata e ridimensionata sul nuovo percorso del file
-        //case 1:$result = imagegif($img_resource, IMAGE_DIR.$fileTmpName); break; // default quality
-        case 'jpg':$result = imagejpeg($this->img_resource, self::IMAGE_DIR.$this->fileNewName, 100 );  break; // best quality
-        case 'jpeg':$result = imagejpeg($this->img_resource, self::IMAGE_DIR.$this->fileNewName, 100 );  break; // best quality
-        case 'png':$result = imagepng($this->img_resource, self::IMAGE_DIR.$this->fileNewName, 0); break; // no compression
-        default: die('Il formato file '.$this->fileExtension.' non è supportato');
+public function save(){     
+  
+    switch ($this->fileExtension)  { 
+        case 'jpg':$result = imagejpeg($this->img_resource, $this->folder.$this->fileNewName, 100 );  break; // best quality
+        case 'jpeg':$result = imagejpeg($this->img_resource, $this->folder.$this->fileNewName, 100 );  break; // best quality
+        case 'png':$result = imagepng($this->img_resource, $this->folder.$this->fileNewName, 0); break; // no compression
+        default: $this->message .='Il formato file '.$this->fileExtension.' non è supportato';
     }
     
     if ( !$result ) {
-        die("Impossibile salvare l'immagine");
+        $this->message .= "Impossibile salvare l'immagine";
     }  
 }
 
