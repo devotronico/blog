@@ -1,5 +1,22 @@
-<form id='auth' class='auth-form' action='/auth/signup/store' method='POST' autocomplete='off'>
+<form id='auth' class='auth-form' action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
 <h2 class='container-title text-center'>Registrati</h2>
+<?php if (!empty($imgMessage)): ?>
+    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        <?= $imgMessage ?>
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+        </button>
+    </div>
+    <?php endif?>
+
+    <div class="form-group">
+        <label for="image">Avatar</label>
+        <div class="input-group mb-2 mb-sm-0">
+            <div class="input-group-addon"><i class="fas fa-image fa-lg"></i></div>
+            <input type="file" class="form-control" name="file"> 
+        </div>
+    </div>
+
 <?php if (!empty($message)): ?>
     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
         <?= $message ?>
@@ -7,8 +24,7 @@
             <span aria-hidden='true'>&times;</span>
         </button>
     </div>
-    <?php endif?>
-
+  <?php endif?>
   <div class='form-group'>
     <label for='username'></label> 
     <div class='input-group'>

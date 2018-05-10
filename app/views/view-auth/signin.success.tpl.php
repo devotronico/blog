@@ -1,6 +1,6 @@
 <div id='auth' class='auth-verify'>
     <h2>Login riuscito</h2>
-    <?php if (isset($_SESSION['id'])): ?>
+    <?php if (isset($_SESSION['user_id'])): ?>
     <div class="alert alert-success" role="alert"><?=$message?></div>
     <a href="/posts" class="btn">Entra</a>
     <?php else: ?>

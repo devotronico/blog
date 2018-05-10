@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// if ( isset($_SESSION['id']) ) {  echo 'id è uguale a '.$_SESSION['id'].'<br>'; }
-// if ( isset($_SESSION['email']) ) {  echo 'email è uguale a '.$_SESSION['email'].'<br>'; }
-// if ( isset($_SESSION['name']) ) {  echo 'name è uguale a '.$_SESSION['name'].'<br>'; }
-// if (session_status() == PHP_SESSION_ACTIVE) {  echo 'sessione attiva <br>';} else { echo 'sessione assente! <br>'; } 
+if ( isset($_SESSION['user_id']) ) {  echo 'id è uguale a '.$_SESSION['user_id'].'<br>'; }
+if ( isset($_SESSION['email']) ) {  echo 'email è uguale a '.$_SESSION['email'].'<br>'; }
+if ( isset($_SESSION['name']) ) {  echo 'name è uguale a '.$_SESSION['name'].'<br>'; }
+if (session_status() == PHP_SESSION_ACTIVE) {  echo 'sessione attiva <br>';} else { echo 'sessione assente! <br>'; } 
 
 //$navbarLink = 'posts';
 

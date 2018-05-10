@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use \PDO; // importiamo le classi 'PDO' e 'Post'
 use App\Models\Auth;
+use App\Models\Image;
 
 
 class AuthController extends Controller
@@ -28,7 +29,7 @@ class AuthController extends Controller
 * Se si clicca sul link signup che sta nella Navbar carica il template del Form per fare la registrazione   |                     
 * Al submit del form attiviamo il metodo 'signupStore'                                                      |
 ************************************************************************************************************/
-public function signupForm(){ // 
+public function signupForm(){ 
  
     $message = isset($_GET['message']) ? $_GET['message'] : '';
 
@@ -42,25 +43,33 @@ public function signupForm(){ //
 * se i dati del form {email e password} sono validi si salvano nel database                     | 
 * e il sistema invierà una Mail all'utente con un link che contiene i parametri email e hash    |                                    
 ************************************************************************************************/
-public function signupStore(){ // 
-    $Auth = new Auth($this->conn, $_POST);  // creiamo qui un istanza della classe 'Auth' e gli passiamo la connessione al database
-    // come argomento del metodo signup($_POST) della classe Auth passiamo i dati che sono un array di chiavi valori {$_POST['email'], $_POST['password'] }
-    $Auth->signup(); 
 
-   // preleviamo dalla classe Auth la variabile $message - se non cè - allora la 
+    // come argomento del metodo signup($_POST) della classe Auth passiamo i dati che sono un array di chiavi valori {$_POST['email'], $_POST['password'] }
+ // preleviamo dalla classe Auth la variabile $message - se non cè - allora la 
    //registrazione ha avuto successo e verrà visualizzato il messaggio che
    // ci avvisa che ci ci è stata inviata una mail per confermare l'account
-    if (  empty( $Auth->getMessage()) )
+public function signupStore(){ // 
+
+    $Image = new Image(80, 80, 100000, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
+
+    $Auth = new Auth($this->conn, $_POST);  
+      
+    $imageName = !is_null($Image->getNewImageName()) ? $Image->getNewImageName() : 'default.jpg';
+    $Auth->signup($imageName); 
+  
+    if (  empty( $Auth->getMessage()) &&  empty( $Image->getMessage()) )
     {
+    
         $message =  "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
         $files=['navbar-auth', 'signup.success'];
         $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
     }
     else
     {
+        $imgMessage = !empty( $Image->getMessage()) ? $Image->getMessage() : '';
         $message = $Auth->getMessage(); // redirect("/auth/signup/store?message=$message");
         $files=['navbar-auth', 'signup.form'];
-        $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
+        $this->content = View('auth', $files, compact('imgMessage','message'));  // ritorniamo il template con il form per fare la registrazione
     }  
 }
 
@@ -73,7 +82,7 @@ public function signupStore(){ //
 ************************************************************************************************/
 public function signupVerify() {  
     $Auth = new Auth($this->conn, $_GET);
-    $Auth->signupEmailActivation(); // in questo metodo otteniamo anche le  $_SESSION id, email;
+    $Auth->signupEmailActivation(); // in questo metodo otteniamo anche le  $_SESSION user_id, email;
  
     $message = !empty( $Auth->getMessage()) ? $Auth->getMessage() : "Registrazione avvenuta con successo!";
 
@@ -114,7 +123,7 @@ $email = $Auth->signin();
 // il login ha avuto successo e verrà visualizzato il messaggio che ce lo confermerà
 if (  empty( $Auth->getMessage()) )
 {
-    if (isset($_SESSION['id'])): 
+    if (isset($_SESSION['user_id'])): 
         $message = "Login effettuato con Successo!";   
         $files=['navbar-auth', 'signin.success'];
     $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
@@ -139,7 +148,7 @@ else
 ********************/
 public function authLogout(){
     if (session_status() == PHP_SESSION_ACTIVE) { session_destroy(); }
-    // unset($_SESSION["id"]);
+    // unset($_SESSION["user_id"]);
     // unset($_SESSION["email"]);
     // session_abort();
     // session_destroy(); 
@@ -232,7 +241,7 @@ public function passwordCheck(){
 public function passwordSave(){
 
     $Auth = new Auth($this->conn, $_POST);
-    $Auth->passSave(); // in questo metodo otteniamo anche le  $_SESSION id, email, name;
+    $Auth->passSave(); // in questo metodo otteniamo anche le  $_SESSION user_id, email, name;
   
     if (  empty( $Auth->getMessage()) )
     {    
@@ -246,8 +255,6 @@ public function passwordSave(){
         $files=['navbar-auth', 'pass.new'];            
         $this->content = View('auth', $files, compact('message')); 
     }  
-
-
 }
 
 

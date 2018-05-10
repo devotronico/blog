@@ -18,12 +18,12 @@ GLOBAL $navbarLink;
       <li class="nav-item deactive">
         <a class="nav-link" href="/posts">Posts</a>
       </li>
-      <?php if ( isset($_SESSION['id']) &&  $_SESSION['id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
+      <?php if ( isset($_SESSION['user_id']) &&  $_SESSION['user_id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
       <li class="nav-item <?=$navbarLink=='post/create'? 'active' : 'deactive' ?>">
         <a class="nav-link" href="/post/create">New&nbsp;Post</a>
       </li>
       <?php endif ?>
-      <?php if ( isset($_SESSION["id"]) ) : ?>
+      <?php if ( isset($_SESSION["user_id"]) ) : ?>
         <li class="nav-item">
           <a class="nav-link" href="/auth/logout">Logout</a> 
         </li>
