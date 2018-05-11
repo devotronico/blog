@@ -31,7 +31,13 @@ class Comment
         return $stm->fetchAll();
     }
 
-
+    public function total(int $postid){
+        $sql = 'SELECT * FROM postscomments WHERE post_id = postid';
+        $stm = $this->conn->prepare($sql);
+        $stm->bindParam(':postid', $postid, PDO::PARAM_INT);
+        $stm->execute();
+        return $stm->fetchAll();
+    }
 
 
 /***************************************************************************************************************************|
@@ -64,6 +70,7 @@ public function save(array $data=[]){
 * i loro rispettivi campi/colonne 'id'(posts) e 'post_id'(postscomments)                                            |
 ********************************************************************************************************************/ 
     public function deleteAll(int $postid){
+
        $sql = 'DELETE FROM postscomments WHERE post_id = :id';
        $stm = $this->conn->prepare($sql); 
        $stm->bindParam(':id', $postid, PDO::PARAM_INT); 
@@ -77,11 +84,29 @@ public function save(array $data=[]){
 * che otteniamo dal URL                                                                                                     |
 ****************************************************************************************************************************/ 
     public function deleteOne(int $commentid){
+
         $sql = 'DELETE FROM postscomments WHERE id = :id'; 
         $stm = $this->conn->prepare($sql); 
         $stm->bindParam(':id', $commentid, PDO::PARAM_INT); 
         $stm->execute(); 
      }
+
+
+/***********************************************************************************************************************************|
+* GET POST ID                                                                                                                       |
+* Con l'id della tabella postscomments ci andiamo a prendere il valore del campo post_id che è relativo all'id della tabella posts  |                                                                                                  
+************************************************************************************************************************************/ 
+     public function getPostId(int $commentid){
+
+        $sql = 'SELECT post_id FROM postscomments WHERE id = :id';
+        $stm = $this->conn->prepare($sql);
+        $stm->bindParam(':id', $commentid, PDO::PARAM_INT);
+        $stm->execute();
+        $res= $stm->fetch(PDO::FETCH_ASSOC);
+        $post_id = (int)$res['post_id'];
+        return $post_id;
+    }
+
 
 
     }
