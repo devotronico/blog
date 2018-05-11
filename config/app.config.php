@@ -22,7 +22,7 @@ return [
         ],
         'POST' => [
             'post/save' => 'App\Controllers\PostController@savePost',
-            'post/:id/store' => 'App\Controllers\PostController@store',
+            'post/update' => 'App\Controllers\PostController@update',
             'post/:id/comment' => 'App\Controllers\PostController@saveComment',
             'auth/signin/access' => 'App\Controllers\AuthController@signinAccess',
             'auth/signup/store' => 'App\Controllers\AuthController@signupStore',   

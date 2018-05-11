@@ -22,23 +22,24 @@ class PostController extends Controller
 
 
 
-/*******************|
-*       GETPOSTS    |
-********************/
+/***************************************************|
+* GETPOSTS          metodo = GET    path = posts    |
+* Otteniamo tutti i post                            |
+****************************************************/
     public function getPosts(){
 
         $posts = $this->Post->all(); // prendiamo tutti i post dal database 
 
+        //$comment = new Comment($this->conn); // istanziamo la classe Comment
+        //$comments =  $comment->all($postid); // prendiamo tutti i commenti che hanno lo stesso id del post
+
         $files=['navbar-blog', 'post.all'];
         $this->content = View('blog', $files, compact('posts'));  // ritorniamo il template con il form per fare il Login
-
-        // compact('posts') serve a passare $posts a questa funzione per inserirli nel template
-        //  $this->content = View('posts', compact('posts')); // con la funzione helpers/View ritorniamo il template con i post all' interno
     }
     
 
 /***************************************************************************************|
-*       SHOW                                                                            |
+* SHOW      metodo = GET    path = post/id                                              |
 * questa classe mostrerà un solo post e mostrerà tutti i commenti legati a questo post  |
 ****************************************************************************************/
     public function postSingle($postid){ 
@@ -55,14 +56,10 @@ class PostController extends Controller
 
 
 
-
-
-
-
-/***********************************************|
-*       CREATE                                  |     
-* Visualizza il form per scrivere un nuovo post |
-************************************************/
+/***************************************************|
+* CREATE        metodo = GET    path = post/create  |                           
+* Visualizza il form per creare un nuovo post       |
+****************************************************/
     public function create(){
         $files=['navbar-blog', 'post.create'];
         $this->content = View('blog', $files );
@@ -70,9 +67,10 @@ class PostController extends Controller
 
 
 
-/*******************|
-*       SAVE        |
-********************/
+/***********************************************|
+* SAVE      metodo = POST    path = post/save   |
+* Salviamo un post nel database                 |
+************************************************/
     public function savePost(){
 
     $Image = new Image(300, 200, 1000000, 'posts', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
@@ -90,32 +88,13 @@ class PostController extends Controller
 
     }
 
-
-
-/*******************|
-*       STORE       |
-********************/
-    public function store(string $id){
-
-        try {    
-
-            $result = $this->Post->store($_POST); // salviamo il post creato nel database 
-            redirect("/posts"); // redirect è una funzione che fa il redirect nella home
-
-        } catch ( PDOException $e ) {
-            
-            return $e->getMessage();
-        }
-    
-    }
-
-/***************************************************************************************************************************************|
-* EDIT                                                                                                                                  |
-* Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                      |
-* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']   | 
-* Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                      |
-* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                       |                                                          |
-****************************************************************************************************************************************/
+/*******************************************************************************************************************************************|
+* EDIT      metodo = GET    path =  post/id/edit                                                                                            |                                          
+* Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                          |
+* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']  | 
+* Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                     |
+* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                          
+********************************************************************************************************************************************/
 public function edit($postid){
 
     $post = $this->Post->find($postid); // prendiamo tutti i post dal database 
@@ -124,13 +103,34 @@ public function edit($postid){
    
 }
 
+/***********************************************************************************************|
+* UPDATE    metodo = POST    path = post/update                                                 |
+* aggiorniamo/modifichiamo i dati del post (titolo, immagine, messaggio)                        |
+* l'id lo otteniamo tramite il tag input che è type=hidden quindi è compreso nel array $_POST   | 
+************************************************************************************************/
+public function update(){
+
+    try {    
+
+        $result = $this->Post->store($_POST); // salviamo il post creato nel database 
+        redirect("/posts"); // redirect è una funzione che fa il redirect nella home
+
+    } catch ( PDOException $e ) {
+        
+        return $e->getMessage();
+    }
+
+}
+
+
+
     
 /*******************************************************************************************************************************************|
-* DELETE                                                                                                                                    |
+* DELETE         metodo = GET    path =  post/id/delete                                                                                     |                                              
 * Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                          |
 * Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']  | 
 * Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                     |
-* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                          |
+* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                          
 ********************************************************************************************************************************************/
     public function delete($id){
       
@@ -155,33 +155,39 @@ public function edit($postid){
 
 
 /***********************************************************************************************************|
-* SAVE-COMMENT                                                                                              |    
-* /post/:id/comment                                                                                         |
+* SAVE-COMMENT      metodo = POST    path = post/id/comment                                                 |                                                                                      
 * Salviamo il commento relativo a un determinato id di un post che passiamo come argomento a questo metodo  |
 * Oltre al commento salviamo anche l'id del post nella colonna post_id della tabella postscomments          |
 ************************************************************************************************************/
-    public function saveComment($postid) {
+public function saveComment($postid) {
 
-        $comment = new Comment($this->conn);
-        $_POST['post_id'] = (int) $postid;
-        $comment->save($_POST); // salviamo il post creato nel database 
-        redirect('/post/'.$postid); //  torniamo alla pagina di tutti i post
-    }
+    $postid = (int)$postid;
+        
+    $comment = new Comment($this->conn);
+    $_POST['post_id'] = $postid;
+    $comment->save($_POST); 
+
+    $this->Post->totalComments($postid, 1);
+
+    redirect('/post/'.$postid); 
+}
 
 /*******************************************************************************************************************************************|
-* DELETE SINGLE COMMENT                                                                                                                     |          |
+* DELETE SINGLE COMMENT          metodo = GET    path = comment/id/delete                                                                   |             
 * Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                          |
 * Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']  | 
 * Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                     |
-* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                          |
+* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                        
 ********************************************************************************************************************************************/
 public function deleteComment($commentid){
 
-
     $comment = new Comment($this->conn); // istanziamo la classe Comment
-    $comments =  $comment->deleteOne($commentid); // prendiamo solo il commento che ha il suo id univoco
 
-    redirect("/posts"); // redirect è una funzione che fa il redirect nella home
+    $postid = $comment->getPostId($commentid);
+  
+    $this->Post->totalComments($postid, -1);
+    $comments =  $comment->deleteOne($commentid); // prendiamo solo il commento che ha il suo id univoco
+    redirect("/posts"); 
 }    
 
 } // chiude classe PostController
