@@ -1,13 +1,11 @@
-<?php foreach ($posts as $post) : ?>
+<?php foreach ($posts as $post) : ?>    
 <article>
     <h2><a href="/post/<?=$post->id?>"><?=htmlentities($post->title)?></a></h2>
     <p>
-        <time datetime="<?=$post->datecreated?>"><?=$post->datecreated?></time>
+        <time datetime="<?=$post->datecreated?>"><?=$post->dateformatted?></time>
         by&nbsp;<span><a href="mailto:<?=$post->user_email?>"><?=$post->user_name?></a></span>
     </p>
-    <?php if ( strlen($post->message) > 250 ) { $post->message = trim(substr($post->message, 0, 200))."<a href='/post/$post->id'>&nbsp;[...]</a>"; } ?>
-    
-    <?= $post->message?>
+    <p><?= $post->messtruncate ?>&nbsp;<a href='/post/$post->id'>[...]</a></p>
     <p><?=$post->num_comments?>&nbsp;commenti</p>
     <hr>
 </article>

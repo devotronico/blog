@@ -28,6 +28,9 @@
       </li>
       <?php endif ?>
       <?php if ( isset($_SESSION["user_id"]) ) : ?>
+      <li class="nav-item">
+          <a class="nav-link" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/auth/logout">Logout</a> 
         </li>

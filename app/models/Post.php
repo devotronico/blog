@@ -29,11 +29,11 @@ class Post
 
         $stm = $this->conn->query( $sql);
         if ( $stm ){
-             $result = $stm->fetchAll(PDO::FETCH_OBJ);
-         }
-       //  echo '<pre>', print_r($result) ,'</pre>';
-   
-         return $result;
+
+            $res = $stm->fetchAll(PDO::FETCH_OBJ);
+
+            return $res;
+        }
     }
 
 
@@ -44,9 +44,9 @@ class Post
 * FIND                                                                                  |
 ****************************************************************************************/
     public function find($id){
-        $result = [];
-
-        $sql = 'SELECT * FROM posts WHERE id = :id';
+        //$result = [];
+        $sql = 'SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID AND posts.id = :id ORDER BY posts.datecreated DESC';
+        //$sql = 'SELECT * FROM posts WHERE id = :id';
       
         $stm = $this->conn->prepare($sql); 
 
@@ -66,16 +66,21 @@ class Post
 * SAVE                                                                                  |
 * Salviamo nel database 
 ****************************************************************************************/
-public function save(array $data=[], string $image){
+public function save(array $data=[], string $image=''){
 
-$sql = 'INSERT INTO posts (user_id, title, image, message, datecreated) VALUES (:user_id, :title, :image, :message, :datecreated)';
+$messtruncate = truncate_words($data['message'], 10, '[...]'); //   "<a href='/post/$post->id'>&nbsp;[...]</a>"
+$datecreated = date('Y-m-d H:i:s');
+$dateformatted = dateFormatted($datecreated);
+$sql = 'INSERT INTO posts (user_id, title, image, message, messtruncate, datecreated, dateformatted) VALUES (:user_id, :title, :image, :message, :messtruncate, :datecreated, :dateformatted)';
 $stm = $this->conn->prepare($sql); 
 $stm->execute([ 
     'user_id'=> $_SESSION['user_id'],
     'title'=> $data['title'], 
     'image'=> $image, 
     'message'=>$data['message'], 
-    'datecreated'=>date('Y-m-d H:i:s'), 
+    'messtruncate'=>$messtruncate, 
+    'datecreated'=>$datecreated,
+    'dateformatted'=>$dateformatted,
 ]); 
 
 return $stm->rowCount();
