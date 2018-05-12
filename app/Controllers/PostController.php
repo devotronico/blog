@@ -30,9 +30,6 @@ class PostController extends Controller
 
         $posts = $this->Post->all(); // prendiamo tutti i post dal database 
 
-        //$comment = new Comment($this->conn); // istanziamo la classe Comment
-        //$comments =  $comment->all($postid); // prendiamo tutti i commenti che hanno lo stesso id del post
-
         $files=['navbar-blog', 'post.all'];
         $this->content = View('blog', $files, compact('posts'));  // ritorniamo il template con il form per fare il Login
     }
@@ -73,19 +70,21 @@ class PostController extends Controller
 ************************************************/
     public function savePost(){
 
-    $Image = new Image(300, 200, 1000000, 'posts', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
+    if ( !$_FILES['file']['error']  ||  is_uploaded_file($_FILES['file']['tmp_name'])    )  {
+        $Image = new Image(300, 200, 1000000, 'posts', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
 
-    if ( empty( $Image->getMessage()) )
-    {
-        $imageName = $Image->getNewImageName();
-        $this->Post->save($_POST, $imageName); // salviamo il post creato nel database 
+        if ( empty( $Image->getMessage()) )
+        {
+            $imageName = $Image->getNewImageName();
+            $this->Post->save($_POST, $imageName); // salviamo il post creato nel database 
+        }
     }
-    else { die($Image->getMessage()); }
+    else {
+        $this->Post->save($_POST);  //echo json_encode($_POST);
+     }
    
     redirect("/posts"); // redirect è una funzione che fa il redirect nella home
-    //echo json_encode($_POST);
-
-
+   
     }
 
 /*******************************************************************************************************************************************|

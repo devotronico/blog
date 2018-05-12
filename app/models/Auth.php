@@ -15,6 +15,41 @@ class Auth extends Validate
         return $this->message;
     }
 
+
+
+
+
+    
+/***********************************|
+ * PROFILE                          |
+************************************/
+public function profile() {
+
+  
+    $sql = 'SELECT * FROM users INNER JOIN posts INNER JOIN postscomments WHERE users.ID = :id AND posts.user_id = users.ID AND postscomments.user_id = users.ID ';
+
+    if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
+    {
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        if ($stmt->execute()) // Tentiamo di eseguire lo statement
+        {
+            if ( $stm ){
+
+                $result = $stm->fetch(PDO::FETCH_OBJ);
+            }
+            return $result;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
     public function signup($image)
     {
         $email = $this->validateEmailSignup();

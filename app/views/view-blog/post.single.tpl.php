@@ -1,8 +1,9 @@
 <article>
     <h1><?=$post->title?></h1>
+    <span><h2>&#x2709  &#x1F40C</h2></span>
     <p>
-        <time datetime="<?=$post->datecreated?>"><?=$post->datecreated?></time>
-        by&nbsp;<span><a href="mailto:<?=$post->email?>"><?=$post->username?></a></span>
+        <time datetime="<?=$post->datecreated?>"><?=$post->dateformatted?></time>
+        by&nbsp;<span><a href="mailto:<?=$post->user_email?>"><?=$post->user_name?></a></span>
     </p>
     <?php if ( !empty($post->image) ) : ?>
         <img src="/img/posts/<?=$post->image?>" alt="immagine del post">
@@ -35,7 +36,7 @@
         <div class='comment-box'>
             <div class='comment-head'>
                 <img src="/img/auth/<?=!empty($comment->user_image)?$comment->user_image:'default.jpg'?>" alt="avatar personale">
-                <time datetime="<?= $comment->datecreated ?>"><?= $comment->datecreated ?></time>
+                <time datetime="<?= $comment->datecreated ?>"><?=$comment->dateformatted?></time>
                 by <span><a  href="mailto:<?= $comment->user_email ?>"> <?= $comment->user_name ?></a></span> 
                 <?php if ( isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1 ) : ?><a href='/comment/<?= $comment->id ?>/delete' class="btn right">X</a><?php endif; ?>
             <div class='clear'></div>

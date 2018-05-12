@@ -48,7 +48,7 @@ public function __construct(int $max_width, int $max_height, int $max_size, stri
         $this->save(); // +m
         }
 
-    } else { echo 'file non caricato'; }
+    } 
  }
 
  public function getMessage(){

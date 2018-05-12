@@ -50,13 +50,16 @@ class Comment
 ****************************************************************************************************************************/ 
 public function save(array $data=[]){
     
-    $sql = 'INSERT INTO postscomments (post_id, user_id, comment, datecreated) VALUES (:post_id, :user_id, :comment, :datecreated)';
+    $datecreated = date('Y-m-d H:i:s');
+    $dateformatted = dateFormatted($datecreated);
+    $sql = 'INSERT INTO postscomments (post_id, user_id, comment, datecreated, dateformatted) VALUES (:post_id, :user_id, :comment, :datecreated, :dateformatted)';
     $stm = $this->conn->prepare($sql); 
     $stm->execute([ 
         'post_id'=> $data['post_id'], 
         'user_id'=> $_SESSION['user_id'], 
         'comment'=>$data['comment'], 
-        'datecreated'=>date('Y-m-d H:i:s'), 
+        'datecreated'=>$datecreated,
+        'dateformatted'=>$dateformatted,
         ]); 
     
     return $stm->rowCount();

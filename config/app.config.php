@@ -18,7 +18,9 @@ return [
             'auth/password/form'=> 'App\Controllers\AuthController@passwordForm',
             'auth/password/new'=> 'App\Controllers\AuthController@passwordNew',
             'auth/signup/success' => 'App\Controllers\AuthController@signupSuccess',
-            'auth/logout' => 'App\Controllers\AuthController@authLogout'
+            'auth/logout' => 'App\Controllers\AuthController@authLogout',
+            'auth/:id/profile' => 'App\Controllers\AuthController@profile',
+            
         ],
         'POST' => [
             'post/save' => 'App\Controllers\PostController@savePost',
