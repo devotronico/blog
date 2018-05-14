@@ -16,6 +16,8 @@
      <!-- FONTAWESOME -->
      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script> -->
+    <!-- PRETTYPRINT -->
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
     <title>Il mio sito</title>
   </head>
   <body>
@@ -26,7 +28,8 @@
   <script src="/js/jquery.js" ></script>
   <script src="/js/tether.js" ></script>
   <script src="/js/bootstrap.min.js"></script>  
-  <script src="/js/script.js"></script>  
+  <!-- <script src="/js/script.js"></script>   -->
+  <script src="/js/<?=$this->script?>.js"></script> 
   <!-- FONTAWESOME -->
   <!-- <script>FontAwesomeConfig = { searchPseudoElements: true };</script> -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>

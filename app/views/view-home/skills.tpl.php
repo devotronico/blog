@@ -1,5 +1,5 @@
 <div class="section" id="skill">
-    <div class="section-title" id="skill-title">Competenze</div>
+    <div class="section-title" id="skill-title"><p>Competenze</p></div>
     <div class="row justify-content-center">        
     <div class="col-6 col-sm-6 col-md-4 col-lg-1 mb-3">
         <img  class="skill-img" src="img/skill/html.svg" alt="html" >
