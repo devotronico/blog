@@ -16,9 +16,6 @@ class Auth extends Validate
     }
 
 
-
-
-
     
 /***********************************|
  * PROFILE                          |
@@ -44,20 +41,14 @@ public function profile() {
 
 
 
-
-
-
-
-
-
     public function signup($image)
     {
-        $email = $this->validateEmailSignup();
+        $this->email = $this->validateEmailSignup();
         $password = $this->validatePassSignup();
 
         if (empty($this->message)) {
             $name = $this->validateUsername();
-            $this->storeData($name, $email, $password, $image);
+            $this->storeData($name, $this->email, $password, $image);
         }
 
         // $this->conn = null; // Chiude PDO connection

@@ -1,20 +1,23 @@
 <?php
 namespace App\Controllers;
 
-use \PDO; // importiamo le classi 'PDO' e 'Post'
+//use \PDO; // importiamo le classi 'PDO' e 'Post'
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Image;
+use \PDO; // importiamo le classi 'PDO' e 'Post'
 
 
 class PostController extends Controller
 {
    
     protected $Post ;
-    protected $conn;
-    //protected $test;
+    //protected $conn;
+    
 
     public function __construct(PDO $conn){ 
+  
+        parent::__construct(); 
         $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
         $this->Post = new Post($conn);  // creiamo qui un istanza della classe 'Post' e gli passiamo la connessione al database
         $this->page = 'blog';

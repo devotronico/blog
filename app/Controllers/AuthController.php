@@ -8,15 +8,11 @@ use App\Models\Image;
 
 class AuthController extends Controller
 {
-   
-    protected $conn;
-   // protected $Auth;  // [!]
-  
 
     public function __construct(PDO $conn){ 
-        $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
+        parent::__construct(); 
+        $this->conn = $conn; 
         $this->page = 'auth';
-       // $this->Auth = new $class($this->conn); // [!]
     }
   
 

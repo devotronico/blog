@@ -1,5 +1,5 @@
 <div class="section" id="portfolio">
-    <div class="section-title">Portfolio</div>
+    <div class="section-title"><p>Portfolio</p></div>
     <div class="row">
         <div class="col-sm-6 col-md-3">
             <div class="card mb-3">

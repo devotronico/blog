@@ -25,8 +25,8 @@ class Validate
                 $this->hash = preg_match('/^[a-f0-9]{32}$/', $data['hash'])? $data['hash'] : '';
                 break;
             case 'POST':
-                $this->name = isset($data['user_name'])? $data['user_name']: ''; 
                 $this->email = isset($data['user_email'])? $data['user_email']: ''; 
+                $this->name = isset($data['user_name'])? $data['user_name']: ''; 
                 $this->password = isset($data['user_pass'])? $data['user_pass']: ''; 
                 $this->password_conf = isset($data['user_pass_confirm'])? $data['user_pass_confirm']: '';
                 break;
@@ -39,9 +39,10 @@ class Validate
         if ( empty($this->name) ) 
         {  
             $name = explode('@', $this->email); // es. spezziamo l'email nel punto del simbolo '@'
-            return $this->name = $name[0];
-           // return $this->name
+            $this->name = $name[0];
+          
         }
+        return $this->name;
 
     }
 
@@ -92,23 +93,23 @@ public function validateEmail()
     public function validateEmailSignup()
     {
         if ( !is_null($this->validateEmail()) ) {
-            $this->email = $this->validateEmail();
+            $email = $this->validateEmail();
 
             $sql = "SELECT user_email FROM users WHERE user_email = :email"; // Creiamo uno Statement di tipo Select
 
             if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
             { // Colleghiamo la variabile $email al parametro email dello statement che abbiamo preparato sopra
-                $stmt->bindParam(':email', $this->email, PDO::PARAM_STR, 32);
+                $stmt->bindParam(':email', $email, PDO::PARAM_STR, 32);
                 if ($stmt->execute()) // Tentiamo di eseguire lo statement
                 {
                     // Il metodo rowCount restituisce il numero di righe in cui è presente la variabile $email
                     if ($stmt->rowCount() == 1) // se è uguale a 1 vuol dire che questa email è già stata registrata
                     {
-                        $this->message .= "Un utente con l' email <strong>".$this->email."</strong> è già stato registrato.<br>";
+                        $this->message .= "Un utente con l' email <strong>".$email."</strong> è già stato registrato.<br>";
                     } else // se è uguale a 0
                     {
                         $stmt = null; // Chiudi lo statement
-                        return $this->email; // otteniamo l'email per memorizzarla nel database
+                        return $email; // otteniamo l'email per memorizzarla nel database
                     }
                 } else {
                     $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";

@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//var_dump($_SERVER['DOCUMENT_ROOT']); // C:\xampp\htdocs\blog\public
 // if ( isset($_SESSION['user_id']) ) {  echo 'id è uguale a '.$_SESSION['user_id'].'<br>'; }
 // if ( isset($_SESSION['email']) ) {  echo 'email è uguale a '.$_SESSION['email'].'<br>'; }
 // if ( isset($_SESSION['name']) ) {  echo 'name è uguale a '.$_SESSION['name'].'<br>'; }
@@ -23,6 +23,10 @@ session_start();
 chdir(dirname(__DIR__)); // setta questa cartella(public) come quella predefinita per fare il require dei file
 
 
+
+//if ( file_exists('config/database.php') ) {die ("File found2");}
+
+
 //die (__DIR__.'/../core/bootstrap.php'); // C:\xampp\htdocs\blog\public/../core/bootstrap.php
 require 'core/bootstrap.php'; // qui i vengono caricati tutte le classi e anche le funzioni
 //require __DIR__.'/../core/bootstrap.php'; // qui i vengono caricati tutte le classi e anche le funzioni
@@ -32,6 +36,9 @@ require 'core/bootstrap.php'; // qui i vengono caricati tutte le classi e anche 
 // prende i valori del database richiesti per fare la connessione
 $data = require 'config/database.php';
 //$data = require __DIR__.'/../config/database.php';
+
+
+
 
 // $appConfig è un array
 $appConfig = require 'config/app.config.php';
