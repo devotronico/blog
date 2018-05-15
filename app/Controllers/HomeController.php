@@ -33,9 +33,9 @@ public function home(){
     $files=[
         $this->device.'.navbar-home',
         $this->device.'.cover',
-        'portfolio',
-        'skills', 
-        'contact',
+        $this->device.'.portfolio',
+        $this->device.'.skills', 
+        $this->device.'.contact',
         $this->device.'.footer'
         ];
     $this->content = View('home', $files);
