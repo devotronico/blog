@@ -8,9 +8,9 @@
        
 /*260***XS****260**************************************************************************************************260*/
 @media(min-width:260px){
-/*********GENERAL********/ 
+/*********GENERAL*260*******/ 
 *{padding:0;margin:0;}
-#risoluzione{display:none;position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow;}     
+#risoluzione{position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow;}     
 html{color:black;}  
 body{background-color:#999;}  
 #box-sign{display:none;} 
@@ -22,10 +22,9 @@ body{background-color:#999;}
 .btn{color: #fff;background-color:#333;border: none;} 
 .btn:hover{color: #fff;background-color:red;} 
 
- 
 
 
-/*********NAVBAR********/  
+/*********NAVBAR*260*******/  
 nav{padding:0;color:#fff;background-color:#333;}
 .navbar{padding:0;}
 .navbar-brand{margin-left:20px; height:100px;}
@@ -36,15 +35,14 @@ nav{padding:0;color:#fff;background-color:#333;}
 .nav-link:hover{background-color: #666666;}  
 
 
-
-/*********COVER********/  
+/*********COVER*260*******/  
 #cover{background-color:#fff;}   
 #cover-animation{min-height:100vh;}
 #cover-foto{border-radius:50%;width:200px;opacity: 0.5;}
 #cover-text{font-size:30px;font-weight:bolder;color:#fff;} 
 #cover-btn{border: 2px solid #fff;background-color: transparent;border-radius: 0;}
 
-/*********PORTFOLIO********/  
+/*********PORTFOLIO*260*******/  
 #portfolio{padding:60px 15px;background-color:#333;}
 .card{height:350px;}
 .card{border-radius:0;}
@@ -52,24 +50,31 @@ nav{padding:0;color:#fff;background-color:#333;}
 .card-footer{text-align:center;}
 .card-fontawesome{font-size: 14vw;}
 
-/*********SKILL********/ 
-#skill{padding:60px 15px;background-color:#fff;} 
-#skill-title{color: #333;}
-#skill .row{width:90%;margin:auto;}
-.skill-img{height:80px;}
-#skill-bg{text-align:center;margin-top:40px;}
-#skill-bg img{width:200px;}
+/*********SKILL*260*******/ 
 
-/*********CONTACT********/ 
+/* #skill *{ border: 1px solid black; } */
+#skill{padding:60px 15px;background-color:#fff;} 
+#skill-title p{color: #333;}
+#skill .row{margin-bottom:50px;}
+.skill-img{min-height:70px;padding:4px;margin:0 30px;}
+
+#skill-bg{
+  background-image: url(../img/skill/building-web.svg); 
+  background-size: contain;
+  background-repeat: no-repeat; 
+  min-height: 250px; 
+}
+
+/*********CONTACT*260*******/ 
 #contact{padding:60px 15px;background-color:#333;}
 .contact-message{color:white;text-align:center;}
 .contact-form{margin:0 auto;padding:15px;} 
 label{color:white;margin-top:30px;} 
-#submit{margin-top:30px;} 
+#submit{margin-top:30px;border:1px solid #fff;} 
 
-/*********FOOTER********/ 
-footer{padding:70px 0;background-color:#fff; 
-} 
+/*********FOOTER*260*******/ 
+footer{padding:70px 0;background-color:#fff;} 
+.fontawesome{font-size:3em;color:#333;text-align:center;padding:12px;}
 #copyright{margin:10px;padding:10px;}
    
 #btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size: 16vw;}
@@ -79,38 +84,44 @@ footer{padding:70px 0;background-color:#fff;
 @media(min-width:576px){
 #risoluzione{background-color:green;} 
 
-/*********NAVBAR********/  
+/*********NAVBAR*576*******/  
 .navbar-brand{margin-left:40px;}
 
-/********COVER***********/    
+/********COVER*576**********/    
 
-/********PORTFOLIO***********/    
+/********PORTFOLIO*576**********/    
 .card{height:400px;}
 
-/********SKILLS****************/  
-.skill-img{height:100px;} 
-#skill-bg{margin-top:50px;}
-#skill-bg img{width:550px;height:250px;}    
-/***********CONTACT************/
+/********SKILLS*576***************/  
+.skill-img{min-height:80px;margin: 10px 50px;}
+#skill-bg{min-height: 350px;}
+
+/***********CONTACT*576***********/
 .contact-form{width:50%;}
-/***********FOOTER************/
+/***********FOOTER*576***********/
 #btn-scroll{font-size: 8vw;}
 }
 /*768***MD****768***************************************************************************************************/
 @media(min-width:768px){
 #risoluzione{background-color:blue;} 
 
-/*********NAVBAR********/     
+/*********NAVBAR*768px*******/     
 .navbar-brand{margin-left:50px;} 
 
-/********COVER***********/
+/********COVER*768px**********/
 
-/********PORTFOLIO***********/     
+/********PORTFOLIO*768px**********/     
 .card-fontawesome{font-size: 6vw;}
 
-/********SKILLS****************/      
-#skill-bg img{width:680px;height:310px;} 
+/********SKILLS*768px***************/      
+.skill-img{min-height:100px;margin: 10px 50px;}
 
+
+#skill-bg{
+ 
+  min-height: 450px; 
+  
+}
 /***********CONTACT************/
 
 
@@ -122,7 +133,7 @@ footer{padding:70px 0;background-color:#fff;
 @media(min-width:992px){
 #risoluzione{background-color:red;} 
 
-/*********NAVBAR********/  
+/*********NAVBAR*992*******/  
  .nav-top {animation: top-size 1s forwards, top-alpha 1s forwards;}
 .nav-bottom{animation: bottom-size 1s forwards, bottom-alpha 1s forwards;}  
 
@@ -152,14 +163,22 @@ nav{height: 100px;background-color:rgba(51, 51, 51, 0.2);}
 .nav-link{padding:0;font-size:20px;border:none; text-align: left;} 
 .nav-link:hover{background-color:transparent; border-bottom: 1px solid #fff;}  
 
-/********COVER***********/    
+/********COVER*992**********/    
 
-/********PORTFOLIO***********/      
+/********PORTFOLIO*992**********/      
 .card-header h4{font-size:1.4em;}
 
-/********SKILLS****************/      
-#skill-bg{margin-top:100px;}
-#skill-bg img{width:900px;height:400px;}
+/********SKILLS*992***************/      
+.skill-img{min-height:90px;margin: 10px 10px;}
+
+#skill-bg{
+  margin: auto;
+   width:800px;
+   height: 300px; 
+   background-size: 800px 500px; 
+   
+ }
+
 
 /***********CONTACT************/
 
@@ -170,41 +189,31 @@ nav{height: 100px;background-color:rgba(51, 51, 51, 0.2);}
 @media(min-width:1200px){  
 #risoluzione{background-color:violet;} 
 
-/*********NAVBAR********/  
+/*********NAVBAR*1200*******/  
 
-/********COVER***********/
+/********COVER*1200**********/
 #cover-foto{width:300px;}
 
-/********PORTFOLIO***********/      
+/********PORTFOLIO*1200**********/      
 .card{height:300px;}
 .card-fontawesome{font-size: 3vw;}
 
-/********SKILLS****************/   
-#skill-bg{margin-top:80px;}
-#skill-bg img{width:900px;height:400px;margin-bottom:15px;}
+/********SKILLS*1200***************/   
+.skill-img{min-height:100px;margin: 10px 30px;}
 
-/***********CONTACT************/ 
+#skill-bg{
+ margin: auto;
+  width:800px;
+  height: 300px; 
+  background-size: 800px 500px; 
+  
+}
+
+/***********CONTACT*1200***********/ 
 .contact-form{width:25%;}
-/***********FOOTER************/
-#btn-scroll{font-size: 2vw;}
+/***********FOOTER*1200***********/
+#btn-scroll{font-size:2vw;}
 }    
-     
-/* footer{
-  padding:0;margin:0;
-  border:1px solid black;
-}  */
 
-/* footer *{
-
-   padding:0;margin:0; 
-   background-color:#fff;
-   border:1px solid red; 
-}  */
-
-/* #footer{
-  margin:0;
-  border:1px solid red;
-  width:100%;
-} */
 
 
