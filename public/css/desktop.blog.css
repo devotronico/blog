@@ -13,7 +13,7 @@
 html{color:black;}  
 body{background-color:#999;}  
 #box-sign{display:none;} 
-.container{display:block;padding:0;min-height:100vh;background-color:#fff;}
+.container{display:block;padding:0;min-height:100vh;background-color:blue;}
 .btn{color: #fff;background-color:#333;border: none;} 
 .btn:hover{color: #fff;background-color:red;} 
 
@@ -29,7 +29,26 @@ nav{padding:0;color:#fff;background-color:#333;}
 
 /*********BLOG********/ 
 article{padding:10px;background-color:#fff;}
-/* img:empty {display: none;} */
+main{  background-color: green;border:1px solid black;}
+.Pagination {
+ position: relative;
+ bottom: -80px;
+ /* padding:20px; */
+ height: 80px;
+  background-color: yellow;
+  opacity: 0.6;
+}
+/* .footer {
+  position: absolute;
+  bottom: 0;
+  right:50%;
+    margin-right:-250px; 
+    width:500px;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+} */
+nav{ background-color: red; }
 
 .textarea-box{
   width:96%;
@@ -38,15 +57,7 @@ article{padding:10px;background-color:#fff;}
   border:1px dashed #999;
   text-align:center; 
 }
-/* 
-pre{
-  padding:10px;
-  color: white;
-  background-color:#333;
-  border-radius:8px;
-  font-family: monospace;
-  white-space: pre;
-} */
+
 
 .comment-box{
   padding:8px;
@@ -64,9 +75,8 @@ pre{
 
 
 /*********FOOTER********/ 
-footer{padding:70px 0;background-color:#fff;} 
-#copyright{margin:10px;padding:10px;}
-   
+
+
 #btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size: 16vw;}
 #btn-scroll:hover{opacity:1;}
 }

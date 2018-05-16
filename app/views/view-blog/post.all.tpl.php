@@ -1,4 +1,8 @@
-<?php foreach ($posts as $post) : ?>    
+<main role="main">
+     
+
+   
+<?php foreach ($posts as $post) : ?> 
 <article>
     <h2><a href="/post/<?=$post->id?>"><?=htmlentities($post->title)?></a></h2>
     <p>
@@ -9,4 +13,14 @@
     <p><?=$post->num_comments?>&nbsp;commenti</p>
     <hr>
 </article>
-<?php endforeach;
+<?php endforeach; ?>
+
+ </main>
+
+
+
+
+
+
+
+
