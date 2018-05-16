@@ -32,10 +32,31 @@ class PostController extends Controller
     public function getPosts(){
 
         $posts = $this->Post->all(); // prendiamo tutti i post dal database 
+        $totalPosts = $this->Post->countPosts();
+      
+        $files=['navbar-blog', 'post.all' , 'pagination'];
+        $page = 1;
+        $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts'));  
 
-        $files=['navbar-blog', 'post.all'];
-        $this->content = View('blog', $files, compact('posts'));  // ritorniamo il template con il form per fare il Login
     }
+
+ 
+
+/***********************************************************|
+* GETPOSTS          metodo = GET    path = posts/page/id    |
+* Otteniamo tutti i post di una pagina                      |             
+************************************************************/
+public function getPostsPage($page){ 
+    //if ( $page != 1 ) { die($page); }
+    for ($i=0, $postStart=-2; $i<$page; $postStart+=2, $i++);
+
+    $posts = $this->Post->pagePosts($postStart); // prendiamo tutti i post dal database 
+    $totalPosts = $this->Post->countPosts();
+
+    $files=['navbar-blog', 'post.all', 'pagination'];
+  
+    $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts'));  
+}
     
 
 /***************************************************************************************|

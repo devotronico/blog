@@ -25,7 +25,7 @@ class Post
 ********************************************************************************************************/
     public function all(){
     
-        $sql = 'SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID ORDER BY posts.datecreated DESC';
+        $sql = 'SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT 0, 4';
 
         $stm = $this->conn->query( $sql);
         if ( $stm ){
@@ -36,6 +36,48 @@ class Post
         }
     }
 
+
+
+        
+/*******************************************************************************************************|
+* PAGE POSTS                                                                                            |
+* Facciamo una JOIN tra posts e users per ottenere tutti i posts con i dati dell' autore del post       |
+* dalla tabella posts prendiamo [id, title, datecreated, message]                                       |
+* dalla tabella users prendiamo [user_email, user_name]                                                 |
+* la relazione tra le tabelle posts e users è il campo posts.user_id e users.ID                         |
+* in questo modo per ogni post abbiamo accesso ai dati dell'utente che ha scritto quel determinato post |                                              |
+********************************************************************************************************/
+public function pagePosts($postStart){
+  
+    
+  
+    $sql = "SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT $postStart, 3";
+
+    $stm = $this->conn->query( $sql);
+    if ( $stm ){
+
+        $res = $stm->fetchAll(PDO::FETCH_OBJ);
+
+        return $res;
+    }
+}
+
+
+/*******************************************************************************************************|
+* COUNT POSTS                                                                                           |
+********************************************************************************************************/
+public function countPosts(){
+    
+
+    $sql = 'SELECT COUNT(*) FROM posts';
+    if ($res = $this->conn->query($sql)) {
+        $rows= $res->fetchColumn();
+        return $rows;
+    }
+
+
+
+}
 
 
 

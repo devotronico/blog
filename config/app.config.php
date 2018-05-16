@@ -7,6 +7,7 @@ return [
             '' => 'App\Controllers\HomeController@home',
             'blog' => 'App\Controllers\PostController@getPosts',
             'posts' => 'App\Controllers\PostController@getPosts',
+            'posts/page/:id' => 'App\Controllers\PostController@getPostsPage',
             'post/create' => 'App\Controllers\PostController@create',
             'post/:id' => 'App\Controllers\PostController@postSingle',
             'post/:id/edit' => 'App\Controllers\PostController@edit',
