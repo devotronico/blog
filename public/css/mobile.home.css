@@ -6,8 +6,8 @@
 #sign{display:inline;writing-mode:vertical-rl;text-orientation:upright;}
 } 
  
-@media(min-width:240px){ /*  320 */
-/*********GENERAL*240*******/ 
+@media(min-width:230px){ /*  320 */
+/*********GENERAL*230*******/ 
 *{padding:0;margin:0;}
 #risoluzione{display:none;position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:pink;} 
 html{color:black;}  
@@ -19,9 +19,11 @@ body{background-color:#999;}
 .row{margin:0;}
 .btn{color:#fff;background-color:#333;border:none;} 
 .btn:hover{color:#fff;background-color:red;} 
-#btn-scroll{display:none;}
+#btn-scroll{display:none;position:fixed;bottom:20px;right:20px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size:16vw;}
 
-/*********NAVBAR*240*******/  
+/* #btn-scroll{display:none;} */
+
+/*********NAVBAR*230*******/  
 .navbar{display:none;}
 .navbar{padding:0;color:#fff;background-color:rgb(50, 241, 75);}
 .navbar-brand{margin-left:1rem;margin-right:5rem;font-size:1rem;}
@@ -32,29 +34,29 @@ body{background-color:#999;}
 .nav-link:hover{background-color:#666666;}   
 
 
-/*********COVER*240*******/  
+/*********COVER*230*******/  
 #cover{background-color:#666;padding:0;}   
 #cover-animation{min-height:100vh;}
 #cover-foto{margin-top:60px;border-radius:50%;width:120px;opacity:0.5;}
 #cover-text{font-size:20px;font-weight:bolder;color:#fff;padding:0;margin-bottom:8px;} 
 #cover-btn{border:3px solid #fff;background-color:transparent;border-radius:0;}
 
-/*********PORTFOLIO*240*******/ 
+/*********PORTFOLIO*230*******/ 
 #portfolio{display:none;}
 
-/*********SKILL*240*******/ 
+/*********SKILL*230*******/ 
 #skill{display:none;}
 
-/*********CONTACT*240*******/ 
+/*********CONTACT*230*******/ 
 #contact{background-color:#333;} 
 .contact-message{color:white; }
 .contact-form{margin:0 auto;} 
 label{display:none;}
 .form-control{margin-bottom:12px;padding:.320rem .75rem;font-size:0.8rem;line-height:1.2;}
 .btn-box{padding:0; margin-top:12px;}
-#submit{margin:0;border:1px solid #fff;} 
+#submit{width:100px;margin:0;border:1px solid #fff;} 
 
-/*********FOOTER*240********/ 
+/*********FOOTER*230********/ 
 footer{display:none;}
 }
 
@@ -67,7 +69,7 @@ footer{display:none;}
 .section{padding:70px 8px 10px 8px }
 .section-title{display:block;text-align:center;margin-bottom:12px;}
 .section-title p{color:white;font-size:26px;}
-#btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size:16vw;}
+#btn-scroll{bottom:12px;right:24px;}
 #btn-scroll:hover{opacity:1;}
     
 /*********NAVBAR*260*******/  

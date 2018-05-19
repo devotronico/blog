@@ -10,11 +10,8 @@ use \PDO; // importiamo le classi 'PDO' e 'Post'
 
 class PostController extends Controller
 {
-   
     protected $Post ;
-    //protected $conn;
-    
-
+  
     public function __construct(PDO $conn){ 
   
         parent::__construct(); 
@@ -31,12 +28,26 @@ class PostController extends Controller
 ****************************************************/
     public function getPosts(){
 
-        $posts = $this->Post->all(); // prendiamo tutti i post dal database 
-        $totalPosts = $this->Post->countPosts();
-      
-        $files=['navbar-blog', 'post.all' , 'pagination'];
-        $page = 1;
-        $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts'));  
+        //$posts = $this->Post->all(); // prendiamo tutti i post dal database 
+     
+        $totalPosts = $this->Post->totalPosts(); // ottiene il numero totale di posts
+        if ( empty($totalPosts ) ) { 
+
+            //$files=['navbar-blog', 'post.all'];
+           // $this->content = View('blog', $files, compact('posts')); 
+            $files=['navbar-blog', 'post.empty'];
+            $this->content = View('blog', $files);
+
+         } else {
+            $posts = $this->Post->all(); // prendiamo tutti i post dal database 
+            $files=['navbar-blog', 'post.all', $this->device.'.pagination'];
+            $page = 1;
+            $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts')); 
+         }
+       
+      //  $files=['navbar-blog', 'post.all', $this->device.'.pagination'];
+       // $page = 1;
+      //  $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts'));  
 
     }
 
@@ -47,15 +58,27 @@ class PostController extends Controller
 * Otteniamo tutti i post di una pagina                      |             
 ************************************************************/
 public function getPostsPage($page){ 
-    //if ( $page != 1 ) { die($page); }
-    for ($i=0, $postStart=-2; $i<$page; $postStart+=2, $i++);
-
-    $posts = $this->Post->pagePosts($postStart); // prendiamo tutti i post dal database 
-    $totalPosts = $this->Post->countPosts();
-
-    $files=['navbar-blog', 'post.all', 'pagination'];
   
-    $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts'));  
+    $totalPosts = $this->Post->totalPosts();
+ 
+    if ( empty($totalPosts ) ) { 
+
+        $files=['navbar-blog', 'post.empty'];
+        $this->content = View('blog', $files, compact('posts')); 
+
+     } else {
+          
+        for ($i=0, $postStart=-2; $i<$page; $postStart+=2, $i++);
+        $posts = $this->Post->pagePosts($postStart); // prendiamo tutti i post dal database 
+        $files=['navbar-blog', 'post.all', $this->device.'.pagination'];
+        $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts')); 
+     }
+
+
+
+
+   // $files=['navbar-blog', 'post.all', $this->device.'.pagination'];
+  //  $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts'));  
 }
     
 
@@ -103,9 +126,11 @@ public function getPostsPage($page){
             $this->Post->save($_POST, $imageName); // salviamo il post creato nel database 
         }
     }
-    else {
+    else 
+    {
         $this->Post->save($_POST);  //echo json_encode($_POST);
-     }
+    }
+    $this->Post->countPosts(1);
    
     redirect("/posts"); // redirect è una funzione che fa il redirect nella home
    
@@ -159,8 +184,8 @@ public function update(){
       
             try {    
 
-                $result = $this->Post->deleteOne((int)$id); // salviamo il post creato nel database 
-
+                $result = $this->Post->deleteOne((int)$id); // cancelliamo il post creato dal database 
+                $this->Post->countPosts(-1);
                 $comment = new Comment($this->conn); // istanziamo la classe Comment
                 $comment->deleteAll((int)$id);
 
@@ -180,16 +205,18 @@ public function update(){
 /***********************************************************************************************************|
 * SAVE-COMMENT      metodo = POST    path = post/id/comment                                                 |                                                                                      
 * Salviamo il commento relativo a un determinato id di un post che passiamo come argomento a questo metodo  |
-* Oltre al commento salviamo anche l'id del post nella colonna post_id della tabella postscomments          |
+* Oltre al commento salviamo anche l'id del post nella colonna post_id della tabella 'comments'             |
 ************************************************************************************************************/
 public function saveComment($postid) {
 
+  
     $postid = (int)$postid;
         
     $comment = new Comment($this->conn);
     $_POST['post_id'] = $postid;
     $comment->save($_POST); 
-
+    
+    $this->Post->countPosts(1);
     $this->Post->totalComments($postid, 1);
 
     redirect('/post/'.$postid); 
