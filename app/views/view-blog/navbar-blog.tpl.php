@@ -1,10 +1,6 @@
 <?php
-  /*
-  $_SESSION["username"] = 'Daniele';
-  $_SESSION["user_id"] = $_SESSION["username"];*/
   GLOBAL $navbarLink;
     //if ( isset($navbarLink)  ) { die($navbarLink); }
-
   ?>
 <nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="/">

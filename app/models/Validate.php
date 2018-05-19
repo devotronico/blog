@@ -20,9 +20,21 @@ class Validate
 
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
-                $this->email = $data['email'];
+                $this->email = isset($data['email'])? $data['email']: '';
+               // $this->email = $data['email'];
                // $this->hash = $data['hash']; // da controllare se viene passato anche con POST
-                $this->hash = preg_match('/^[a-f0-9]{32}$/', $data['hash'])? $data['hash'] : '';
+               
+                if ( isset($data['hash']) ) {
+                
+                    $this->hash = preg_match('/^[a-f0-9]{32}$/', $data['hash'])? $data['hash'] : '';
+
+                } else {
+                    $this->hash = '';
+                }
+
+
+
+               // $this->hash = isset($data['hash'])? $data['email']: '';
                 break;
             case 'POST':
                 $this->email = isset($data['user_email'])? $data['user_email']: ''; 
@@ -162,6 +174,28 @@ public function validateEmail()
 
 
 
+/***********************************************************************************************************************|
+* GET USER TYPE                                                                                                         |
+* al momento della registrazione viene definita anche il campo 'user_type' della tabella 'users'                        |
+* il campo 'user_type' può assumere tre valori ['administrator' 'contributor' 'reader']                                 |
+* Quando ci si registra in automatico il campo 'user_type' può essere settato solo come 'administrator' oppure 'reader' | 
+* Al primo utente che si registra in automatico il campo 'user_type' viene settato come 'administrator'                 |
+* Mentre agli utenti che si registrano successivamente, in automatico il campo 'user_type' viene settato come 'reader'  | 
+* Solo l' utente che ha il campo 'user_type' settato come 'administrator' può  cambiare                                 |
+* il campo 'user_type' degli altri utenti nei valori 'administrator', 'contributor', 'reader'                           |
+************************************************************************************************************************/
+public function getUserType(){
+    
+    $sql = 'SELECT COUNT(*) FROM users';
+    if ($res = $this->conn->query($sql)) {
+        $rows= $res->fetchColumn();
+        if ( $rows === '0' ) { 
+            return 'administrator';
+        } else {
+            return 'reader';
+        }
+    }
+}
 
 
       
@@ -238,56 +272,3 @@ public function validateEmail()
 } // Chiude la classe Validate
 
 
-
-
-
-
-/***********************************************************************************************************|
- * VALIDATE EMAIL e HASH                                                                                    |
- * Controlla i parametri email e hash passati come parametri dell'URL se sono corrispondenti nel database   |
- * Questo metodo si attiva solo quando riceviamo un email dal sistema:                                      |
- * Alla creazione di un account nuovo e al recupero password                                                | 
- ***********************************************************************************************************/
-/*
-public function validateEmailParam()
-{
-    if ( !is_null($this->validateEmail()) ) {
-        $this->email = $this->validateEmail();   
-            //$sql = "SELECT user_email FROM users WHERE user_email = :email AND user_activation_key= :hash AND user_status= 0"; // Creiamo uno Statement di tipo Select
-            $sql = "SELECT user_activation_key FROM users WHERE user_email = :email";
-
-            if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
-            { // Colleghiamo la variabile $email al parametro email dello statement che abbiamo preparato sopra
-                $stmt->bindParam(':email', $this->email, PDO::PARAM_STR, 32);
-                if ($stmt->execute()) // Tentiamo di eseguire lo statement
-                {
-                    // se è uguale a 1 vuol dire che questa email è già stata registrata e possiamo procedere con la validazione
-                    if ($stmt->rowCount() == 1) {
-                        $user = [];
-                        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-                       
-                        if ( $this->hash == $user['user_activation_key'] ) // controlliamo se l'hash il parametro hash è uguale all'hash del database 
-                        {
-                            $stmt = null; // Chiudi lo statement
-                            return $this->email; // otteniamo l'email per poter accedere al nostro account
-  
-                        }
-                        else
-                        {
-                            $this->message = "I parametri dell' URL sono errati. Non puoi proseguire";     
-                        }
-
-                    } else {
-                        $this->message .= "L' email <strong>".$this->email."</strong> non è stata ancora registrata.<br>";
-                    }
-
-                } else {
-                    $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
-                }
-            } else {
-                $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
-            }
-            $stmt = null; // Close statement
-        } 
-    }
-*/

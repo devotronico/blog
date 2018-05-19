@@ -16,28 +16,35 @@ class Auth extends Validate
     }
 
 
-    
+
 /***********************************|
  * PROFILE                          |
 ************************************/
-public function profile() {
+    public function profile($id) {       
 
-  
-    $sql = 'SELECT * FROM users INNER JOIN posts INNER JOIN postscomments WHERE users.ID = :id AND posts.user_id = users.ID AND postscomments.user_id = users.ID ';
-
-    if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
-    {
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        if ($stmt->execute()) // Tentiamo di eseguire lo statement
-        {
-            if ( $stm ){
-
-                $result = $stm->fetch(PDO::FETCH_OBJ);
+        $id = (int)$id;
+        $sql = 'SELECT * FROM users 
+        LEFT JOIN posts ON users.ID = posts.user_id
+        LEFT JOIN comments ON users.ID = comments.user_id
+        WHERE users.ID = :id
+        ORDER BY posts.datecreated DESC, comments.c_datecreated DESC';
+        
+        
+            if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
+            {
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                if ($stmt->execute()) // Tentiamo di eseguire lo statement
+                {
+                    if ( $stmt ){
+        
+                        $data = $stmt->fetch(PDO::FETCH_OBJ);
+                        echo '<pre>', print_r($data) ,'</pre>';
+                        return $data;
+                    }
+                }
             }
-            return $result;
+        
         }
-    }
-}
 
 
 
@@ -48,7 +55,8 @@ public function profile() {
 
         if (empty($this->message)) {
             $name = $this->validateUsername();
-            $this->storeData($name, $this->email, $password, $image);
+            $type = $this->getUserType(); //die($type);
+            $this->storeData($type, $name, $this->email, $password, $image);
         }
 
         // $this->conn = null; // Chiude PDO connection
@@ -72,7 +80,7 @@ public function profile() {
     }
 
 
-    public function storeData( $name, $email, $password, $image)
+    public function storeData($type, $name, $email, $password, $image)
     {
         //$image = isNull($image)? 'default.jpg' : $image;
         $password= password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
@@ -81,16 +89,17 @@ public function profile() {
         $status = 0;
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (user_image, user_name, user_email, user_pass, user_registered, user_activation_key, user_status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (user_type, user_image, user_name, user_email, user_pass, user_registered, user_activation_key, user_status) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $this->conn->prepare($sql)) {
-            $stmt->bindParam(1, $image, PDO::PARAM_STR, 32);
-            $stmt->bindParam(2, $name, PDO::PARAM_STR, 12);
-            $stmt->bindParam(3, $email, PDO::PARAM_STR, 12);
-            $stmt->bindParam(4, $password, PDO::PARAM_STR, 60);
-            $stmt->bindParam(5, $date, PDO::PARAM_STR, 12);
-            $stmt->bindParam(6, $hash, PDO::PARAM_STR, 12);
-            $stmt->bindParam(7, $status, PDO::PARAM_INT);
+            $stmt->bindParam(1, $type, PDO::PARAM_STR, 13);
+            $stmt->bindParam(2, $image, PDO::PARAM_STR, 32);
+            $stmt->bindParam(3, $name, PDO::PARAM_STR, 12);
+            $stmt->bindParam(4, $email, PDO::PARAM_STR, 12);
+            $stmt->bindParam(5, $password, PDO::PARAM_STR, 60);
+            $stmt->bindParam(6, $date, PDO::PARAM_STR, 12);
+            $stmt->bindParam(7, $hash, PDO::PARAM_STR, 12);
+            $stmt->bindParam(8, $status, PDO::PARAM_INT);
 
             if ($stmt->execute()) { //  Tentiamo di eseguire lo statement
                 //Se riusciamo a salvare i dati nel database senza errori allora inviamo un email all'utente per attivare l'account
