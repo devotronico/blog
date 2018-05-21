@@ -18,7 +18,7 @@
       <li class="nav-item <?=$navbarLink=='posts'? 'active' : 'deactive' ?>">
         <a class="nav-link" href="/posts">Posts</a> 
       </li>
-      <?php if ( isset($_SESSION['user_id']) &&  $_SESSION['user_id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
+      <?php if ( isset($_SESSION['user_type']) &&  $_SESSION['user_type'] != 'reader' ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
       <li class="nav-item <?=$navbarLink=='post/create'? 'active' : 'deactive' ?>">
         <a class="nav-link" href="/post/create">New&nbsp;Post</a>
       </li>

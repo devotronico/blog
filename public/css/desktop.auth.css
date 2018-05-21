@@ -31,13 +31,26 @@ nav{color:#fff;background-color:#333;}
 
 /*********FORM********/  
 #auth{
-  background-color:red;
-  border: 1px solid #ccc;
   padding:10px;
   margin:0 auto;
   margin-top: 50px;
   width:100%;
   text-align:center;
+  background-color:#fff;
+  border: 1px solid #666;
+}
+
+#profile{
+  padding:10px;
+  margin:0 auto;
+  text-align:center;
+  background-color:#fff;
+  
+}
+
+#profile-form{
+  width:260px;
+  margin:0 auto;
 }
 
 

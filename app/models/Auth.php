@@ -16,10 +16,13 @@ class Auth extends Validate
     }
 
 
-
-/***********************************|
- * PROFILE                          |
-************************************/
+//====================================================================================================== 
+//========== PROFILE GROUP  ========================= PROFILE GROUP  =====================================
+//====================================================================================================== 
+    /*******************************************************************************************|
+     * PROFILE                                                                                  |
+     * Otteniamo tutti i dati dalle tabelle 'users' 'posts' 'comments' di uno specifico utente  | 
+    ********************************************************************************************/
     public function profile($id) {       
 
         $id = (int)$id;
@@ -29,39 +32,121 @@ class Auth extends Validate
         WHERE users.ID = :id
         ORDER BY posts.datecreated DESC, comments.c_datecreated DESC';
         
-        
-            if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
+        if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
+        {
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            if ($stmt->execute()) // Tentiamo di eseguire lo statement
             {
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                if ($stmt->execute()) // Tentiamo di eseguire lo statement
-                {
-                    if ( $stmt ){
-        
-                        $data = $stmt->fetch(PDO::FETCH_OBJ);
-                        echo '<pre>', print_r($data) ,'</pre>';
-                        return $data;
-                    }
+                if ( $stmt ){
+    
+                    $data = $stmt->fetch(PDO::FETCH_OBJ);
+                    // echo '<pre>', print_r($data) ,'</pre>';
+                    return $data;
                 }
             }
-        
         }
-
-
-
-    public function signup($image)
-    {
-        $this->email = $this->validateEmailSignup();
-        $password = $this->validatePassSignup();
-
-        if (empty($this->message)) {
-            $name = $this->validateUsername();
-            $type = $this->getUserType(); //die($type);
-            $this->storeData($type, $name, $this->email, $password, $image);
-        }
-
-        // $this->conn = null; // Chiude PDO connection
     }
 
+
+
+/*******************************************************************************************|
+* DELETE AVATAR                                                                             |
+********************************************************************************************/
+public function deleteAvatar($id) {
+  
+    $sql = "SELECT user_image FROM users WHERE ID = :id";
+
+    if ($stmt = $this->conn->prepare($sql)) {
+    
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) { 
+
+            $res = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if ( $res->user_image != 'default.jpg' ) {
+                if ( unlink("public/img/auth/$res->user_image") ) {
+
+                //  $this->message = "L' immagine è stata eliminata.";
+                } else {
+                    $this->message = "L' immagine non è stata eliminata.";
+                }
+            }
+        } else {
+            $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
+        }
+    } else {
+        $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
+    }
+    $stmt = null; // Close statement
+}
+
+
+
+/*******************************************************************************************|
+* STORE AVATAR                                                                              |
+********************************************************************************************/
+    public function storeAvatar($id, $image) {
+      
+        $sql = "UPDATE users SET user_image = :user_image  WHERE ID = :id";
+
+        if ($stmt = $this->conn->prepare($sql)) {
+        
+            $stmt->bindParam(':user_image', $image, PDO::PARAM_STR, 32);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            if ($stmt->execute()) { 
+                
+               // $this->message = "Tutto OK.";
+            } else {
+                $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
+            }
+        } else {
+            $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
+        }
+        $stmt = null; // Close statement
+    }
+
+
+
+    /***************************************************************************************|
+     * GET USER TYPE                                                                        |
+     * otteniamo dalla tabella 'users' solo il valore del campo 'user_type'                 |
+     * che verrà utilizzato nella pagina profilo per modificare i valori degli altri utenti |
+    ****************************************************************************************/
+    public function getUserType() {       
+
+        $sql = 'SELECT user_type FROM users WHERE users.ID = :id LIMIT 1';
+        
+        if ($stmt = $this->conn->prepare($sql)) 
+        {
+            $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+            if ($stmt->execute()) 
+            {
+                    $res = $stmt->fetch(PDO::FETCH_OBJ);
+                    //echo '<pre>', print_r($res) ,'</pre>';
+                    return $res;
+            }
+        }
+    }
+            
+
+    /***************************************************************************************************************|
+    * MOD USER TYPE                                                                                                 |                                                                                        
+    ****************************************************************************************************************/
+    public function modUserType($id, $type) { 
+        $sql = 'UPDATE users SET user_type = :user_type WHERE users.ID = :id LIMIT 1';
+        
+        if ($stmt = $this->conn->prepare($sql)) 
+        {
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':user_type', $type, PDO::PARAM_STR, 13);
+            $stmt->execute();
+        }
+    }
+//====================================================================================================== 
+//========== SIGNIN GROUP  ========================= SIGNIN GROUP  =====================================
+//======================================================================================================  
     public function signin()
     {
 
@@ -78,8 +163,32 @@ class Auth extends Validate
     }
         $this->conn = null; // Chiude PDO connection
     }
+//====================================================================================================== 
+//========== SIGNUP GROUP  ========================= SIGNUP GROUP  =====================================
+//====================================================================================================== 
+    /*******************************************************************************************|
+     * SIGNUP                                                                                   |
+     * Otteniamo tutti i dati dalle tabelle 'users' 'posts' 'comments' di uno specifico utente  | 
+    ********************************************************************************************/
+    public function signup($image)
+    {
+        $this->email = $this->validateEmailSignup();
+        $password = $this->validatePassSignup();
 
+        if (empty($this->message)) {
+            $name = $this->validateUsername();
+            $type = $this->setUserType(); 
+            $this->storeData($type, $name, $this->email, $password, $image);
+        }
 
+        // $this->conn = null; // Chiude PDO connection
+    }
+
+  
+
+    /*******************************************************************************************|
+     * STORE DATA                                                                               |
+    ********************************************************************************************/
     public function storeData($type, $name, $email, $password, $image)
     {
         //$image = isNull($image)? 'default.jpg' : $image;
@@ -105,18 +214,19 @@ class Auth extends Validate
                 //Se riusciamo a salvare i dati nel database senza errori allora inviamo un email all'utente per attivare l'account
                 // $Email = new Email;
                 // $Email->send($email, $hash);
-                $Email = new Email($email, $hash);
+                $Email = new Email($email, $hash, $name);
                 $Email->send();
             } else {
                 $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
             }
+        } else {
+            $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
         }
         $stmt = null; // Close statement
     }
 
 
 /***************************************************************************|
- * SIGNUP GROUP                                                             |
  * VERIFICA DOPO ATTIVAZIONE DA MAIL PER FARE IL SIGNUP                     |
  * Quando clicchiamo sul link di conferma presente nell'email               |
  * verremo indirizzati sul nostro sito dove si attiva questo metodo         |
@@ -133,7 +243,7 @@ class Auth extends Validate
             $email = $this->isEmailStored();   //   $email = $_GET['email'];
             $hash = $this->hash; // la hash passata dal URL col $_GET viene validata nel costruttore della classe 'Validate'
 
-            $sql = "SELECT * FROM users WHERE user_email= :email AND user_activation_key= :hash AND user_status= 0";
+            $sql = "SELECT ID, user_type, user_name FROM users WHERE user_email= :email AND user_activation_key= :hash AND user_status= 0";
 
             if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement della Select
             {
@@ -142,11 +252,11 @@ class Auth extends Validate
                 if ($stmt->execute()) // Tentiamo di eseguire lo statement
                 {
                     if ($stmt->rowCount() == 1) { // se nel database cè una corrispondenza con i parametri passati dal link dell'email
-                        $user = [];
+                        //$user = [];
                         $user = $stmt->fetch(PDO::FETCH_ASSOC); //  PDO::FETCH_OBJ
                         $_SESSION['user_id'] = $user['ID'];
-                        $_SESSION['email'] = $user['user_email'];
-                        $_SESSION['name'] = $user['user_name'];
+                        $_SESSION['user_type'] = $user['user_type'];
+                        $_SESSION['user_name'] = $user['user_name'];
 
                         $sql = "UPDATE users SET user_status = 1 WHERE user_email = :email"; //  attiviamo l' account {set user_status ='1'}
                         if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
@@ -174,9 +284,11 @@ class Auth extends Validate
 
 
 
+//====================================================================================================== 
+//========== PASSWORD RESET GROUP  ========================= PASSWORD RESET GROUP  =====================
+//====================================================================================================== 
 
 /***********************************************************************************************************|
- * PASSWORD RESET GROUP                                                                                     |
  * PASS-PARAM                                                                                               |
  * Verifica dopo attivazione da Mail per fare resettare/cambiare/creare la password                         |
  * Controlla i parametri email e hash passati come parametri dell'URL se sono corrispondenti nel database   |
@@ -219,7 +331,6 @@ public function passParam()
 
 
 /***********************************************************************************************|
- * PASSWORD RESET GROUP                                                                         |
  * PASS-CHECK                                                                                   |
  * Dopo aver inserito la mail nel campo input e premuto il bottone si attiverà questo metodo    |
  * Dopo la validazione dell' email e ottenuto l'hash corrispondete dal database                 |
@@ -237,11 +348,8 @@ public function passParam()
     }
 
 /***********************************************************************************************|
- * PASSWORD RESET GROUP                                                                         |
  * PASS-NEW                                                                                     |
  ***********************************************************************************************/
-
- 
     public function passNew() {
 
         $email = $this->isEmailStored();
@@ -254,22 +362,18 @@ public function passParam()
 
 
 /***********************************************************************************************|
- * PASSWORD RESET GROUP                                                                         |
  * PASS-SAVE                                                                                    |
  ***********************************************************************************************/
 public function passSave() {
 
     $email = $this->isEmailStored();
-   // $hash = $this->hashUrlValidate($_GET['hash']); // validiamo questa hash perchè è presa dal URL col $_GET
     $password = $this->validatePassSignup();
     if ( !is_null($password) )
     {
         $password_conf =  $this->password_conf;
 
-        if ($password === $password_conf) { 
-        
-        //   if ( !is_null($email) && !is_null($password) ) {
-
+        if ($password === $password_conf) 
+        { 
                 $sql = "SELECT ID, user_email, user_name FROM users WHERE user_email = :email";
                 if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement
                 { 
@@ -292,7 +396,7 @@ public function passSave() {
                                 {
                                     $_SESSION['user_id'] = $user['ID'];
                                     $_SESSION['email'] = $user['user_email'];
-                                    $_SESSION['name'] = $user['user_name'];
+                                    $_SESSION['user_name'] = $user['user_name'];
                                 }
                                 else
                                 {
@@ -310,6 +414,7 @@ public function passSave() {
         } else { $this->message .= "Le due password devono essere uguali"; } 
     }   
 }
+
 
 
 } // Chiude la classe Auth

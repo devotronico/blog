@@ -31,12 +31,11 @@ nav{padding:0;color:#fff;background-color:#333;}
 main{  background-color: green;}
 article{padding:10px;background-color:#fff;}
 
-
 .textarea-box{
   width:96%;
   padding:8px; 
   margin:0 auto;
-  border:1px dashed #999;
+  /* border:1px dashed #999; */
   text-align:center; 
 }
 
@@ -54,6 +53,7 @@ article{padding:10px;background-color:#fff;}
 .clear{clear:both;}
 .comment-body{padding:6px;background-color:#fff;}
 
+.input-group-addon{background-color:#ccc;padding:8px;}
 
 /*********FOOTER*260*******/ 
 

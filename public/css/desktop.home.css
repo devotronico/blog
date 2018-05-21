@@ -1,18 +1,28 @@
 
+/* da provare
+font-family: 'Graphik Medium';
+3px solid #2C8CFF
+border-radius:500px
+*/
+
 /*0***0****0******************************************************************************************+++++++********0*/    
 @media(min-width:0){
+  *{padding:0;margin:0;}
+  html{color:black;}  
+  body{background-color:#999;}
+  #risoluzione{display:none;position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow;}  
   .container-fluid{display:none;} 
   #box-sign{width:80%;margin:10px auto;text-align:center;}
   #sign{display:inline;writing-mode:vertical-rl;text-orientation:upright;}
+  
 }
        
 /*260***XS****260**************************************************************************************************260*/
 @media(min-width:260px){
 /*********GENERAL*260*******/ 
-*{padding:0;margin:0;}
-#risoluzione{position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow;}     
-html{color:black;}  
-body{background-color:#999;}  
+
+#risoluzione{background-color:pink;}   
+  
 #box-sign{display:none;} 
 .container-fluid {display:block;padding:0;margin:0;}
 .section{min-height:100vh;}

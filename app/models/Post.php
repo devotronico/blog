@@ -102,6 +102,38 @@ public function totalPosts(){
     
 
 
+/***************************************************************************************|
+* EDIT                                                                                  |
+****************************************************************************************/
+public function edit($postid){
+        
+    $sql = 'SELECT * FROM posts WHERE post_ID = :postid LIMIT 1';
+    $stm = $this->conn->prepare($sql); 
+    $stm->bindParam(':postid', $postid, PDO::PARAM_INT);
+    $stm->execute(); 
+    if ( $stm ) {
+        $result = $stm->fetch(PDO::FETCH_OBJ);
+        return $result;
+    }
+ }
+
+
+/***************************************************************************************|
+* UPDATE                                                                                |
+* Modifica un post creato in precedenza                                                 |
+****************************************************************************************/
+public function update(int $postid, array $data=[]){
+        
+    $messtruncate = truncate_words($data['message'], 10, '[...]'); 
+    $sql = 'UPDATE posts SET title = :title, message = :message, messtruncate = :messtruncate WHERE post_ID = :id';
+    $stm = $this->conn->prepare($sql); 
+    $stm->bindParam(':title',$data['title'], PDO::PARAM_STR, 255);
+    $stm->bindParam(':message',$data['message'], PDO::PARAM_STR);
+    $stm->bindParam(':messtruncate', $messtruncate, PDO::PARAM_STR, 255);
+    $stm->bindParam(':id', $postid, PDO::PARAM_INT);
+    $stm->execute();
+   // return $stm->rowCount();
+ }
 
 
 /***************************************************************************************|
@@ -129,50 +161,6 @@ return $stm->rowCount();
 }
 
 
-/***************************************************************************************|
-* STORE !                                                                                 |
-****************************************************************************************/
-     public function store(array $data=[]){
-        
-        $sql = 'UPDATE posts SET title = :title, message = :message WHERE post_ID = :id';
-        $stm = $this->conn->prepare($sql); 
-        $stm->execute([ 
-            'id' => $data['id'],
-            'title'=> $data['title'], 
-            'message'=>$data['message'],  
-            ]); 
-     
-            return $stm->rowCount();
-     }
-
-
-/*******************************************************************************************************************|
-* TOTAL-COMMENTS !                                                                                                  |
-* questo metodo incrementa o decrementa il numero dei commenti del campo 'num_comments' della tabella 'posts'       |                            
-* a seconda se il secondo argomento passato sia 1 oppure -1                                                         |
-* Avendo l'id di un post, per prima cosa faccimo una SELECT per ottenere il valore/numero del campo 'num_comments'  |
-* quindi modifichiamo il valore del campo 'num_comments' e lo aggiorniamo/salviamo nel database con 'UPDATE'        |
-********************************************************************************************************************/
-public function totalComments(int $id, int $sign){
-        
-    $sql = 'SELECT num_comments FROM posts WHERE post_ID = :id';
-    $stm = $this->conn->prepare($sql); 
-    $stm->execute(['id'=>$id]); 
-
-    if ( $stm ){
-        $res = $stm->fetch(PDO::FETCH_OBJ);
-        $num = (int)$res->num_comments;
-        $num+= $sign;
-    
-        $sql = 'UPDATE posts SET num_comments = :num_comments WHERE post_ID = :id';
-        $stm = $this->conn->prepare($sql); 
-        $stm->execute([ 
-            'id'=>$id,
-            'num_comments'=> $num,   
-        ]); 
-    }
- }     
-
 
 
 /*******************************************************************************************************************|
@@ -184,18 +172,14 @@ public function totalComments(int $id, int $sign){
 ********************************************************************************************************************/
 public function countPosts(int $sign){
         
-   // $sql = 'SELECT user_num_posts FROM users'; 
-    $sql = 'SELECT user_num_posts FROM users WHERE ID = :id';
+    $sql = "SELECT user_num_posts FROM users WHERE ID = :id";
     $stm = $this->conn->prepare($sql); 
-    $stm->execute(['id'=>$_SESSION['user_id']]); 
-
+    $stm->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $stm->execute();
     if ( $stm ){
         if ($res = $stm->fetch(PDO::FETCH_OBJ)) {
             $num = (int)$res->user_num_posts;
-          //  if ( $sign == 0 ) {  return $num;  }
-               
             $num+= $sign;
-        
             $sql = 'UPDATE users SET user_num_posts = :user_num_posts WHERE ID = :id';
             $stm = $this->conn->prepare($sql); 
             $stm->execute([ 
@@ -206,18 +190,16 @@ public function countPosts(int $sign){
     }
  }  
 
-
 /***************************************************************************************|
-* DELETE-ONE !                                                                          |
-* cancelliamo tutti i commenti relativi al post appena cancellato                       |
+* DELETE-ONE                                                                            |
+* cancelliamo un post                                                                   |
 ****************************************************************************************/
-     public function deleteOne(int $id){
+     public function deletePost(int $postid){
         
         $sql = 'DELETE FROM posts WHERE post_ID = :id';
         $stm = $this->conn->prepare($sql); 
-        $stm->bindParam(':id', $id, PDO::PARAM_INT); // gli diciamo che deve essere di tipo integer 
+        $stm->bindParam(':id', $postid, PDO::PARAM_INT); 
         $stm->execute(); 
-        return $stm->rowCount();
      }
  
 

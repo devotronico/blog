@@ -1,4 +1,4 @@
-<div id='auth' class='auth-verify' style="background-color:#fff;padding:20px;text-align:center;">
+<div id='auth' class='auth-verify'>
     <h2>Verifica registrazione</h2>
     <div class="message">
         <div class="alert <?=$_SESSION["user_id"]?'alert-success':'alert-danger'?>" role="alert"><?=$message?></div>

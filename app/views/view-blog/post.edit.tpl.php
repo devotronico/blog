@@ -2,8 +2,7 @@
 <div class="row">
     <div class="col-md-6 push-md-3">
         <h1>Modifica il post</h1>
-        <form action="/post/update" method="POST">
-            <input type="hidden" name="id" value="<?=$post->id?>">
+        <form action="/post/<?=$post->post_ID?>/update" method="POST">
             <div class="form-group">
                 <label for="title">Title</label>
                 <input class="form-control" type="text" name="title" value="<?=$post->title?>" required>

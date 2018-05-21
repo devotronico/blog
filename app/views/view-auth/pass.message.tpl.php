@@ -1,4 +1,4 @@
-<div id='auth' class='auth-verify' style="background-color:#fff;padding:20px;text-align:center;">
+<div id='auth' class='auth-verify'>
     <h2>Controlla la tua email</h2>
     <div class="alert alert-success" role="alert"><?=$message?></div>
     <small class="form-text text-muted">

@@ -97,9 +97,10 @@ public function save(array $data=[]){
 
 /***********************************************************************************************************************************|
 * GET POST ID                                                                                                                       |
-* Con l'id della tabella Comments ci andiamo a prendere il valore del campo post_id che è relativo all'id della tabella posts  |                                                                                                  
+* Con l'id della tabella Comments ci andiamo a prendere il valore del campo post_id che è relativo all'id della tabella posts       |                                                                                                  
 ************************************************************************************************************************************/ 
-     public function getPostId(int $commentid){
+   /*  
+public function getPostId(int $commentid){
 
         $sql = 'SELECT post_id FROM Comments WHERE comment_ID = :id';
         $stm = $this->conn->prepare($sql);
@@ -109,6 +110,85 @@ public function save(array $data=[]){
         $post_id = (int)$res['post_id'];
         return $post_id;
     }
+*/
+
+    public function getId(string $column, int $commentid){
+
+        $sql = "SELECT $column FROM Comments WHERE comment_ID = :id";
+        $stm = $this->conn->prepare($sql);
+        $stm->bindParam(':id', $commentid, PDO::PARAM_INT);
+        $stm->execute();
+        $res= $stm->fetch(PDO::FETCH_ASSOC);
+        $id = (int)$res[$column];
+        return $id;
+    }
+
+
+
+
+
+/***********************************************************************************************************************|
+* USER NUM COMMENTS                                                                                                     |
+* questo metodo incrementa o decrementa il numero dei commenti del campo 'user_num_comments' della tabella users        |                          
+* a seconda se il secondo argomento passato sia 1 oppure -1                                                             |
+* Avendo l'id 'users', per prima cosa faccimo una SELECT per ottenere il valore/numero del campo 'user_num_comments'    |
+* quindi modifichiamo il valore del campo 'user_num_comments' e lo aggiorniamo/salviamo nel database                    |
+************************************************************************************************************************/
+
+public function userNumComments(int $sign, $id=null){
+    $id = isset($id) ? $id : $_SESSION['user_id'];   
+    $sql = "SELECT user_num_comments FROM users WHERE ID = :id";
+    $stm = $this->conn->prepare($sql); 
+
+  //  $stm->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $stm->bindParam(':id', $id, PDO::PARAM_INT);
+    $stm->execute();
+
+    if ( $stm ){
+        if ($res = $stm->fetch(PDO::FETCH_OBJ)) {
+            $num = (int)$res->user_num_comments;
+            $num+= $sign;
+            $sql = 'UPDATE users SET user_num_comments = :user_num_comments WHERE ID = :id';
+            $stm = $this->conn->prepare($sql); 
+            $stm->bindParam(':user_num_comments', $num, PDO::PARAM_INT);
+           // $stm->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+            $stm->bindParam(':id', $id, PDO::PARAM_INT);
+            $stm->execute();
+        }
+    }
+} 
+
+
+
+/*******************************************************************************************************************|
+* POST NUM COMMENTS                                                                                                 |
+* questo metodo incrementa o decrementa il numero dei commenti del campo 'num_comments' della tabella 'posts'       |                            
+* a seconda se il secondo argomento passato sia 1 oppure -1                                                         |
+* Avendo l'id di un post, per prima cosa faccimo una SELECT per ottenere il valore/numero del campo 'num_comments'  |
+* quindi modifichiamo il valore del campo 'num_comments' e lo aggiorniamo/salviamo nel database con 'UPDATE'        |
+********************************************************************************************************************/
+
+public function postNumComments(int $sign, int $id){
+        
+    $sql = 'SELECT num_comments FROM posts WHERE post_ID = :id';
+    $stm = $this->conn->prepare($sql); 
+    $stm->execute(['id'=>$id]); 
+
+    if ( $stm ){
+        $res = $stm->fetch(PDO::FETCH_OBJ);
+        $num = (int)$res->num_comments;
+        $num+= $sign;
+    
+        $sql = 'UPDATE posts SET num_comments = :num_comments WHERE post_ID = :id';
+        $stm = $this->conn->prepare($sql); 
+        $stm->execute([ 
+            'id'=>$id,
+            'num_comments'=> $num,   
+        ]); 
+    }
+ }     
+
+
 
 
 
