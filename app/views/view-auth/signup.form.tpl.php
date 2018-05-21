@@ -53,7 +53,6 @@
       <input type='password' class='form-control' name='user_pass' placeholder='Password' required='required'>
     </div>
   </div> 
-
   <div class='form-group text-center'>
   <button type='submit' class='btn'>Registrati</button>
   </div>

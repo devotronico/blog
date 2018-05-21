@@ -175,7 +175,7 @@ public function validateEmail()
 
 
 /***********************************************************************************************************************|
-* GET USER TYPE                                                                                                         |
+* SET USER TYPE                                                                                                         |
 * al momento della registrazione viene definita anche il campo 'user_type' della tabella 'users'                        |
 * il campo 'user_type' può assumere tre valori ['administrator' 'contributor' 'reader']                                 |
 * Quando ci si registra in automatico il campo 'user_type' può essere settato solo come 'administrator' oppure 'reader' | 
@@ -184,7 +184,7 @@ public function validateEmail()
 * Solo l' utente che ha il campo 'user_type' settato come 'administrator' può  cambiare                                 |
 * il campo 'user_type' degli altri utenti nei valori 'administrator', 'contributor', 'reader'                           |
 ************************************************************************************************************************/
-public function getUserType(){
+public function setUserType(){
     
     $sql = 'SELECT COUNT(*) FROM users';
     if ($res = $this->conn->query($sql)) {
@@ -241,8 +241,8 @@ public function getUserType(){
                     {  
                         if ($user['user_status'] == 1) {
                             $_SESSION['user_id'] = $user['ID']; // ($user['user_status']);
-                            $_SESSION['email'] = $user['user_email'];
-                            $_SESSION['name'] = $user['user_name'];
+                            $_SESSION['user_type'] = $user['user_type'];
+                            $_SESSION['user_name'] = $user['user_name'];
                             return $password;
                             // if ( array_key_exists('setcookie', $_POST) && $_POST['setcookie'] == '1')  {
                             //     setcookie('id', $_SESSION['user_id'], time()+60*60*24*365);   // }

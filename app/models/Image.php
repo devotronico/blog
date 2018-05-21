@@ -54,13 +54,12 @@ public function __construct(int $max_width, int $max_height, int $max_size, stri
  public function getMessage(){
   
         return $this->message;
-    
  }
 
 
   
 /*******************************************************************************************************************************|
-* GET-NEW-IMAGE-NAME                                                                                                            |
+* SET-NEW-IMAGE-NAME                                                                                                            |
 * rinominiamo il file con un id univoco + l'estensione del file                                                                 |
 * sul database alla colonna dove salveremo il nome dell' immagine per sicurezza impostare à VARCHAR 32                          |
 * e non meno di 32 perchè la lunghezza della stringa data dalla funzione uniqid più l'estensione può arrivare a 32 caratteri    |
@@ -141,7 +140,7 @@ public function resource(){
 * poi prendiamo e controlliamo il valore della chiave 'Orientation'. Se è diverso da 1 allora l'immagine è ruotata.         |
 * tramite la funzione 'imagerotate' ruotiamo l'immagine alla sua angolazione normale                                        |
 ****************************************************************************************************************************/   
-public function rotate(){                                            
+public function rotate() {                                            
    
     if (function_exists('exif_read_data')) {
         $exif = @exif_read_data($this->fileTmpName);
@@ -195,7 +194,7 @@ public function save(){
     switch ($this->fileExtension)  { 
         case 'jpg':$result = imagejpeg($this->img_resource, $this->folder.$this->fileNewName, 100 );  break; // best quality
         case 'jpeg':$result = imagejpeg($this->img_resource, $this->folder.$this->fileNewName, 100 );  break; // best quality
-        case 'png':$result = imagepng($this->img_resource, $this->folder.$this->fileNewName, 0); break; // no compression
+        case 'png':$result = imagepng($this->img_resource, $this->folder.$this->fileNewName, 9); break; // no compression
         default: $this->message .='Il formato file '.$this->fileExtension.' non è supportato';
     }
     

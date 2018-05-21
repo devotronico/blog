@@ -18,12 +18,17 @@ GLOBAL $navbarLink;
       <li class="nav-item deactive">
         <a class="nav-link" href="/posts">Posts</a>
       </li>
-      <?php if ( isset($_SESSION['user_id']) &&  $_SESSION['user_id'] == 1 ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
-      <li class="nav-item <?=$navbarLink=='post/create'? 'active' : 'deactive' ?>">
+      <?php if ( isset($_SESSION['user_type']) &&  $_SESSION['user_type'] != 'reader' ) : ?>
+      <li class="nav-item deactive">
         <a class="nav-link" href="/post/create">New&nbsp;Post</a>
       </li>
       <?php endif ?>
       <?php if ( isset($_SESSION["user_id"]) ) : ?>
+
+        <li class="nav-item <?=$navbarLink=="auth/".$_SESSION['user_id']."/profile"? 'active' : 'deactive' ?>">
+          <a class="nav-link" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="/auth/logout">Logout</a> 
         </li>
@@ -32,7 +37,7 @@ GLOBAL $navbarLink;
           <a class="nav-link" href="/auth/signin/form">Accedi</a> 
         </li>
         <li class="nav-item <?=$navbarLink=='auth/signup/form'? 'active' : 'deactive' ?>">
-          <a class="nav-link" href="/auth/signup/form">Registratii</a> 
+          <a class="nav-link" href="/auth/signup/form">Registrati</a> 
         </li>
       <?php endif ?>
     </ul>

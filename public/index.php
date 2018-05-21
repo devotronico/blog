@@ -1,12 +1,19 @@
 <?php
-session_start();
-//var_dump($_SERVER['DOCUMENT_ROOT']); // C:\xampp\htdocs\blog\public
-// if ( isset($_SESSION['user_id']) ) {  echo 'id è uguale a '.$_SESSION['user_id'].'<br>'; }
-// if ( isset($_SESSION['email']) ) {  echo 'email è uguale a '.$_SESSION['email'].'<br>'; }
-// if ( isset($_SESSION['name']) ) {  echo 'name è uguale a '.$_SESSION['name'].'<br>'; }
-// if (session_status() == PHP_SESSION_ACTIVE) {  echo 'sessione attiva <br>';} else { echo 'sessione assente! <br>'; } 
+if (!isset($_SESSION)) { session_start(); } 
+session_regenerate_id(true);
 
-//$navbarLink = 'posts';
+//echo '<pre>', print_r($_SESSION) ,'</pre>'; 
+/*
+if (session_status() == PHP_SESSION_DISABLED) {  echo '<br> PHP_SESSION_DISABLED <br>';} // si disabilita nel file php.ini session.auto_start = "0"
+if (session_status() == PHP_SESSION_NONE )    {  echo '<br> PHP_SESSION_NONE  <br>'   ;} // session_start() NON inizializzato
+if (session_status() == PHP_SESSION_ACTIVE)   {  echo '<br> PHP_SESSION_ACTIVE <br>'  ;} // session_start() inizializzato
+echo session_id();
+*/
+
+
+//var_dump($_SERVER['DOCUMENT_ROOT']); // C:\xampp\htdocs\blog\public
+
+//$navbarLink = 'posts'; da eliminare in futuro
 
 // die (__DIR__); //= C:\xampp\htdocs\blog\public
 // __DIR__ restituisce l'intero path/percorso in cui viene richiamata la costante-magica __DIR__ 
@@ -32,11 +39,9 @@ require 'core/bootstrap.php'; // qui i vengono caricati tutte le classi e anche 
 //require __DIR__.'/../core/bootstrap.php'; // qui i vengono caricati tutte le classi e anche le funzioni
 
 
-
 // prende i valori del database richiesti per fare la connessione
-$data = require 'config/database.php';
+$databaseConfig = require 'config/database.php';
 //$data = require __DIR__.'/../config/database.php';
-
 
 
 
@@ -46,7 +51,7 @@ $appConfig = require 'config/app.config.php';
 
 try{
 
-    $pdoConn = App\DB\DbFactory::Create($data); // $data è l'array che contiene il driver grazie al quale costruiremo il dsn
+    $pdoConn = App\DB\DbFactory::Create($databaseConfig); // $data è l'array che contiene il driver grazie al quale costruiremo il dsn
 
 
     $conn = $pdoConn->getConn(); // otteniamo la connessione al database
