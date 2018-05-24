@@ -33,16 +33,16 @@
         </div>
         <div class="col-sm-6 col-md-3">
             <div class="card mb-3">
-                <div class="card-header"><h4>Blog</h4></div>
+                <div class="card-header"><h4>Ninja Bit</h4></div>
                 <!-- <img class="card-img-top" src="img/portfolio/blog-3.svg" alt="blog"> -->
                 <div class="card-fontawesome"style="color:#333; text-align:center;">
-                    <i class="fab fa-blogger-b"></i>
+                    <i class="fas fa-gamepad"></i>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Un completo esempio di blog-Un completo esempio di blog</p>
+                    <p class="card-text">Un videogame che mescola uno stile grafico 8bit con un gameplay moderno</p>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <a href='https://www.danielemanzi.it/3-blog' target="_blank" class="btn">Visita</a>
+                    <a href='/home/download' target="_blank" class="btn">Visita</a>
                 </div>
             </div>
         </div>
