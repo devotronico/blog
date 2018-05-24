@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
   <head>
-    <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -13,9 +12,10 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
      <!-- CSS -->
     <link rel="stylesheet" href="/css/<?=$this->style?>.css">
-     <!-- FONTAWESOME -->
-     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script> -->
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!-- DEVICON -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
     <!-- PRETTYPRINT -->
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
     <title>Il mio sito</title>
@@ -28,10 +28,6 @@
   <script src="/js/jquery.js" ></script>
   <script src="/js/tether.js" ></script>
   <script src="/js/bootstrap.min.js"></script>  
-  <!-- <script src="/js/script.js"></script>   -->
   <script src="/js/<?=$this->script?>.js"></script> 
-  <!-- FONTAWESOME -->
-  <!-- <script>FontAwesomeConfig = { searchPseudoElements: true };</script> -->
-  <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
   </body>
 </html>

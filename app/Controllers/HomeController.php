@@ -24,12 +24,11 @@ class HomeController extends Controller
 //========== FRONT PAGE ========================= FRONT PAGE ===========================================
 //======================================================================================================     
 
-/*******************|
-*       HOME        |
-********************/
+/***********************************************|
+* HOME  metodo = GET    route = home            |        
+*************************************************/
 public function home(){
   
-   // $files=['navbar-home', 'cover', 'portfolio', 'skills', 'contact', 'footer'];
     $files=[
         $this->device.'.navbar-home',
         $this->device.'.cover',
@@ -40,6 +39,43 @@ public function home(){
         ];
     $this->content = View('home', $files);
 }
+
+
+/***********************************************************|
+* DOWNLOAD      metodo = GET    route = home/id/download    |
+************************************************************/
+public function download(){
+  
+    $dir = 'public/download/';
+   // $dir = 'download/';
+    $filename = 'testFile.zip';
+   // $fn = (isset($_GET['filename']) ? $_GET['filename'] : false);
+    
+    // controlliamo che ci siano caratteri validi nel nome del file
+    if (!preg_match('/^[a-z0-9]+\.[a-z]{2,3}$/i',$filename)) {
+        $filename = false;
+      }else{
+       $file = $dir . $filename;  
+      }
+    
+    // verifico che il file esista
+    if (!file_exists($file))
+    {
+      // se non esiste stampo un errore
+      echo "Il file NON esiste!";
+    }else{
+        echo "Il file esiste!";
+    
+    header("Cache-Control: public");
+    header("Content-Description: File Transfer");
+    header("Content-disposition: attachment; filename=$file");
+    header("Content-Transfer-Encoding: binary");
+    //header("Contant-type: application/txt");
+    readfile("download/testFile.txt");
+    //redirect("");
+    header("index.php"); //redirect("/posts");
+    }
+ }
 
 } // chiude classe HomeController
 

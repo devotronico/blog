@@ -5,6 +5,7 @@ return [
     'routes' => [
         'GET' => [
             '' => 'App\Controllers\HomeController@home',
+            'home/download' => 'App\Controllers\HomeController@download',
             'blog' => 'App\Controllers\PostController@getPosts',
             'posts' => 'App\Controllers\PostController@getPosts',
             'posts/page/:id' => 'App\Controllers\PostController@getPostsPage',
