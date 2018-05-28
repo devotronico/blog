@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use \PDO; // importiamo le classi 'PDO' e 'Post'
-
+use App\Models\Email;
 
 class HomeController extends Controller
 {
@@ -29,7 +29,9 @@ class HomeController extends Controller
 *************************************************/
 public function home(){
   
+    $photo =  $this->device.'.photo';
     $files=[
+       
         $this->device.'.navbar-home',
         $this->device.'.cover',
         $this->device.'.portfolio',
@@ -37,7 +39,7 @@ public function home(){
         $this->device.'.contact',
         $this->device.'.footer'
         ];
-    $this->content = View('home', $files);
+    $this->content = View('home', $files, compact('photo'));
 }
 
 
@@ -47,7 +49,7 @@ public function home(){
 public function download(){
   
     $dir = 'public/download/';
-   // $dir = 'download/';
+  
     $filename = 'testFile.zip';
    // $fn = (isset($_GET['filename']) ? $_GET['filename'] : false);
     
@@ -76,6 +78,31 @@ public function download(){
     header("index.php"); //redirect("/posts");
     }
  }
+
+
+ public function contact() {
+ 
+
+    $Email = Email::toMe($_POST);
+    $Email->send();
+
+    $message = "Grazie per averci contattato, risponderemo il prima possibile";
+    $photo = $this->device.'.photo';
+    $files=[
+        $this->device.'.navbar-home',
+        $this->device.'.cover',
+        $this->device.'.portfolio',
+        $this->device.'.skills', 
+        $this->device.'.contact',
+        $this->device.'.footer'
+        ];
+    $this->content = View('home', $files, compact('photo', 'message'));  // ritorniamo il template con il form per fare la registrazione
+    //redirect("/");
+ }
+
+
+
+
 
 } // chiude classe HomeController
 

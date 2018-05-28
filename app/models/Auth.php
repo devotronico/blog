@@ -156,7 +156,7 @@ public function deleteAvatar($id) {
         if ( !is_null($email) && !is_null($password) ) {  // se email e password sono corretti 
         if ( !isset($_SESSION['user_id']) ) { // se $_SESSION['user_id'] non è settato vuol dire che l'account non è stato confermato
             $hash = $this->hash; // non è necessario validare questa hash perchè è presa dal database col metodo 'isEmailStored'
-            $Email = new Email($email, $hash);
+            $Email = Email::verify($email, $hash);
             $Email->send();
             return $email; // ritorniamo email per inserirla nel messaggio che ci avvisa che ci è stata invita un Mail al nostro indirizzo
         }
@@ -212,10 +212,10 @@ public function deleteAvatar($id) {
 
             if ($stmt->execute()) { //  Tentiamo di eseguire lo statement
                 //Se riusciamo a salvare i dati nel database senza errori allora inviamo un email all'utente per attivare l'account
-                // $Email = new Email;
-                // $Email->send($email, $hash);
-                $Email = new Email($email, $hash, $name);
-                $Email->send();
+       
+                $Email = Email::verify($email, $hash, $name);
+                $test = $Email->send();
+    
             } else {
                 $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
             }
@@ -329,7 +329,7 @@ public function passParam()
 
 
 
-
+//[! IMPORTANTE] Controllare gli argomenti passati nella creazione di un istanza della classe Email 
 /***********************************************************************************************|
  * PASS-CHECK                                                                                   |
  * Dopo aver inserito la mail nel campo input e premuto il bottone si attiverà questo metodo    |
@@ -342,7 +342,11 @@ public function passParam()
         $hash = $this->hash; // non è necessario validare questa hash perchè è presa dal database col metodo 'isEmailStored' 
         if ( !is_null($email) && !is_null($hash) ) {  // se email e password sono corretti 
           
-            $Email = new Email($email, $hash, 'newpass');
+            //$Email = new Email('newpass', $email, $hash);
+            //$Email->send();
+
+
+            $Email = Email::newpass($email, $hash);
             $Email->send();
         }
     }

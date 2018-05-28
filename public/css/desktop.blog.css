@@ -15,7 +15,7 @@ body{background-color:#999;}
 #box-sign{display:none;} 
 .container{display:block;padding:0;min-height:100vh;background-color:#fff;}
 .btn{color: #fff;background-color:#333;border: none;} 
-.btn:hover{color: #fff;background-color:red;} 
+.btn:hover{color:#fff;background-color:red;} 
 
 /*********NAVBAR*260*******/  
 nav{padding:0;color:#fff;background-color:#333;}
@@ -113,7 +113,7 @@ nav{height: 100px;}
 .navbar-nav{padding:0;} 
 .nav-item{padding:0 30px;} 
 .nav-link{padding:0;font-size:20px;border:none;text-align:left;} 
-.nav-link:hover{background-color:transparent;border-bottom:1px solid #fff;}  
+.nav-link:hover{background-color:transparent;box-shadow:0 5px 0#fff}  
 .active{color:#fff;} 
 
 

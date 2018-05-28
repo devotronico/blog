@@ -12,7 +12,10 @@ class Controller {
     protected $device;
     //$style =  { identifica il file css da linkare nel template a seconda del dispositivo e della pagina } 
     protected $style;
+    //$script =  { identifica il file JS da linkare nel template a seconda del dispositivo } 
     protected $script;
+    //$script =  { identifica il file immagine da linkare nel template a seconda del dispositivo }
+  //  protected $photo;
     //$grid =  { serve a identificare la classe bootstrap .container-fluid utilizzata nei template home e .container in blog e auth } 
     protected $grid = 'container';
 
@@ -45,6 +48,7 @@ public function display(){
  
     $this->script = $this->device.'.script'; // è il file javascript da caricare
     $this->style = $this->device.'.'.$this->page; // è il file css da caricare
+ 
     require $this->layout;   
 }
     

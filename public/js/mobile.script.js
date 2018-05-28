@@ -6,12 +6,9 @@ window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 }
 
+/*
 document.addEventListener('click', clickEvent);
-
-
 function clickEvent(e){
-//console.dir(e.target);
-
   switch (e.target.className)
   {
     case 'nav-link':
@@ -27,30 +24,88 @@ function clickEvent(e){
      console.log('section'); 
     break;
   }
+}
+*/
 
-  switch (e.target.id){
-    case 'portfolio':
-      console.log('portfolio'); 
-    break;
-    case 'skill':
-      var bg = document.querySelector('#skill-bg');
-      bg.classList.add('show-bg'); 
-    break;
-    case 'contact':
-     console.log('contact'); 
-    break;
-  }
- 
+
+/********** NAVBAR SENZA BOOTSTRAP **********/
+document.addEventListener('touchstart', clickFunc, false); // mouseenter
+
+let navState = false;
+
+function clickFunc(e){ 
+   console.dir(e.target.parentNode);
+    let nav = document.querySelector('nav');
+if ( e.target.parentNode.localName === 'header' ) {  console.log('ok')}
+
+    if (e.target.href === undefined) {  
+        
+        e.target.classList.toggle('active');
+        if (e.target.id === 'toggleNav') {
+
+            if ( navState === false) {
+              
+                nav.style.display = 'block';
+            } else {
+              
+                nav.style.display = 'none';
+            }
+            navState = !navState;
+        }
+    } else {  
+
+    var goToId = e.target.hash.slice(1);
+
+        if ( goToId !== "" ) {
+
+            smoothScroll(document.getElementById(goToId))
+            navState = false;
+            nav.style.display = 'none';
+            let toggleNav = document.querySelector('#toggleNav');
+            toggleNav.classList.toggle('active');
+        }
+    }
 }
 
-/******************SCROLL LOADING ******************/
+
+window.smoothScroll = function(target) {
+    var scrollContainer = target;
+    do { //find scroll container
+        scrollContainer = scrollContainer.parentNode;
+        if (!scrollContainer) return;
+        scrollContainer.scrollTop += 1;
+    } while (scrollContainer.scrollTop == 0);
+    
+    var targetY = 0;
+    do { //find the top of target relatively to the container
+        if (target == scrollContainer) break;
+        targetY += target.offsetTop;
+    } while (target = target.offsetParent);
+    
+    scroll = function(c, a, b, i) {
+        i++; if (i > 30) return;
+        c.scrollTop = a + (b - a) / 30 * i;
+        setTimeout(function(){ scroll(c, a, b, i); }, 20);
+    }
+    // start scrolling
+    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+}
+/********** END NAVBAR SENZA BOOTSTRAP **********/
+
+
+
+
+
+/**********SCROLL LOADING*********/
 
 document.addEventListener('scroll', scrollLoad, false);
 
 //altezzaTotale = document.body.scrollHeight; // [!]
-let altezza = document.querySelector('#portfolio').offsetTop - window.innerHeight * 0.2;
+
+let altezza = document.querySelector('#portfolio').offsetTop - window.innerHeight * 0.8;
 state = ['init', 'portfolio', 'skill', 'contact', 'footer', 'end'];
 let index = 0;
+
 
 function scrollLoad(e){
 
@@ -63,122 +118,117 @@ function scrollLoad(e){
       case 'portfolio': //APRE PORTFOLIO ------------------------------------------------------
         console.log('portfolio loading'); 
 
-        let cardTitle = ['Meteo', 'Social Network', 'Blog', 'Android Game', 'Wordpress', 'Appunti', 'Cryptovalute', 'Database'];
+        let titleList = ['Meteo', 'Social Network', 'Blog', 'Android Game', 'Wordpress', 'Appunti', 'Cryptovalute', 'Database'];
         let faIcon = ['s fa-sun', 'b fa-connectdevelop', 'b fa-blogger-b', 'b fa-android', 'b fa-wordpress', 's fa-sticky-note', 'b fa-bitcoin', 's fa-database'];
-        let text =  ['descrizione1', 'descrizione2', 'descrizione3', 'descrizione4', 'descrizione5', 'descrizione6', 'descrizione7', 'descrizione8'];
-        let address =  ['meteo', 'socialnetwork', 'blog', 'https://play.google.com/store/apps/details?id=com.manzidevelopment.fantasyflappy', 'wp-site', 'note', 'cryptocoin', 'database'];
+        let address =  ['meteo', 'socialnetwork', 'blog', '', 'wp-site', 'note', 'cryptocoin', 'database'];
         
         let portfolio = document.querySelector('#portfolio');
+        portfolio.classList.add('visibileBlue');
 
-        let titleBox = document.createElement('div'); //  <div class="section-title"><p>Portfolio</p></div>
+        let titleBox = document.createElement('div'); 
         titleBox.classList.add('section-title');
         let title = document.createElement('p'); 
         title.innerHTML = 'Portfolio';
         titleBox.appendChild(title);
         portfolio.appendChild(titleBox);
         
-        let rowCard1 = document.createElement('div'); //  <div class="row">
-        rowCard1.classList.add('row'); 
-
-        let rowCard2 = document.createElement('div'); //  <div class="row">
-        rowCard2.classList.add('row'); 
-
-        portfolio.appendChild(rowCard1);
-        portfolio.appendChild(rowCard2);
 
         for (let i=0; i<faIcon.length;  i++) {  
 
-          let col = document.createElement('div'); // <div class="col-sm-6 col-md-3">  x4|x2
-          col.classList.add('col-sm-6', 'col-md-3');  
-        
-          let card = document.createElement('div');// <div class="card mb-3">    x4|x2
-          card.classList.add('card', 'mb-3');  
-        
-          let cardHeader = document.createElement('div');// <div class="card-header"><h4>Meteo</h4></div>   x4|x2
-          cardHeader.classList.add('card-header');  
-
-          let h4Title = document.createElement('h4'); // x4|x2
-          h4Title.innerHTML = cardTitle[i];
-
-
-          let cardIcon = document.createElement('div'); // <div class="card-fontawesome"> // x4|x2
-          cardIcon.classList.add('card-fontawesome'); 
-          cardIcon.innerHTML = '<i class="fa'+faIcon[i]+'"></i>';
-
-          let cardBody = document.createElement('div'); //  <div class="card-body"> // x4|x2
+          let card = document.createElement('div');
+          card.classList.add('card');  
+          
+          let cardBody = document.createElement('div'); 
           cardBody.classList.add('card-body');  
+       
+          let cardTitle = document.createElement('h5'); 
+          cardTitle.innerHTML = titleList[i];
 
-          let cardText = document.createElement('p'); //  <p class="card-text"> x4|x2
-          cardText.classList.add('card-text');
-          cardText.innerHTML = text[i];
-          //FOOTER
-          let cardFooter = document.createElement('div');     // <div class="card-footer bg-transparent"> x4|x2
-          cardFooter.classList.add('card-footer', 'bg-transparent');
-
-          let link = document.createElement('a');   //  <a href='https://github.com/redeluni/meteo' target="_blank" class="btn">Visita</a> x4|x2
-          link.classList.add('btn');
+          let link = document.createElement('a');  
+          link.classList.add('btn', 'btn-primary', 'card-icon');
           link.href = 'https://github.com/redeluni/'+address[i];   
           link.setAttribute('target', '"_blank');
-          link.innerHTML = 'Visita';
+          link.innerHTML = '<i class="fa'+faIcon[i]+'"></i>';
 
-          cardHeader.appendChild(h4Title);
-
-          cardBody.appendChild(cardText);
-
-          cardFooter.appendChild(link);
-        
-          card.appendChild(cardHeader);
-          card.appendChild(cardIcon);
+          cardBody.appendChild(cardTitle);
+          cardBody.appendChild(link);
           card.appendChild(cardBody);
-          card.appendChild(cardFooter);
-
-          col.appendChild(card);
-
-          if (i > 3) {
-
-            rowCard1.appendChild(col);
-          } else {
-            rowCard2.appendChild(col);
-          }
+          portfolio.appendChild(card);
         }
-        altezza = document.querySelector('#skill').offsetTop - window.innerHeight * 0.5;
+       
+
+
+        altezza = document.querySelector('#skill').offsetTop - window.innerHeight * 0.8;
         console.log('portfolio completato'); 
       break;  //CHIUDE PORTFOLIO
 
 
       case 'skill':  //APRE SKILLS ------------------------------------------------------
-        console.log('skill loading'); 
+      console.log('skill loading'); 
 
-        let skillsId = document.querySelector('#skill');
-        let skill = ['html5', 'css3', 'javascript', 'jquery', 'php', 'mysql', 'bootstrap', 'git', 'github', 'photoshop', 'inkscape', 'angularjs'];
+      let skillsId = document.querySelector('#skill');
+      skillsId.classList.add('visibileWhite');
 
-        for (let i=0; i<skill.length; i++) {
+      let sTitleBox = document.createElement('div'); 
+      sTitleBox.classList.add('section-title');
+      let sTitle = document.createElement('p'); 
+      sTitle.innerHTML = 'Skills';
+      sTitleBox.appendChild(sTitle);
+      skillsId.appendChild(sTitleBox);
 
-            let col = document.createElement('div');
-            col.classList.add('col-auto');
+      let row = document.createElement('div');                      
+      row.classList.add('row', 'justify-content-center');                   
+      skillsId.appendChild(row);
 
-            let icon = document.createElement('div');
-            icon.innerHTML = '<i class="devicon-'+skill[i]+'-plain colored"></i>'; 
-            icon.classList.add('skill-icon');
-            icon.classList.add('visibile');
+      let skill = ['html5', 'css3', 'javascript', 'jquery', 'php', 'mysql', 'bootstrap', 'git', 'github', 'photoshop', 'inkscape', 'angularjs'];
 
-            col.appendChild(icon); 
+      for (let i=0; i<skill.length; i++) {
 
-            skillsId.children[1].appendChild(col);
-        }
-        var bg = document.querySelector('#skill-bg');
-        bg.classList.add('show-bg'); 
-     
-        altezza = document.querySelector('#contact').offsetTop - window.innerHeight * 0.5;
-        console.log('skills completato'); 
+          let col = document.createElement('div');
+          col.classList.add('col-auto');
+
+          let icon = document.createElement('div');
+          icon.innerHTML = '<i class="devicon-'+skill[i]+'-plain colored"></i>'; 
+          icon.classList.add('skill-icon');
+         
+          col.appendChild(icon); 
+          row.appendChild(col);
+      }
+      let bg = document.createElement('div');    
+      bg.classList.add('show-bg');                //  <div id="skill-bg"></div>
+      bg.id = "skill-bg"; 
+      skillsId.appendChild(bg);
+   
+      altezza = document.querySelector('#contact').offsetTop - window.innerHeight * 0.8;
+      console.log('skills completato'); 
       break;  //CHIUDE SKILLS
+
 
       case 'contact': //APRE CONTACT ------------------------------------------------------
         console.log('contact loading'); 
 
-        let form = document.querySelector('.form-group'); 
         let campi = ['nome', 'cognome', 'tel', 'email'];
-        let tipo = ['text', 'text', 'tel', 'email'];
+        let tipo = ['text', 'text', 'number', 'email'];
+
+        let contact = document.querySelector('#contact'); // <div class="form-group">
+        contact.classList.add('visibileGray');
+
+        let fTitleBox = document.createElement('div'); 
+        fTitleBox.classList.add('section-title');
+        let fTitle = document.createElement('p'); 
+        fTitle.innerHTML = 'Contatti';
+        fTitleBox.appendChild(fTitle);
+        contact.appendChild(fTitleBox);
+
+        let form = document.createElement('form'); 
+        form.classList.add('contact-form');
+        form.setAttribute('method', 'post');   
+        form.setAttribute('action', '/home/contact'); //  form.setAttribute('action', 'email.php'); 
+        contact.appendChild(form);
+
+        let formGroup = document.createElement('div'); // <div class="form-group">
+        formGroup.classList.add('form-group');
+        form.appendChild(formGroup);
             
             for (let i=0; i<campi.length; i++) {
             
@@ -186,7 +236,7 @@ function scrollLoad(e){
                 label.setAttribute('for', campi[i]);
                 label.innerHTML = campi[i];
     
-                form.appendChild(label); 
+                formGroup.appendChild(label); 
     
                 let input = document.createElement('input');
                 input.setAttribute('type', tipo[i] );  //   
@@ -194,7 +244,7 @@ function scrollLoad(e){
                 input.setAttribute('name', campi[i]);    
                 input.setAttribute('placeholder', campi[i]); 
               
-                form.appendChild(input); 
+                formGroup.appendChild(input); 
             }
     
             let textarea = document.createElement('textarea');
@@ -204,7 +254,7 @@ function scrollLoad(e){
             textarea.setAttribute('name', 'testo');    
             textarea.setAttribute('placeholder', 'Descrivi il lavoro'); 
           
-            form.appendChild(textarea); 
+            formGroup.appendChild(textarea); 
     
             let button = document.createElement('input');
             button.classList.add('btn');
@@ -219,10 +269,9 @@ function scrollLoad(e){
             buttonBox.classList.add('text-center');
             buttonBox.appendChild(button);
     
-            form.appendChild(buttonBox); 
-            form.classList.add('visibile');
+            formGroup.appendChild(buttonBox); 
     
-          altezza = document.querySelector('#footer').offsetTop - window.innerHeight * 0.5;
+          altezza = document.querySelector('#footer').offsetTop - window.innerHeight * 0.8;
           console.log('contact completato');
       break; // CHIUDE CONTACT 
 
@@ -230,7 +279,11 @@ function scrollLoad(e){
       case 'footer':   //APRE FOOTER ------------------------------------------------------
         console.log('footer loading');
 
+        let siteAddress = ['github.com/redeluni', 'twitter.com/JQALP', 'www.linkedin.com/in/daniele-manzi-b57529110/', 'www.facebook.com/daniele.manzi.83'];  
+        let siteIcon = ['github', 'twitter', 'linkedin', 'facebook']; 
+
         let footer = document.querySelector('footer');
+        footer.classList.add('visibileBlue');
         let rowIcon = document.createElement('div');
         rowIcon.classList.add('row', 'justify-content-center'); // row justify-content-center
         let rowCopy = document.createElement('div');
@@ -243,17 +296,12 @@ function scrollLoad(e){
         footer.appendChild(rowIcon);
         footer.appendChild(rowCopy);
 
-      //  let immagini = document.querySelectorAll('.footer-icon');
+        for (let i=0; i<siteIcon.length;  i++) {  
 
-        let siteAddress = ['github.com/redeluni', 'twitter.com/JQALP', 'www.linkedin.com/in/daniele-manzi-b57529110/', 'www.facebook.com/daniele.manzi.83'];  
-        let siteIcon = ['github', 'twitter', 'linkedin', 'facebook']; 
+          let col = document.createElement('div');   
+          col.classList.add('col-sm-3'); //  col-auto     col-sm-3
 
-        for (let i=0; i<siteIcon.length;  i++) { 
-            
-          let col = document.createElement('div');   // <div class="col-sm-3">
-          col.classList.add('col-sm-3');
-
-          let link = document.createElement('a');   //  <a class="footer-icon" href="https://github.com/redeluni" target="_blank">
+          let link = document.createElement('a');   
           link.classList.add('footer-icon');
           link.href = 'https://'+siteAddress[i];   
           link.setAttribute('target', '"_blank');
@@ -261,7 +309,6 @@ function scrollLoad(e){
           let d = document.createElement('div');
           d.innerHTML = '<i class="fab fa-'+siteIcon[i]+'"></i>'; 
           d.classList.add('footer-fontawesome');
-          d.classList.add('visibile');
 
           rowIcon.appendChild(col); 
           col.appendChild(link); 
@@ -274,26 +321,29 @@ function scrollLoad(e){
   }
 }
 
-/*****************CHIUDE*SCROLL LOADING ******************/
+/**********END SCROLL LOADING*********/
+
 
 
 /*****JQUERY**********JQUERY*****JQUERY*****/
 
- /// SCROLL verso i DIV dopo aver cliccato un link della navbar
-  $('.nav-link').click(function(){    
-    var divId = $(this).attr('href');
-     $('html, body').animate({
-      scrollTop: $(divId).offset().top 
-    }, 600);
-  });
-
+///SMOOTH SCROLL AL DIV JQUERY
+// SCROLL verso i DIV dopo aver cliccato un link della navbar 
+/*
+$('.nav-link').click(function(){    
+  var divId = $(this).attr('href');
+   $('html, body').animate({
+    scrollTop: $(divId).offset().top 
+  }, 600);
+});
+*/
+// CHIUDE LO SMOOTH SCROLL AL DIV
 
 
 //BUTTON FADEIN on PAGE SCROLL  
 // Quando scrolliamo la pagina 
 // se la distanza dalla cima della pagina è maggiore di 'offset'
 // "#btn-scroll" appare
-
 $(window).scroll(function() { 
   var offset = 0;
   var fadeTime = 300;
@@ -317,7 +367,7 @@ $("#btn-scroll").click(function(event) {
 
 
 
-
+/*
 
 var risoluzione = $(window).width()+17; // ottiene la larghezza della finestra
 $('#risoluzione').html('<p>' + risoluzione + '</p>');
@@ -326,7 +376,7 @@ $(window).resize(function() { // This will execute whenever the window is resize
     $('#risoluzione').html('<p>' + risoluzione + '</p>');
 });
             
-
+*/
 
 
 });
