@@ -3,59 +3,163 @@ namespace App\Models;
 require 'vendor/autoload.php'; //Load Composer's autoloader
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-  // Import PHPMailer classes {PHPMailer\PHPMailer\PHPMailer e PHPMailer\PHPMailer\Exception}into the global namespace  
-    // These must be at the top of your script, not inside a function
+ 
   
 class Email{
 
     private $email; 
     private $name;
-    private $hash;
+
+    private $emailSender; 
+    private $nameSender;
+
+    private $emailRecipient; 
+    private $nameRecipient;
+
+    private $surnameSender;
+    private $telSender;
+
+    private $template;
     private $site;
     private $link;
     private $subject;
-
     private $titleTpl; 
     private $infoTpl;
     private $buttonTpl;
 
-    public function __construct($email, $hash, $name='nuovo utente', $type='verify'){
-        $this->email = $email;
-        $this->hash = $hash;
-        $this->name = $name;
-        $this->site = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER['HTTP_HOST']; // https://www.danielemanzi.it/ ||| http://localhost:3000/
-        if ( $type === 'verify' ){
 
-            $route = '/auth/signup/verify/';
-            $this->subject = 'Registrazione';
-            $this->titleTpl =  'Verifica il tuo indirizzo email'; 
-            $this->infoTpl = 'Per iniziare ad usare il tuo account devi confermare l\'indirizzo email';
-            $this->buttonTpl = 'Verifica indirizzo email';
-        } else {
+//  activeStatus  |   signup  |   newpass     |   contact
 
-            $route = '/auth/password/new/';
-            $this->subject = 'Nuova password';
-            $this->titleTpl = 'Crea una nuova password'; 
-            $this->infoTpl = 'Per creare una nuova password clicca sul bottone nuova password';
-            $this->buttonTpl = 'Nuova password';
-        }
+    public function __construct(){ 
       
-    
-        $this->link = $this->site.$route."?email=".$email."&hash=".$hash; //http://localhost:3000/auth/verify/?email=dmanzi83@hotmail.it&hash=a597e50502f5ff68e3e25b9114205d4a
-
+      
+        $this->site = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER['HTTP_HOST']; // https://www.danielemanzi.it/ ||| http://localhost:3000/
     }
 
+        public static function toMe(array $data) {
+
+            $obj = new static;
+  
+          //  $obj->name = nameValidetion($data['nome']);  // !empty($_POST['nome'])?$_POST['nome']:'senza nome'; 
+          //  $obj->surname = nameValidetion($data['cognome']); // !empty($_POST['cognome'])?$_POST['cognome']:'senza cognome';  // $_POST['cognome']; 
+          //  $obj->telephone =  telValidetion($data['tel']); //!empty($_POST['tel'])?$_POST['tel']:'senza tel'; //  $_POST['tel']; 
+          //  $obj->email = $data['email'];
+          //  $obj->body =  $data['testo'];
+
+            $obj->nameSender = $data['nome'];
+            $obj->emailSender =  $data['email'];
+            $obj->surnameSender = $data['cognome']; 
+            $obj->telSender = $data['tel']; 
+
+
+            $obj->nameRecipient = 'Daniele Manzi';
+            $obj->emailRecipient = 'dmanzi83@hotmail.it';
+            
+            $obj->subject = 'Info';
+            $obj->template = 'emailToMe'; 
+            $obj->infoTpl = $data['testo'];
+            $obj->titleTpl = 'Ciao Daniele sei stato contattato da un visitatore dal tuo sito internet'; 
+       
+            return $obj;
+
+        }
+
+
+        public static function verify($email, $hash, $name='utente') {        // SIGNUP   ($email, $hash, $name);  // Verifica account
+
+            $obj = new static;
+
+            $obj->nameSender = 'Daniele Manzi';
+            $obj->emailSender = 'dmanzi83@gmail.com';
+            $obj->nameRecipient =  $name;
+            $obj->emailRecipient = $email;
+     
+            $obj->template = 'emailAuth'; 
+        
+            $obj->subject = 'Registrazione';
+            $obj->titleTpl = 'Verifica il tuo indirizzo email'; 
+            $obj->infoTpl = 'Per iniziare ad usare il tuo account devi confermare l\'indirizzo email';
+            $obj->buttonTpl = 'Verifica indirizzo email';
+            $route = '/auth/signup/verify/';
+            $obj->link = $obj->site.$route."?email=".$email."&hash=".$hash; //http://localhost:3000/auth/verify/?email=dmanzi83@hotmail.it&hash=a597e50502f5ff68e3e25b9114205d4a
+
+            return $obj;
+        }
+   
+
+
+        public static function newpass($email, $hash) {   // PASSWORD RESET ($email, $hash, 'newpass')
+
+            $obj = new static;
+  
+            $obj->nameSender = 'Daniele Manzi';
+            $obj->emailSender = 'dmanzi83@gmail.com';
+            $obj->emailRecipient = $email;
+         
+            $obj->template = 'emailAuth'; 
+         
+            $route = '/auth/password/new/';
+            $obj->subject = 'Nuova password';
+            $obj->titleTpl = 'Crea una nuova password'; 
+            $obj->infoTpl = 'Per creare una nuova password clicca sul bottone nuova password';
+            $obj->buttonTpl = 'Nuova password';
+            $obj->link = $obj->site.$route."?email=".$email."&hash=".$hash; //http://localhost:3000/auth/verify/?email=dmanzi83@hotmail.it&hash=a597e50502f5ff68e3e25b9114205d4a
+
+            return $obj;
+        }
+
+  
+
+    /***************************|
+    *    EMAIL INVIO            |
+    ****************************/  
+    public function sendGmail(){
+
+        $mail = new PHPMailer(true);                  
+        try { //Server settings
+
+        //  GMAIL SMTP
+        $mail->SMTPDebug = 0;                       // Enable verbose debug output
+        $mail->isSMTP();                            // Set mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';             // Specify main and backup SMTP servers    //[mailtrap: 'smtp.mailtrap.io']  
+        $mail->SMTPAuth = true;                     // Enable SMTP authentication
+        $mail->Username = 'dmanzi83@gmail.com';     // SMTP username                            //[mailtrap: 'b34b7169adb122'] 
+        $mail->Password = 'DMbr0l1@XIX83.google';   // SMTP password                            //[mailtrap: '8d0c925142f07b'] 
+        $mail->SMTPSecure = 'tls';                  // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                          // TCP port to connect to                   //[mailtrap: 465] 
+
+
+        //Recipients
+        $mail->setFrom($this->emailSender, $this->nameSender);          // mittente email e nome
+        $mail->addAddress($this->emailRecipient, $this->nameRecipient); // destinatario email e nome                  
+
+        //Content
+        $mail->isHTML(true);                                  
+        $mail->Subject = $this->subject; 
+
+        $body = require 'layout\\'.$this->template.'.tpl.php';  
+        $mail->Body = $body; 
+        $mail->AltBody = strip_tags($body);
+
+        $mail->send();
+        } catch (Exception $e) {
+            echo 'Invio email fallito! Errore: ', $mail->ErrorInfo;
+        }
+
+    }
+    
+
+    
 /***************************|
 *    EMAIL INVIO            |
 ****************************/  
 public function send(){
 
-   // require 'vendor/autoload.php'; //Load Composer's autoloader
     
-    $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-    try { //Server settings
-    
-    //  MAILTRAP SMTP
+      $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+      try { 
+
+        //  MAILTRAP SMTP
         $mail->SMTPDebug = 0;                                   // Enable verbose debug output
         $mail->isSMTP();                                        // Set mailer to use SMTP
         $mail->Host = 'smtp.mailtrap.io';                       //smtp.gmail.com  // Specify main and backup SMTP servers
@@ -64,52 +168,95 @@ public function send(){
         $mail->Password = '8d0c925142f07b';                     // DMbr0l1@XIX83.google  // SMTP password
         $mail->SMTPSecure = 'tls';                              // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 465;    
-    
-    /*
-    //  GMAIL SMTP
-        $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';                       // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'dmanzi83@gmail.com';               // SMTP username
-        $mail->Password = 'DMbr0l1@XIX83.google';             // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
-    */
+
+
         //Recipients
-        $mail->setFrom('dmanzi83@gmail.com', 'Daniele');
-        $mail->addAddress($this->email, $this->name);                       // Add a recipient
-        //$mail->addAddress('ellen@example.com');               // Name is optional
-        //$mail->addReplyTo('info@example.com', 'Information');
-        //$mail->addCC('cc@example.com');
-        //$mail->addBCC('bcc@example.com');
-    
-        //Attachments
-        //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-        //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-    
+        $mail->setFrom($this->emailSender, $this->nameSender);    // mittente email e nome
+        $mail->addAddress($this->emailRecipient, $this->nameRecipient);  // destinatario email e nome                  
+
+
         //Content
         $mail->isHTML(true);                                  // Set email format to HTML
-        $mail->Subject = $this->subject;// Crea una nuova password // Benvenuto in danielemanzi.it // Account su danielemanzi.it cancellato
-        $body = require_once 'app\views\view-auth\email.tpl.php'; //
-        $mail->Body = $body;
+        $mail->Subject = $this->subject;  // Crea una nuova password // Benvenuto in danielemanzi.it // Account su danielemanzi.it cancellato
+
+        $body = require 'layout\\'.$this->template.'.tpl.php';  
+        $mail->Body = $body; 
         $mail->AltBody = strip_tags($body);
+          
         $mail->send();
-        //echo 'Invio email riuscito!';
-    } catch (Exception $e) {
-        echo 'Invio email fallito! Error: ', $mail->ErrorInfo;
+
+        } catch (Exception $e) {
+            echo 'Invio email fallito! Errore: ', $mail->ErrorInfo;
+        }
+}
+
+
+
+
+
+
+public function nameValidetion($str) {
+
+    if ( !empty($str) ) {
+
+        if (preg_match('/^[a-zA-Z]{32}$/', $str)) {
+
+            return $str;
+        } else {
+            return 'nome invalido!'; 
+        }
+
+    } else {
+
+        return 'senza nome';
     }
-    
+}
+
+public function telValidetion($num) {
+
+    if ( !empty($num) ) {
+
+        if (preg_match('/^[0-9]{15}$/', $num)) {
+
+            return $num;
+        } else {
+            return 'numero di telefono invalido!'; 
+        }
+
+    } else {
+
+        return 'senza telefono';
     }
-    
+}
+
+/***************************************************************|
+* VALIDATE EMAIL BASE                                          |
+* fa una prima validificazione del 'email                      |
+* Controlla: che non sia vuota e che abbia caratteri validi    |
+****************************************************************/
+public function validateEmail()
+{
+$this->email = trim($this->email);
+
+if (empty($this->email)) {
+    $this->message .= "Il campo <strong>email</strong> è vuoto.<br>";
+} 
+else 
+{
+    /* FILTER_SANITIZE_EMAIL
+    Rimuove tutti i caratteri eccetto le lettere, i numeri e !#$%&'*+-/=?^_`{|}~@.[]
+    ma lascia le virgolette singole ['] perciò non è sufficiente.*/
+    $this->email = filter_var($this->email, FILTER_SANITIZE_EMAIL);
+    if ($this->email === false) {
+        $this->message .= "<strong>".$this->email."</strong> non è un email valida.<br>";
+    }
+    else{
+        return $this->email;
+    }
+}
+}  
 
 
-// Titolo-> Verifica il tuo indirizzo email | Crea una nuova password
-// Info-> Per iniziare ad usare il tuo account devi confermare l'indirizzo email | Per creare una nuova password clicca sul bottone nuova password
-// bottone-> Verifica indirizzo email | Creare nuova password
-
-// note.1-> Se non sei stato tu ad ad iscriverti, ignora questa email. L' account verrÃ  chiuso
-// note.2-> Se il bottone non funziona copia il link qui sotto e incollalo nel URL del tuo browser
 
 }
 

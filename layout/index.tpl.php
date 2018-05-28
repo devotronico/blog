@@ -25,9 +25,9 @@
     <div class="<?=$this->grid?>">
       <?=$this->content?>
     </div>
-  <script src="/js/jquery.js" ></script>
-  <script src="/js/tether.js" ></script>
-  <script src="/js/bootstrap.min.js"></script>  
+  <script src="/js/jquery.js"></script>
+  <!-- <script src="/js/tether.js"></script>
+  <script src="/js/bootstrap.min.js"></script>   -->
   <script src="/js/<?=$this->script?>.js"></script> 
   </body>
 </html>

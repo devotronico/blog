@@ -25,10 +25,9 @@ return [
             'auth/:id/administrator' => 'App\Controllers\AuthController@setAdministrator',
             'auth/:id/contributor' => 'App\Controllers\AuthController@setContributor',
             'auth/:id/reader' => 'App\Controllers\AuthController@setReader',
-         
-            
         ],
         'POST' => [
+            'home/contact' => 'App\Controllers\HomeController@contact',
             'post/save' => 'App\Controllers\PostController@savePost',
             'post/:id/update' => 'App\Controllers\PostController@updatePost',
             'post/:id/comment' => 'App\Controllers\PostController@saveComment',
