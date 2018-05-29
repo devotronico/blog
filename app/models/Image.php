@@ -20,15 +20,11 @@ class Image {
 
 public function __construct(int $max_width, int $max_height, int $max_size, string $folder, array $data ){
 
-   // echo '<pre>', print_r($data) ,'</pre>';
  
     if ( !$data['file']['error']  ||  is_uploaded_file($data['file']['tmp_name'])    )  {// { exit;} // file non caricato
    
-        //$this->message  = empty($data) ? 'Nessun file caricato': '';
-        //$this->message .= !isset($data['file']) ? 'Non hai inviato nessun file': '';
-        //$this->message .= !is_uploaded_file($data['file']['tmp_name']) ? 'Possibile file upload attack': '';
-        //$this->message .=  $data['file']['error']  ? 'Si è verificato un errore nel caricamento del file': '';
-        $this->message =  $data['file']['size'] > $max_size ? "Il file caricato supera il limite di ".$max_size." bytes": '';
+        $MB = $max_size * 0.000001;
+        $this->message =  $data['file']['size'] > $max_size ? "Il file caricato supera il limite di ".$MB." Megabytes": '';
 
         $this->fileName = $data['file']['name'];
         $this->fileType = $data['file']['type'];

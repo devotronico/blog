@@ -1,4 +1,5 @@
 <article>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
     <h1><?=$post->title?></h1>
     <span><h2>&#x2709 &#x1F5BC &#x1F40C</h2></span>
     <p>
