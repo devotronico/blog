@@ -30,9 +30,9 @@ class AuthController extends Controller
         $Auth = new Auth($this->conn); 
         $data = $Auth->profile($id); 
         $user = $Auth->getUserType();
-        //$message = 'pagina del profilo';
+        $link="profile";
         $files=['navbar-auth', 'profile'];
-        $this->content = View('auth', $files, compact( 'data', 'user')); // 'message',
+        $this->content = View('auth', $files, compact( 'message', 'data', 'user', 'link')); // 'message',
     }
 
 /***************************************************************************************************************|
@@ -77,23 +77,14 @@ class AuthController extends Controller
      
         if (  empty( $Auth->getMessage()) && empty( $Image->getMessage()) ) {
 
-            $data = $Auth->profile($id); 
-            $user = $Auth->getUserType();
-            $files=['navbar-auth', 'profile'];
-            $this->content = View('auth', $files, compact( 'data', 'user')); 
+            $this->profile($id);   
         } else {
 
             $message = 'Si è verificato un errore';
             $message .= $Auth->getMessage();
             $message .= $Image->getMessage();
-            $data = $Auth->profile($id); 
-            $user = $Auth->getUserType();
-            $files=['navbar-auth', 'profile'];
-            $this->content = View('auth', $files, compact('message', 'data', 'user')); 
+            $this->profile($id); 
         }
-        
-
-
     }
     
 
@@ -114,40 +105,45 @@ public function signupForm(){
     $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
 }
 
-/***********************************************************************************************|
-* SIGNUP STORE      metodo = POST    route = auth/signup/store                                  |
-* Con il submit del form con il metodo POST                                                     |
-* se i dati del form {email e password} sono validi si salvano nel database                     | 
-* e il sistema invierà una Mail all'utente con un link che contiene i parametri email e hash    |                                    
-************************************************************************************************/
+/***************************************************************************************************************************************************|
+* SIGNUP STORE      metodo = POST    route = auth/signup/store                                                                                      |
+* Il sistema per consentire la registrazione controlla prima se l'immaggine che inseriamo nel form rispetti i requisiti richiesti                   |
+* se non viene inserita nessuna immagine il sistema ci assegnerà un immagine di default                                                             |
+* se l'inserimento dell'immagine ha avuto successo verrà salvato una copia dell'immagine nella cartella public/img/auth                             |
+* a questo punto il sistema può procedere per verificare i restanti dati da noi inseriti nel form. Se sono validi allora li salverà nel database    | 
+* Se non si sono verificati errori fino a questo punto il sistema ci invierà una Mail con un link che contiene i parametri email e hash             |                                    
+****************************************************************************************************************************************************/
 
-    // come argomento del metodo signup($_POST) della classe Auth passiamo i dati che sono un array di chiavi valori {$_POST['email'], $_POST['password'] }
- // preleviamo dalla classe Auth la variabile $message - se non cè - allora la 
-   //registrazione ha avuto successo e verrà visualizzato il messaggio che
-   // ci avvisa che ci ci è stata inviata una mail per confermare l'account
-public function signupStore(){ // 
+public function signupStore(){ 
 
-    $Image = new Image(80, 80, 100000, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
+    $Image = new Image(80, 80, 500000, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
 
-    $Auth = new Auth($this->conn, $_POST);  
-      
-    $imageName = !is_null($Image->getNewImageName()) ? $Image->getNewImageName() : 'default.jpg';
-    $Auth->signup($imageName); 
-  
-    if (  empty( $Auth->getMessage()) &&  empty( $Image->getMessage()) )
-    {
+    if ( empty( $Image->getMessage()) ) {
+
+        $imageName = !is_null($Image->getNewImageName()) ? $Image->getNewImageName() : 'default.jpg';
+
+        $Auth = new Auth($this->conn, $_POST);  
+        $Auth->signup($imageName); 
+
+        if (  empty( $Auth->getMessage()) ) {
+
+            $message =  "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
+            $files=['navbar-auth', 'signup.success'];
+            $this->content = View('auth', $files, compact('message')); 
+        } else {
+
+            $imgMessage = !empty( $Image->getMessage()) ? $Image->getMessage() : '';
+            $message = $Auth->getMessage(); 
+            $files=['navbar-auth', 'signup.form'];
+            $this->content = View('auth', $files, compact('imgMessage','message')); 
     
-        $message =  "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
-        $files=['navbar-auth', 'signup.success'];
-        $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
-    }
-    else
-    {
+        }
+    } else {
+
         $imgMessage = !empty( $Image->getMessage()) ? $Image->getMessage() : '';
-        $message = $Auth->getMessage(); // redirect("/auth/signup/store?message=$message");
         $files=['navbar-auth', 'signup.form'];
-        $this->content = View('auth', $files, compact('imgMessage','message'));  // ritorniamo il template con il form per fare la registrazione
-    }  
+        $this->content = View('auth', $files, compact('imgMessage'));  
+    }
 }
 
 

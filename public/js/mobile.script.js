@@ -117,6 +117,30 @@ function scrollLoad(e){
 
       case 'portfolio': //APRE PORTFOLIO ------------------------------------------------------
         console.log('portfolio loading'); 
+/*
+        // <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        let fontawesome = document.createElement('link');
+        fontawesome.setAttribute('rel', 'stylesheet');   
+        fontawesome.setAttribute('href', 'https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css');  
+        fontawesome.setAttribute('integrity', 'sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp'); 
+        fontawesome.setAttribute('crossorigin', 'anonymous'); */
+
+        //  <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
+        let devicon = document.createElement('link');
+        devicon.setAttribute('rel', 'stylesheet');   
+        devicon.setAttribute('href', 'https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css');
+
+        let head = document.querySelector('head');
+      //  head.appendChild(fontawesome);
+        head.appendChild(devicon);
+
+         // src="/js/jquery.js"
+        let scriptJQ = document.createElement('script');
+        scriptJQ.setAttribute('src', '/js/jquery.js');   
+        let body = document.querySelector('body');
+        body.appendChild(scriptJQ);
+
+
 
         let titleList = ['Meteo', 'Social Network', 'Blog', 'Android Game', 'Wordpress', 'Appunti', 'Cryptovalute', 'Database'];
         let faIcon = ['s fa-sun', 'b fa-connectdevelop', 'b fa-blogger-b', 'b fa-android', 'b fa-wordpress', 's fa-sticky-note', 'b fa-bitcoin', 's fa-database'];

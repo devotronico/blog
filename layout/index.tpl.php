@@ -15,9 +15,9 @@
     <!-- FONTAWESOME -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!-- DEVICON -->
-    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css"> -->
     <!-- PRETTYPRINT -->
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
+    <!-- <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script> -->
     <title>Il mio sito</title>
   </head>
   <body>
@@ -25,9 +25,12 @@
     <div class="<?=$this->grid?>">
       <?=$this->content?>
     </div>
-  <script src="/js/jquery.js"></script>
-  <!-- <script src="/js/tether.js"></script>
-  <script src="/js/bootstrap.min.js"></script>   -->
+    <!-- Da eliminare  -->
+  <!-- <script src="/js/jquery.js"></script>   -->
+  <!-- Mobile NO | Desktop NO -->
+  <!-- <script src="/js/tether.js"></script>    -->
+   <!-- Mobile NO -->
+  <!-- <script src="/js/bootstrap.min.js"></script>   -->
   <script src="/js/<?=$this->script?>.js"></script> 
   </body>
 </html>

@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 class Controller {
     //$layout = { contiene tutta la pagina html e la variabile $content } 
-    protected $layout = 'layout/index.tpl.php'; // percorso del layout completo
+    protected $layout; // percorso del layout completo
     //$content = viene chiamato nel template 'layout/index.tpl.php' e visualizza il contenuto della pagina {template e variabili} 
     protected $content; // $content
     //$page =  home || blog || auth { è il nome della cartella da cui vengono presi i template } \app\views\view-$page\file.tpl.php
@@ -48,7 +48,7 @@ public function display(){
  
     $this->script = $this->device.'.script'; // è il file javascript da caricare
     $this->style = $this->device.'.'.$this->page; // è il file css da caricare
- 
+    $this->layout = 'layout/'.$this->device.'.index.tpl.php'; // layout/desktop.index.tpl.php // 'layout/index.tpl.php'
     require $this->layout;   
 }
     

@@ -1,6 +1,6 @@
  <nav class="navbar fixed-top navbar-expand-lg navbar-dark">     
     <a class="navbar-brand" href="/">
-        <img src="img/logo.svg" height="100%" class="d-inline-block align-top" alt="">
+        <img src="/img/logo.svg" height="100%" class="d-inline-block align-top" alt="">
     </a>
      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-div" aria-controls="navbar-div" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
