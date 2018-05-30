@@ -26,7 +26,7 @@
       <?=$this->content?>
     </div>
     <!-- Da eliminare  -->
-  <!-- <script src="/js/jquery.js"></script>   -->
+   <script src="/js/jquery.js"></script>   
   <!-- Mobile NO | Desktop NO -->
   <!-- <script src="/js/tether.js"></script>    -->
    <!-- Mobile NO -->

@@ -1,12 +1,19 @@
 
-.visibileBlue {background-color:#2c8cff;animation: alpha 5s forwards}
-.visibileGray {background-color:#202225;animation: alpha 5s forwards}
-.visibileWhite {animation: alpha 5s forwards}
+.visibileBlue {background-color:#2c8cff;animation: alphaTo1 5s forwards}
+.visibileGray {background-color:#202225;animation: alphaTo1 5s forwards}
+.visibileWhite {background-color:#fff;animation: alphaTo1 5s forwards}
 
-@keyframes alpha {
-  from {opacity: 0}
-  to   {opacity: 1}
-} 
+@keyframes alphaTo1 {from {opacity: 0} to {opacity: 1}} 
+@keyframes alphaTo05 {from {opacity: 0} to {opacity: 0.7}} 
+@keyframes alphaTo0 {from {opacity:0.7} to {opacity:0}}
+
+
+@keyframes shiftTop { from {bottom:0} to {bottom:40px} }
+@keyframes shiftBottom{ from{bottom:40px}top{bottom:0}  }
+
+.scrollTop {animation:alphaTo0 1s forwards, shiftBottom 1s forwards }
+.scrollDown{animation:alphaTo05 1s forwards, shiftTop 1s forwards}  
+
 
 /********** PORTRAIT **********PORTRAIT ********** PORTRAIT ********** PORTRAIT ********** PORTRAIT ********** PORTRAIT **********/
 @media screen and (orientation: portrait) {
@@ -23,7 +30,7 @@
   *{padding:0;margin:0}
   #risoluzione{display:none;position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:pink} 
   html{color:red}  
-  body{background-color:#fff} 
+  body{height:auto;background-color:#fff} 
   #box-sign{display:none} 
   .container-fluid {display:block;padding:0;background-color:#fff} 
   .section{min-height:100vh} 
@@ -32,8 +39,9 @@
   .row{margin:0}
   .btn{border:none; color:#8c929b;background-color:#eaeff6} 
   .btn:hover{color:#fff;background-color:#454B53} 
-  #btn-scroll{display:none;position:fixed;bottom:20px;right:20px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.7;font-size:16vw;color:#eaeff6}
-  
+  /* #btn-scroll{position:fixed;bottom:30px;right:20px;z-index:99;cursor:pointer;outline:none;border:none;font-size:3rem;opacity:0;color:salmon} */
+  #btn-scroll{position:fixed;bottom:0;right:20px;z-index:99;outline:none;font-size:3rem;opacity:0;color:salmon}
+
   /********NEW*NAVBAR*230*******/ 
   header{position:fixed;width:100vw;z-index: 1000;background-color:salmon;opacity:1}
   .logo{padding:0.5rem;font-size:2rem;float:left;text-decoration:none;color:#fff} /* background-color:blueviolet; */
@@ -52,9 +60,9 @@
   /*********COVER*230*******/  
   #cover{padding:0;background-color:#202225}    
   #cover-animation{min-height:100vh;}
-  #cover-foto{margin-top:60px;border-radius:50%;width:120px;}
-  #cover-text{font-size:1.5rem;font-weight:bolder;color:#fff;padding:0;margin-bottom:4px;} 
-  #cover-btn{border:3px solid #fff;background-color:transparent;border-radius:0;}
+  #cover-foto{margin-top:60px;border-radius:50%;width:120px;opacity:0.5}
+  #cover-text{font-size:1.7rem;font-weight:bolder;color:#fff;padding:0;margin-bottom:4px;} 
+  #cover-btn{border:3px solid#fff;background-color:transparent;border-radius:0;font-size:1.5rem;font-weight: bolder; color:#fff;}
   
   /*********PORTFOLIO*230*******/  
   #portfolio{display:block;padding:0.5rem}   
@@ -99,14 +107,14 @@
 
   /*********GENERAL*320*******/ 
     #risoluzione{background-color:yellow}     
-    #btn-scroll{bottom:12px;right:24px}
-    #btn-scroll:hover{opacity:1}
+    /* #btn-scroll{bottom:12px;right:24px} */
+    /* #btn-scroll:hover{opacity:1} */
   
   /********NEW*NAVBAR*320*******/ 
   header{position:fixed;width:100vw;background-color:salmon}
   .logo{padding:0.5rem;font-size:2rem;float:left;text-decoration:none;color:#fff} /* background-color:blueviolet; */
   .logo::before{content: '\265C'}/* 265C */
-  #toggleNav{float:right;border-left:1px solid#666;text-align:center;width:70px;height:65px;font-family:Arial, Helvetica, sans-serif}/* background-color:blue; */
+  #toggleNav{float:right;border-left:1px dotted #666;text-align:center;width:70px;height:65px;font-family:Arial, Helvetica, sans-serif}/* background-color:blue; */
   #toggleNav:before{content:"\2261";font-size:3rem;line-height:4rem;color:#fff}/* background-color:green; */
   #toggleNav.active:before{font-size:2.2rem;content:'\2716';line-height:4rem;color:#fff} /*content:'\78';*//* background-color:green;*/
   nav{display:none;clear:both} /* padding: 0.5rem; margin: 0 0.5rem; *//* background-color:red; */

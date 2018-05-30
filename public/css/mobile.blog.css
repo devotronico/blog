@@ -1,6 +1,6 @@
 
 
-@media screen and (orientation: portrait) {
+@media screen and (orientation: portrait)  {
 
 /***BLOG CSS***/    
 @media(min-width:0){
@@ -65,8 +65,15 @@
   #btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size: 16vw;}
   #btn-scroll:hover{opacity:1;}
   }
-    }
-    @media screen and (orientation: landscape) {
+
+  @media(min-width:320px){
+
+  }
+}
+
+
+
+@media screen and (orientation: landscape) {
     @media(min-width:260px){
     
         }

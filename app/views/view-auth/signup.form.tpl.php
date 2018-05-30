@@ -15,12 +15,12 @@
             <div class="input-group-addon"><i class="fas fa-image fa-lg"></i></div>
             <input type="file" class="form-control" name="file"> 
         </div>
-        <small>il file deve essere minore di 0.5 MB</small>
+        <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>   
     </div>
 
 <?php if (!empty($message)): ?>
     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-        <?= $message ?>
+        <?=$message?>
         <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
         </button>

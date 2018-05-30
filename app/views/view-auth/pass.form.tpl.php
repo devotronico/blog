@@ -1,5 +1,5 @@
 <form id='auth' class='auth-form' action='/auth/password/check' method="POST" autocomplete='off'>
-<h2 class="container-title text-center"><i class="fab fa-wpforms"></i>&nbsp;Password dimenticata?</h2>
+<h2 class="container-title text-center">Password dimenticata?</h2>
 <div class="<?=isset($message)? 'alert alert-danger' : '' ?>" role="alert"><?=isset($message)? $message : '' ?></div>
     <div>Per creare una nuova password inserisci la tua email</div>
   <div class="form-group">

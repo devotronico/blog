@@ -34,10 +34,10 @@ GLOBAL $navbarLink;
           <a class="nav-link" href="/auth/logout">Logout</a> 
         </li>
       <?php else: ?>
-      <li class="nav-item <?=$navbarLink=='auth/signin/form'? 'active' : 'deactive' ?>">
+      <li class="nav-item <?=$link=='signin'? 'active' : 'deactive' ?>">
           <a class="nav-link" href="/auth/signin/form">Accedi</a> 
         </li>
-        <li class="nav-item <?=$navbarLink=='auth/signup/form'? 'active' : 'deactive' ?>">
+        <li class="nav-item <?=$link=='signup'? 'active' : 'deactive' ?>">
           <a class="nav-link" href="/auth/signup/form">Registrati</a> 
         </li>
       <?php endif ?>
