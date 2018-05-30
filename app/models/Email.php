@@ -113,7 +113,7 @@ class Email{
     /***************************|
     *    EMAIL INVIO            |
     ****************************/  
-    public function send(){
+    public function sendtest(){
 
         $mail = new PHPMailer(true);                  
         try { //Server settings
@@ -153,7 +153,7 @@ class Email{
 /***************************|
 *    EMAIL INVIO            |
 ****************************/  
-public function sendTest(){
+public function send(){
 
     
       $mail = new PHPMailer(true);                              // Passing `true` enables exceptions

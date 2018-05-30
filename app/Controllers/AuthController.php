@@ -99,10 +99,11 @@ class AuthController extends Controller
 ************************************************************************************************************/
 public function signupForm(){ 
  
-    $message = isset($_GET['message']) ? $_GET['message'] : '';
-
+    $bytes = 500000;
+    $megabytes = $bytes * 0.000001;
     $files=['navbar-auth', 'signup.form'];
-    $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
+    $link="signup";
+    $this->content = View('auth', $files, compact('link','megabytes')); // non eliminare la var message
 }
 
 /***************************************************************************************************************************************************|
@@ -116,7 +117,9 @@ public function signupForm(){
 
 public function signupStore(){ 
 
-    $Image = new Image(80, 80, 500000, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
+    $bytes = 500000;
+    $megabytes = $bytes * 0.000001;
+    $Image = new Image(80, 80, $bytes, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
 
     if ( empty( $Image->getMessage()) ) {
 
@@ -127,22 +130,22 @@ public function signupStore(){
 
         if (  empty( $Auth->getMessage()) ) {
 
-            $message =  "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
+            $message = "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
             $files=['navbar-auth', 'signup.success'];
             $this->content = View('auth', $files, compact('message')); 
         } else {
 
-            $imgMessage = !empty( $Image->getMessage()) ? $Image->getMessage() : '';
             $message = $Auth->getMessage(); 
             $files=['navbar-auth', 'signup.form'];
-            $this->content = View('auth', $files, compact('imgMessage','message')); 
-    
+            $link="signup";
+            $this->content = View('auth', $files, compact('link', 'megabytes', 'message')); 
         }
     } else {
 
-        $imgMessage = !empty( $Image->getMessage()) ? $Image->getMessage() : '';
+        $imgMessage = $Image->getMessage();
         $files=['navbar-auth', 'signup.form'];
-        $this->content = View('auth', $files, compact('imgMessage'));  
+        $link="signup";
+        $this->content = View('auth', $files, compact('link','megabytes', 'imgMessage'));  
     }
 }
 
@@ -164,11 +167,6 @@ public function signupVerify() {
 }
 
 
-
-
-
-
-
 //====================================================================================================== 
 //========== SIGNIN GROUP  ========================= SIGNIN GROUP  =====================================
 //====================================================================================================== 
@@ -178,39 +176,42 @@ public function signupVerify() {
 * Se si clicca sul link signin che sta nella Navbar Carica il template del Form per fare il Login   |
 *****************************************************************************************************/
 public function signinForm(){    
-    $message = isset($_GET['message']) ? $_GET['message'] : '';
-    $files=['navbar-auth', 'signin.form'];
-    $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare il Login
-}
-
-
-/***************************************************************|
-* SIGNIN ACCESS     metodo = POST    route = auth/signin/access |     
-****************************************************************/
-public function signinAccess() {  //    
-$Auth = new Auth($this->conn, $_POST);
-// come argomento del metodo signin($_POST) della classe Auth passiamo i dati che sono un array di chiavi valori {$_POST['email'], $_POST['password'] }
-$email = $Auth->signin(); 
    
-// preleviamo dalla classe Auth la variabile $message - se non cè - allora 
-// il login ha avuto successo e verrà visualizzato il messaggio che ce lo confermerà
-if (  empty( $Auth->getMessage()) )
-{
-    if (isset($_SESSION['user_id'])): 
-        $message = "Login effettuato con Successo!";   
-        $files=['navbar-auth', 'signin.success'];
-    $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
-    else:   
-        $files=['navbar-auth', 'signin.success'];
-        $this->content = View('auth', $files, compact('email'));  // ritorniamo il template con il form per fare la registrazione
-    endif;
-}
-else
-{
-    $message = $Auth->getMessage();
     $files=['navbar-auth', 'signin.form'];
-    $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
-}  
+    $link="signin";
+    $this->content = View('auth', $files, compact('link'));  // ritorniamo il template con il form per fare il Login
+}
+
+/***************************************************************************************************************************|
+* SIGNIN ACCESS     metodo = POST    route = auth/signin/access                                                             | 
+* In questo metodo vengono controllate la email e la password che abbiamo inserito nel form del login                       |
+* Se sono correte allora verremo indirizzati in una pagina che ci da il benvenuto [a]                                       |
+* Altrimenti se l'email e la password sono errate resteremo nella pagina del login con un messaggio di errore [b]           | 
+* Se proviamo a fare il login senza aver prima attivato l'account dalla mail che ci ha inviato il sistema durante la fase   | 
+* di registrazione allora il sistema ci invierà un'altra mail chiedendoci di attivare l'account [c]                         |    
+****************************************************************************************************************************/
+public function signinAccess() {  
+    $Auth = new Auth($this->conn, $_POST);
+    $email = $Auth->signin(); 
+    
+    if (  empty( $Auth->getMessage()) )
+    {
+        if (isset($_SESSION['user_id'])): 
+            $message = "Login effettuato con Successo!";   
+            $files=['navbar-auth', 'signin.message'];
+            $this->content = View('auth', $files, compact('message')); // [a]   
+        else:   
+            $files=['navbar-auth', 'signin.message'];
+            $this->content = View('auth', $files, compact('email'));  // [b]  
+        endif;
+    }
+    else
+    {
+        $message = $Auth->getMessage(); 
+        $files=['navbar-auth', 'signin.form'];
+        $link="signin";
+        $this->content = View('auth', $files, compact('link','message')); // [c]  
+    }  
 
 }
 
@@ -242,14 +243,15 @@ public function logout(){
 ****************************************************************************************************************************************/
 
 /***********************************************************************************************************************************|
-* PASSWOR FORM                                                                                                                      |
+* PASSWOR FORM      metodo = GET    route = auth/password/form                                                                      |                                                                                                                    |
 * Dal form del login se l'utente non ricorda la password cliccando sul link del form 'password dimenticata?' si attiverà la rotta   |
-* '/auth/password/lost' che attiva il metodo 'passwordLost' di questa classe il quale ci mostrerà il template del form dove bisogna |
+* '/auth/password/lost' che attiva il metodo 'passwordForm' di questa classe il quale ci mostrerà il template del form dove bisogna |
 * inserire solo l'email e premere il bottone [metodo POST]                                                                          |
 ************************************************************************************************************************************/
 public function passwordForm(){
+
     $files=['navbar-auth', 'pass.form'];            
-    $this->content = View('auth', $files);  // template del form per inserimento della email
+    $this->content = View('auth', $files);  
 }
 
 /***************************************************************************************************************************************|
@@ -265,7 +267,7 @@ public function passwordCheck(){
  
     if ( empty( $Auth->getMessage()) )
     {
-        $message = "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
+        $message = "Ti abbiamo mandato una email al tuo indirizzo di posta <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per creare una nuova password. Se l'email non ti arriva, controlla la tua cartella spam o prova a ripetere la procedura di cambio password";
         $files=['navbar-auth', 'pass.message']; 
         $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
     }
@@ -275,7 +277,6 @@ public function passwordCheck(){
         $files=['navbar-auth', 'pass.form']; 
         $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
     }  
-
  }
 
 

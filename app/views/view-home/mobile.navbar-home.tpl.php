@@ -1,17 +1,17 @@
-    <!-- NAVBAR -->
-    <header>
-      <a href="#home" class="logo" data-scroll>dm</a>
-      <div id="toggleNav"></div>
-      <nav class="nav-collapse">
-        <ul>
-          <li class="menu-item active"><a href="/blog" data-scroll>blog</a></li>
-          <li class="menu-item"><a href="#portfolio" data-scroll>projects</a></li>
-          <li class="menu-item"><a href="#skill" data-scroll>skills</a></li>
-          <li class="menu-item"><a href="#contact" data-scroll>contact</a></li>
-        </ul>
-      </nav>
-    </header>
-     <!-- END NAVBAR -->
+<!-- NAVBAR HOME -->
+<header>
+  <a href="#home" class="logo">dm</a>
+  <div id="toggleNav" class="navClass"></div>
+  <nav class="nav-collapse">
+    <ul>
+      <li class="navClass"><a class="navClass" href="/blog" data-scroll>blog</a></li>
+      <li class="navClass"><a class="navClass" href="#portfolio" data-scroll>projects</a></li>
+      <li class="navClass"><a class="navClass" href="#skill" data-scroll>skills</a></li>
+      <li class="navClass"><a class="navClass" href="#contact" data-scroll>contact</a></li>
+    </ul>
+  </nav>
+</header>
+<!-- END NAVBAR HOME -->
 
 
 
