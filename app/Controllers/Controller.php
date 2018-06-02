@@ -10,7 +10,9 @@ class Controller {
     protected $page; 
     //$device =  mobile || desktop {serve a separare file e template a seconda se siamo su un dispositivo desktop o mobile } 
     protected $device;
-    //$style =  { identifica il file css da linkare nel template a seconda del dispositivo e della pagina } 
+    //$navbar =  { identifica il file CSS della NAVBAR da linkare nel template a seconda del dispositivo e della pagina } 
+    protected $navbar;
+    //$style =  { identifica il file CSS da linkare nel template a seconda del dispositivo e della pagina } 
     protected $style;
     //$script =  { identifica il file JS da linkare nel template a seconda del dispositivo } 
     protected $script;
@@ -47,6 +49,10 @@ public function __construct(){
 public function display(){
  
     $this->script = $this->device.'.script'; // è il file javascript da caricare
+    if ( $this->page === 'home' ) {
+        $this->navbar = $this->device.'.navbar.'.$this->page; // è il file css da caricare
+    } else {  $this->navbar = $this->device.'.navbar.blog'; }
+    
     $this->style = $this->device.'.'.$this->page; // è il file css da caricare
     $this->layout = 'layout/'.$this->device.'.index.tpl.php'; // layout/desktop.index.tpl.php // 'layout/index.tpl.php'
     require $this->layout;   

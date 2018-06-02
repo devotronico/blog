@@ -1,81 +1,29 @@
-
-
-@media screen and (orientation: portrait)  {
-
-/***BLOG CSS***/    
-@media(min-width:0){
-    *{padding:0;margin:0;}
-    .container{display:none;} 
-    #box-sign{width:80%;margin:10px auto;text-align:center;}
-    #sign{display:inline;writing-mode:vertical-rl;text-orientation:upright;}
-  }
-    
-  /*260***XS****260**************************************************************************************************260*/
-  @media(min-width:260px){
-  *{padding:0;margin:0;}
-  #risoluzione{position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow;}     
-  html{color:black;}  
-  body{background-color:#999;}  
-  #box-sign{display:none;} 
-  .container{display:block;padding:0;min-height:100vh;background-color:#fff;}
-  .btn{color: #fff;background-color:#333;border: none;} 
-  .btn:hover{color: #fff;background-color:red;} 
-  
-  /*********NAVBAR********/  
-  
-  nav{padding:0;color:#fff;background-color:#333;}
-  .navbar{padding:0;}
-  .navbar-brand{padding:0; margin-left:20px; height:100px;}
-  .navbar-toggler{margin-right: 20px;} 
-  #navbar-div{margin:0;padding:0;}      /*DIV*/         
-  .nav-item{text-align: center;} /*LI */
-  .nav-link{padding:20px 0;font-size:25px;border-top: 1px solid #999;} 
-  .nav-link:hover{background-color: #666;}  
-  
-  /*********BLOG********/ 
-  article{padding:10px;background-color:#fff;}
-  
-  .textarea-box{
-    width:96%;
-    padding:8px; 
-    margin:0 auto;
-    border:1px dashed #999;
-    text-align:center; 
-  }
-  
-  .comment-box{
-    padding:8px;
-    background-color:#999;
-  }
-  .comment-head{
-    padding:6px;
-    background-color:#ccc;
-    border-bottom:1px dashed #999;
-  }
-  
-  .right{float:right;}
-  .clear{clear:both;}
-  .comment-body{padding:6px;background-color:#fff;}
-  
-  
-  /*********FOOTER********/ 
-  footer{padding:70px 0;background-color:#fff;} 
-  #copyright{margin:10px;padding:10px;}
-     
-  #btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size: 16vw;}
-  #btn-scroll:hover{opacity:1;}
-  }
-
-  @media(min-width:320px){
-
-  }
+@media screen and (orientation: portrait)  {   
+@media(min-width:0) {
 }
+/*260***XS****260**************************************************************************************************260*/
+@media(min-width:230px){
+/* ALL POSTS*/
+main{font-size:0.8rem;background-color:yellow}
+#blog{padding:74px 0 0;background-color:#fff} 
+.posts{padding:1rem 1rem 0 1rem;margin:0}
+.posts h1{font-size:1.2rem;}
+.comment-num{margin:0}
+.posts hr{margin-bottom:0}
 
-
-
+/*********FOOTER********/ 
+footer{padding:2rem 0 6rem;background-color:#fff} 
+footer li:nth-of-type(1){border:none}
+.page-item{padding: 0;border:none;}
+.pagination-lg .page-link {padding: 1rem 1.2rem;}
+#copyright{margin:10px;padding:10px;}
+#btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size: 16vw;}
+#btn-scroll:hover{opacity:1;}
+}
+@media(min-width:320px){
+}
+}
 @media screen and (orientation: landscape) {
-    @media(min-width:260px){
-    
-        }
-    }
-    
+@media(min-width:260px){
+}
+}

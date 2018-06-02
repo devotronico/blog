@@ -10,57 +10,57 @@ class PostController extends Controller
 {
     protected $Post ;
   
-    public function __construct(PDO $conn){ 
+    public function __construct(PDO $conn) { 
   
         parent::__construct(); 
         $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
         $this->Post = new Post($conn);  // creiamo qui un istanza della classe 'Post' e gli passiamo la connessione al database
-        $this->page = 'blog';
+       
     }
-
 
 
 /***************************************************|
 * GETPOSTS          metodo = GET    path = posts    |
 * Otteniamo tutti i post                            |
 ****************************************************/
-    public function getPosts(){
-     
+ /*   public function getPostsOld(){
+        $this->page = 'blog';
         $totalPosts = $this->Post->totalPosts(); 
+        $link="posts";
         if ( empty($totalPosts ) ) { 
 
-            $files=['navbar-blog', 'post.empty'];
-            $this->content = View('blog', $files);
+            $files=[$this->device.'.navbar-blog', 'post.empty'];
+            $this->content = View('blog', $files, compact('link'));
 
          } else {
+
             $posts = $this->Post->all(); // prendiamo tutti i post dal database 
-            $files=['navbar-blog', 'post.all', $this->device.'.pagination'];
+            $files=[$this->device.'.navbar-blog', 'post.all', $this->device.'.pagination'];
             $page = 1;
-            $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts')); 
+            $this->content = View('blog', $files, compact('link', 'posts', 'page', 'totalPosts')); 
          }
     }
-
- 
+*/
 
 /***********************************************************|
 * GETPOSTS          metodo = GET    path = posts/page/id    |
 * Otteniamo tutti i post di una pagina                      |             
 ************************************************************/
-public function getPostsPage($page){ 
-  
+public function getPosts($page=1){ 
+    $this->page = 'blog';
     $totalPosts = $this->Post->totalPosts();
- 
+    $link="posts";
     if ( empty($totalPosts ) ) { 
 
-        $files=['navbar-blog', 'post.empty'];
-        $this->content = View('blog', $files, compact('posts')); 
+        $files=[$this->device.'.navbar-blog', 'post.empty'];
+        $this->content = View('blog', $files, compact('link')); 
 
      } else {
           
         for ($i=0, $postStart=-2; $i<$page; $postStart+=2, $i++);
-        $posts = $this->Post->pagePosts($postStart); // prendiamo tutti i post dal database 
-        $files=['navbar-blog', 'post.all', $this->device.'.pagination'];
-        $this->content = View('blog', $files, compact('posts', 'page', 'totalPosts')); 
+        $posts = $this->Post->pagePosts($postStart); 
+        $files=[$this->device.'.navbar-blog', 'post.all', $this->device.'.pagination'];
+        $this->content = View('blog', $files, compact('link', 'posts', 'page', 'totalPosts')); 
      }
 }
     
@@ -70,17 +70,14 @@ public function getPostsPage($page){
 * questa classe mostrerà un solo post e mostrerà tutti i commenti legati a questo post  |
 ****************************************************************************************/
     public function postSingle($postid){ 
-      
+        $this->page = 'post';
         $post =  $this->Post->find($postid); // prendiamo il post con un determinato id dal database 
         $comment = new Comment($this->conn); // istanziamo la classe Comment
         $comments =  $comment->all($postid); // prendiamo tutti i commenti che hanno lo stesso id del post
 
-
-        $files=['navbar-blog', 'post.single'];
+        $files=[$this->device.'.navbar-blog', 'post.single'];
         $this->content = View('blog', $files, compact('post','comments'));  // usando la funzione View ritorniamo il template con i post all' interno
-      
     }
-
 
 
 /***************************************************|
@@ -88,10 +85,13 @@ public function getPostsPage($page){
 * Visualizza il form per creare un nuovo post       |
 ****************************************************/
     public function create(){
-        $files=['navbar-blog', 'post.create'];
-        $this->content = View('blog', $files );
+        $this->page = 'create';
+        $bytes = 1000000;
+        $megabytes = $bytes * 0.000001;
+        $files=[$this->device.'.navbar-blog', 'post.create'];
+        $link="create";
+        $this->content = View('blog', $files, compact('link', 'megabytes')); 
     }
-
 
 
 /***********************************************|
@@ -100,23 +100,27 @@ public function getPostsPage($page){
 ************************************************/
     public function savePost(){
 
-    if ( !$_FILES['file']['error']  ||  is_uploaded_file($_FILES['file']['tmp_name'])    )  {
-        $Image = new Image(300, 200, 1000000, 'posts', $_FILES);
+    if ( !$_FILES['file']['error']  ||  is_uploaded_file($_FILES['file']['tmp_name']) )  {
+
+        $bytes = 1000000;
+        $Image = new Image('wFixed', 600, 10, $bytes, 'posts', $_FILES);
 
         if ( empty( $Image->getMessage()) )
         {
             $imageName = $Image->getNewImageName();
             $this->Post->save($_POST, $imageName); 
+        } else {
+
+            die ($Auth->getMessage());
         }
     }
     else 
     {
         $this->Post->save($_POST);  //echo json_encode($_POST);
     }
-    $this->Post->countPosts(1);
+        $this->Post->countPosts(1);
    
-    redirect("/posts");
-   
+        redirect("/posts");
     }
 
 /*******************************************************************************************************************************************|
@@ -125,10 +129,10 @@ public function getPostsPage($page){
 * Al login $_SESSION['user_type'] prende il valore del campo 'user_type' e se è uguale a 'administrator' si può accedere a questo metodo    |                                                      |
 * Il controllo su $_SESSION['user_type'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                    |                                                           
 ********************************************************************************************************************************************/
-public function editPost($postid){
-
+public function editPost($postid) {
+    $this->page = 'edit';
     $post = $this->Post->edit($postid); 
-    $files=['navbar-blog', 'post.edit'];
+    $files=[$this->device.'.navbar-blog', 'post.edit'];
     $this->content = View('blog', $files, compact('post'));
 }
 
@@ -137,19 +141,17 @@ public function editPost($postid){
 * aggiorniamo/modifichiamo i dati del post (titolo, immagine, messaggio)                        |
 * l'id lo otteniamo tramite il tag input che è type=hidden quindi è compreso nel array $_POST   | 
 ************************************************************************************************/
-public function updatePost($postid){
+public function updatePost($postid) {
 
     try {    
-       // var_dump($_POST);
         $r = $this->Post->update($postid, $_POST); 
-      //  var_dump($r);
+   
         redirect("/posts"); 
 
     } catch ( PDOException $e ) {
         
         return $e->getMessage();
     }
-
 }
 
 
@@ -177,8 +179,6 @@ public function updatePost($postid){
             return $e->getMessage();
         }
     }
-
-
 
 
 
@@ -215,7 +215,6 @@ public function deleteComment($commentid){
     $postid = $Comment->getId('post_id', $commentid);
     $userid = $Comment->getId('user_id', $commentid);
    
-  
     $Comment->userNumComments(-1, $userid);
     $Comment->postNumComments(-1, $postid);
 

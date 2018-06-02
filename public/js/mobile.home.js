@@ -1,5 +1,4 @@
 
-
     /********** NAVBAR SENZA BOOTSTRAP **********/
 
     window.smoothScroll = function(target) {
@@ -27,15 +26,15 @@
     
 
 
-    document.addEventListener('touchstart', clickFunc,  {passive: false}); // mouseenter
+document.addEventListener('touchstart', clickFunc,  {passive: false}); // mouseenter
     
-    let navState = false;
+let navState = false;
     
 function clickFunc(e){ 
 
   let element = e.target;
-  console.log( element);
-  if ( element.classList.contains('navClass') ) //{  console.log('ok')}
+ // console.log( element);
+  if ( element.classList.contains('navClass') ) 
   {
     let nav = document.querySelector('nav');
 
@@ -75,10 +74,10 @@ function clickFunc(e){
 
       //  document.body.scrollTop = 0;
      //   document.documentElement.scrollTop = 0;
-        while (document.documentElement.scrollTop > 0){
-            console.log('document.documentElement.scrollTop '+document.documentElement.scrollTop);
-            document.documentElement.scrollTop-=0.1;
-        }
+      //  while (document.documentElement.scrollTop > 0){
+     //       console.log('document.documentElement.scrollTop '+document.documentElement.scrollTop);
+            document.documentElement.scrollTop=0;
+      //  }
      // window.scrollY = 0;
         console.log('window.scrollY '+window.scrollY);
         console.log('document.documentElement.scrollTop '+document.documentElement.scrollTop);

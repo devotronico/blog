@@ -1,5 +1,6 @@
-<form id='auth' class='auth-form' action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
-<h2 class='container-title text-center'>Registrati</h2>
+<main role="main">
+<form id='signup' class='auth-form' action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
+<h1 class='container-title text-center'>Registrati</h1>
 <?php if (!empty($imgMessage)): ?>
     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
         <?= $imgMessage ?>
@@ -10,7 +11,6 @@
     <?php endif?>
 
     <div class="form-group">
-        <!-- <label for="image">Avatar</label> -->
         <div class='input-group'>
             <div class="input-group-addon"><i class="fas fa-image fa-lg"></i></div>
             <input type="file" class="form-control" name="file"> 
@@ -50,7 +50,8 @@
     <small>la password deve avere minimo 8 caratteri</small>
   </div> 
   <div class='form-group text-center'>
-  <button type='submit' class='btn'>Registrati</button>
+  <button type='submit' id="signup-btn" class='btn'>Registrati</button>
   </div>
 </form>
+</main>
 

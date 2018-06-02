@@ -7,7 +7,7 @@
       <li class="page-item page-basic"><a class="page-link" href="/posts/page/<?=$page-1?>">Prev</a></li>
     <?php else : ?>
       <li class="page-item disabled"><a class="page-link" tabindex="-1">First</a></li>
-      <li class="page-item page-basic disabled"><a class="page-link" tabindex="-1">Previous</a></li>
+      <li class="page-item page-basic disabled"><a class="page-link" tabindex="-1">Prev</a></li>
     <?php endif; ?>
     <?php for ( $pageNum=$page-3; $pageNum<=$pageLast; $pageNum++ ) : ?>
       <?php if ( $pageNum>0 ) : ?>

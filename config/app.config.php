@@ -8,7 +8,7 @@ return [
             'home/download' => 'App\Controllers\HomeController@download',
             'blog' => 'App\Controllers\PostController@getPosts',
             'posts' => 'App\Controllers\PostController@getPosts',
-            'posts/page/:id' => 'App\Controllers\PostController@getPostsPage',
+            'posts/page/:id' => 'App\Controllers\PostController@getPosts',
             'post/create' => 'App\Controllers\PostController@create',
             'post/:id' => 'App\Controllers\PostController@postSingle',
             'post/:id/edit' => 'App\Controllers\PostController@editPost',

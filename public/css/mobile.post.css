@@ -1,0 +1,48 @@
+@media screen and (orientation: portrait) {  
+@media(min-width:0){
+}
+/*260***XS****260**************************************************************************************************260*/
+@media(min-width:230px) {
+/* SINGLE POSTS*/
+main{font-size:0.8rem;background-color:green}
+#post{padding:4.5rem 0 3rem 0;background-color:#fff}
+#post article{width:100%;margin:0 auto;text-align:center}
+#post h1{font-size:1.2rem;}
+#post img{width:100%;} 
+#post-text{padding:1rem 0.5rem 0 0.5rem;text-align:left;}
+#post-btn-edit{border:none;color:#fff;background-color:#6baeff}
+#post-btn-edit:hover{background-color:orange}
+#post-btn-delete{border:none;color:#fff;background-color:#6baeff}
+#post-btn-delete:hover{background-color:red}
+
+#textarea-container{padding:1rem;text-align:center;background-color:#fff}
+#textarea-container form{width:100%;margin:0 auto}
+#textarea-container h2{font-size:1.2rem;color:#2c8cff}
+#textarea-btn{margin-top:1rem;border:none;color:#fff;background-color:#6baeff} 
+#textarea-btn:hover{background-color:green} 
+
+#comments-container{background-color:#fff}
+.centertitle{text-align:center}
+.comment-box{padding:0.3rem}
+.comment-head{padding:1px;background-color:#fff}
+.comment-head a{text-decoration:none}
+.comment-head img{width:46px;border-radius:50%}
+.comment-btn-delete{float:right}
+.comment-btn-delete{border:1px solid#fff;color:#fff;background-color:#6baeff}
+.comment-btn-delete:hover{background-color:red}
+
+.clear{clear:both}
+.comment-body{padding:6px;background-color:#fff}
+}
+@media(min-width:320px){
+}
+/*576***SM****576***************************************************************************************************576*/
+@media(min-width:576px){
+}
+} 
+@media screen and (orientation: landscape) {
+@media(min-width:260px){
+}
+}
+
+

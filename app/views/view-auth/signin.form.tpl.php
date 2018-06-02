@@ -1,5 +1,6 @@
-<form id='auth'action='/auth/signin/access' method='POST'>
-<h2 class='container-title text-center'>Accedi</h2>
+<main role="main">
+<form id='signin'action='/auth/signin/access' method='POST'>
+<h1 id="signin-title">Accedi</h1>
     <?php if (!empty($message)): ?>
     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
         <?= $message ?>
@@ -28,6 +29,7 @@
     <a href='/auth/password/form' class='text-center' style='padding:8px;'><small class='form-text text-muted'>password dimenticata?</small></a>
   </div> 
   <div class='form-group text-center'>
-    <button type='submit' name='submit' class='btn'>Accedi</button>
+    <button type='submit' name='submit' id="signin-btn" class='btn'>Accedi</button>
   </div>
 </form>
+</main>

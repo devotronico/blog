@@ -1,21 +1,19 @@
 <?php
 namespace App\Controllers;
 
-use \PDO; // importiamo le classi 'PDO' e 'Post'
+use \PDO; 
 use App\Models\Auth;
 use App\Models\Image;
 
 
 class AuthController extends Controller
 {
-
+    protected $bytes = 500000;
     public function __construct(PDO $conn){ 
         parent::__construct(); 
         $this->conn = $conn; 
-        $this->page = 'auth';
     }
   
-
 //====================================================================================================== 
 //========== PROFILE =================================== PROFILE =======================================
 //====================================================================================================== 
@@ -26,13 +24,13 @@ class AuthController extends Controller
 * Se l'utente ha il campo 'user_type' come 'administrator' allora può cambiare l'user_type degli altri utenti dalla pagina del profilo  |
 ****************************************************************************************************************************************/
     public function profile($id) {   
-
+        $this->page = 'profile';
         $Auth = new Auth($this->conn); 
         $data = $Auth->profile($id); 
         $user = $Auth->getUserType();
         $link="profile";
-        $files=['navbar-auth', 'profile'];
-        $this->content = View('auth', $files, compact( 'message', 'data', 'user', 'link')); // 'message',
+        $files=[$this->device.'.navbar-auth', 'profile'];
+        $this->content = View('auth', $files, compact( 'data', 'user', 'link', 'message')); 
     }
 
 /***************************************************************************************************************|
@@ -68,7 +66,7 @@ class AuthController extends Controller
         $Auth = new Auth($this->conn); 
         $Auth->deleteAvatar($id); // cancelliamo l'immagine
 
-        $Image = new Image(80, 80, 100000, 'auth', $_FILES); // creiamo una nuova immagine
+        $Image = new Image('fixed', 92, 92, $this->bytes, 'auth', $_FILES); // creiamo una nuova immagine
 
         $imageName = !is_null($Image->getNewImageName()) ? $Image->getNewImageName() : 'default.jpg'; // otteniamo il nuovo nome dell'immagine
 
@@ -80,16 +78,22 @@ class AuthController extends Controller
             $this->profile($id);   
         } else {
 
-            $message = 'Si è verificato un errore';
+            $message = 'Si è verificato un errore<br>';
             $message .= $Auth->getMessage();
             $message .= $Image->getMessage();
-            $this->profile($id); 
+            
+            $this->page = 'profile';
+            $data = $Auth->profile($id); 
+            $user = $Auth->getUserType();
+            $link="profile";
+            $files=[$this->device.'.navbar-auth', 'profile'];
+            $this->content = View('auth', $files, compact( 'data', 'user', 'link', 'message')); 
         }
     }
     
 
 //====================================================================================================== 
-//========== SIGNUP GROUP  ========================= SIGNUP GROUP  ===================================
+//========== SIGNUP GROUP  ========================= SIGNUP GROUP  =====================================
 //====================================================================================================== 
 
 /***********************************************************************************************************|
@@ -99,11 +103,11 @@ class AuthController extends Controller
 ************************************************************************************************************/
 public function signupForm(){ 
  
-    $bytes = 500000;
-    $megabytes = $bytes * 0.000001;
-    $files=['navbar-auth', 'signup.form'];
+    $this->page = 'signup';
+    $megabytes = $this->bytes * 0.000001;
+    $files=[$this->device.'.navbar-auth', 'signup.form'];
     $link="signup";
-    $this->content = View('auth', $files, compact('link','megabytes')); // non eliminare la var message
+    $this->content = View('auth', $files, compact('link','megabytes')); 
 }
 
 /***************************************************************************************************************************************************|
@@ -117,9 +121,9 @@ public function signupForm(){
 
 public function signupStore(){ 
 
-    $bytes = 500000;
-    $megabytes = $bytes * 0.000001;
-    $Image = new Image(80, 80, $bytes, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
+    $this->page = 'signup';
+    $megabytes = $this->bytes * 0.000001;
+    $Image = new Image('fixed', 92, 92, $this->bytes, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
 
     if ( empty( $Image->getMessage()) ) {
 
@@ -131,24 +135,23 @@ public function signupStore(){
         if (  empty( $Auth->getMessage()) ) {
 
             $message = "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
-            $files=['navbar-auth', 'signup.success'];
+            $files=[$this->device.'.navbar-auth', 'signup.success'];
             $this->content = View('auth', $files, compact('message')); 
         } else {
 
             $message = $Auth->getMessage(); 
-            $files=['navbar-auth', 'signup.form'];
+            $files=[$this->device.'.navbar-auth', 'signup.form'];
             $link="signup";
             $this->content = View('auth', $files, compact('link', 'megabytes', 'message')); 
         }
     } else {
 
         $imgMessage = $Image->getMessage();
-        $files=['navbar-auth', 'signup.form'];
+        $files=[$this->device.'.navbar-auth', 'signup.form'];
         $link="signup";
         $this->content = View('auth', $files, compact('link','megabytes', 'imgMessage'));  
     }
 }
-
 
 /***********************************************************************************************|
 * SIGNUP VERIFY     metodo = GET   route = auth/signup/verify                                   |                                                              
@@ -157,12 +160,13 @@ public function signupStore(){
 * Se è andato tutto bene verremo loggati                                                        |
 ************************************************************************************************/
 public function signupVerify() {  
+    $this->page = 'signup';
     $Auth = new Auth($this->conn, $_GET);
     $Auth->signupEmailActivation(); // in questo metodo otteniamo anche le  $_SESSION user_id, user_type, user_name;
  
     $message = !empty( $Auth->getMessage()) ? $Auth->getMessage() : "Complimenti ".$_SESSION['user_name']." la tua registrazione è avvenuta con successo!";
 
-    $files=['navbar-auth', 'signup.verify'];            
+    $files=[$this->device.'.navbar-auth', 'signup.verify'];            
     $this->content = View('auth', $files, compact('message'));  // ritorniamo il template views\view-auth\verify.tpl.php
 }
 
@@ -172,12 +176,12 @@ public function signupVerify() {
 //====================================================================================================== 
 
 /***************************************************************************************************|
-* SIGNIN FORM       metodo = GET      route = auth/signin/form                                                        
+* SIGNIN FORM       metodo = GET      route = auth/signin/form                                      |                  
 * Se si clicca sul link signin che sta nella Navbar Carica il template del Form per fare il Login   |
 *****************************************************************************************************/
 public function signinForm(){    
-   
-    $files=['navbar-auth', 'signin.form'];
+    $this->page = 'signin';
+    $files=[$this->device.'.navbar-auth', 'signin.form'];
     $link="signin";
     $this->content = View('auth', $files, compact('link'));  // ritorniamo il template con il form per fare il Login
 }
@@ -190,32 +194,31 @@ public function signinForm(){
 * Se proviamo a fare il login senza aver prima attivato l'account dalla mail che ci ha inviato il sistema durante la fase   | 
 * di registrazione allora il sistema ci invierà un'altra mail chiedendoci di attivare l'account [c]                         |    
 ****************************************************************************************************************************/
-public function signinAccess() {  
+public function signinAccess() { 
+    $this->page = 'signin'; 
     $Auth = new Auth($this->conn, $_POST);
     $email = $Auth->signin(); 
     
     if (  empty( $Auth->getMessage()) )
     {
         if (isset($_SESSION['user_id'])): 
-            $message = "Login effettuato con Successo!";   
-            $files=['navbar-auth', 'signin.message'];
-            $this->content = View('auth', $files, compact('message')); // [a]   
+            $message = "Login riuscito";   
+            $files=[$this->device.'.navbar-auth', 'signin.message'];
+            $this->content = View('auth', $files, compact( 'message')); // [a]   
         else:   
-            $files=['navbar-auth', 'signin.message'];
+            $files=[$this->device.'.navbar-auth', 'signin.message'];
             $this->content = View('auth', $files, compact('email'));  // [b]  
         endif;
     }
     else
     {
         $message = $Auth->getMessage(); 
-        $files=['navbar-auth', 'signin.form'];
+        $files=[$this->device.'.navbar-auth', 'signin.form'];
         $link="signin";
-        $this->content = View('auth', $files, compact('link','message')); // [c]  
+        $this->content = View('auth', $files, compact('link', 'message')); // [c]  
     }  
 
 }
-
-
 
 /***************************************************************************************************|
 * LOGOUT    metodo = GET    route = auth/logout                                                     |
@@ -225,7 +228,6 @@ public function logout(){
     if (session_status() == PHP_SESSION_ACTIVE) { session_destroy();  session_unset(); }
     redirect("/posts");
 }
-
 
 
 //====================================================================================================================== 
@@ -243,88 +245,89 @@ public function logout(){
 ****************************************************************************************************************************************/
 
 /***********************************************************************************************************************************|
-* PASSWOR FORM      metodo = GET    route = auth/password/form                                                                      |                                                                                                                    |
+* PASSWOR FORM      metodo = GET    route = auth/password/form                                                                      |                                                                                                                    
 * Dal form del login se l'utente non ricorda la password cliccando sul link del form 'password dimenticata?' si attiverà la rotta   |
 * '/auth/password/lost' che attiva il metodo 'passwordForm' di questa classe il quale ci mostrerà il template del form dove bisogna |
 * inserire solo l'email e premere il bottone [metodo POST]                                                                          |
 ************************************************************************************************************************************/
 public function passwordForm(){
-
-    $files=['navbar-auth', 'pass.form'];            
+    $this->page = 'newpass';
+    $files=[$this->device.'.navbar-auth', 'pass.form'];            
     $this->content = View('auth', $files);  
 }
 
 /***************************************************************************************************************************************|
-* PASSWORD CHECK
+* PASSWORD CHECK         metodo = POST    route = auth/password/check                                                                   |
 * la rotta '/auth/password/check' attiverà il methodo 'passCheck' nel quale verrà verificato se l'email è già registrata nel database,  |         
 * Se è già registrata nel database il sistema ci invierà una Mail                                                                       |
 * con all'interno un link dove saranno passati la nostra email e hash corrispondente che abbiamo prelevato dal database                 |
 ****************************************************************************************************************************************/
 public function passwordCheck(){
 
+    $this->page = 'newpass';
     $Auth = new Auth($this->conn, $_POST);
     $Auth->passCheck(); 
  
     if ( empty( $Auth->getMessage()) )
     {
         $message = "Ti abbiamo mandato una email al tuo indirizzo di posta <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per creare una nuova password. Se l'email non ti arriva, controlla la tua cartella spam o prova a ripetere la procedura di cambio password";
-        $files=['navbar-auth', 'pass.message']; 
-        $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
+        $files=[$this->device.'.navbar-auth', 'pass.message']; 
+        $this->content = View('auth', $files, compact( 'message'));  // ritorniamo il template con il form per fare la registrazione
     }
     else
     {
-        $message = $Auth->getMessage(); // redirect("/auth/signup/store?message=$message");
-        $files=['navbar-auth', 'pass.form']; 
+        $message = $Auth->getMessage(); // redirect("/auth/signup/store?message=\$message");
+        $files=[$this->device.'.navbar-auth', 'pass.form']; 
         $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
     }  
  }
 
 
 /***********************************************************************************************************|
-* PASSWORD NEW                                                                                              |
+* PASSWORD NEW      metodo = GET    route = auth/password/new                                               |
 * Cliccando sul link/bottone all'interno della Mail attiveremo la rotta '/auth/password/new'                |                            
 * il metodo 'passNew' controlla se i parametri {email, hash} passati attraverso il link siano validi        |
 * Se sono validi ci mostrerà un form dove andremo a impostare una nuova password.                           |
-* Se non sono validi non ci mostrerà un messaggio di errore e non ci consetirà di creare una nuova password |                                                              |
+* Se non sono validi non ci mostrerà un messaggio di errore e non ci consetirà di creare una nuova password |                                                            
 ************************************************************************************************************/
  public function passwordNew(){
+    $this->page = 'newpass';
     $Auth = new Auth($this->conn, $_GET);
     $Auth->passNew(); 
 
-
     if ( empty( $Auth->getMessage()) )
     {
-        $files=['navbar-auth', 'pass.new'];   // mostra il form         
+        $files=[$this->device.'.navbar-auth', 'pass.new'];   // mostra il form         
         $this->content = View('auth', $files );  // ritorniamo il template views\view-auth\verify.tpl.php
     }
     else
     {
         $message = $Auth->getMessage();
-        $files=['navbar-auth', 'pass.error'];            
-        $this->content = View('auth', $files, compact('message')); 
+        $files=[$this->device.'.navbar-auth', 'pass.error'];            
+        $this->content = View('auth', $files, compact( 'message')); 
     }  
  }
 
 
 /***********************************************************************************************************|
-* PASSWORD SAVE                                                                                             |                                                          
+* PASSWORD SAVE      metodo = POST    route = auth/password/save                                            |                                                                                                                                                         
 ************************************************************************************************************/
 public function passwordSave(){
-
+    $this->page = 'newpass';
     $Auth = new Auth($this->conn, $_POST);
     $Auth->passSave(); // in questo metodo otteniamo anche le  $_SESSION user_id, email, name;
   
     if (  empty( $Auth->getMessage()) )
     {    
        
-        $files=['navbar-auth', 'pass.success'];            
+        $files=[$this->device.'.navbar-auth', 'pass.success'];            
         $this->content = View('auth', $files);  
     }
     else
     {
         $message = $Auth->getMessage();
-        $files=['navbar-auth', 'pass.new'];            
-        $this->content = View('auth', $files, compact('message')); 
+        $files=[$this->device.'.navbar-auth', 'pass.new'];            
+        $this->content = View('auth', $files, compact( 'message')); 
     }  
 }
 

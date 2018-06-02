@@ -1,0 +1,71 @@
+/*0***0****0*************************************************************************************************0*/    
+@media(min-width:0){
+*{padding:0;margin:0}
+html{color:black;font-size:100%}  
+body{background-color:#999}
+#risoluzione{display:none;position:fixed;left:2px;bottom:2px;z-index:5000;padding:20px;font-weight:bold;background-color:yellow}  
+.container-fluid{display:none} 
+#box-sign{width:80%;margin:10px auto;text-align:center}
+#sign{display:inline;writing-mode:vertical-rl;text-orientation:upright}
+}     
+/*260***XS****260**************************************************************************************************260*/
+@media(min-width:260px){
+/*********GENERAL*260*******/ 
+#risoluzione{background-color:pink}   
+#box-sign{display:none} 
+.container-fluid {display:block;padding:0;margin:0}
+/*********NAVBAR*260*******/  
+nav{padding:0;color:#fff;background-color:#2c8cff} 
+.navbar{padding:0}
+.navbar-brand{margin-left:7%;height:100px}
+.navbar-brand img{margin-top:10px;height:60%}
+.navbar-toggler{margin-right:20px} 
+#navbar-div{margin:0;padding:0}           
+.nav-item{text-align: center} 
+.nav-link{padding:20px 0;font-size:25px;border-top:1px solid#999999} 
+.nav-link:hover{background-color:#6baeff}  
+}
+/*576***SM****576***************************************************************************************************/
+@media(min-width:576px){
+#risoluzione{background-color:green;} 
+/*********NAVBAR*576*******/  
+}
+/*768***MD****768***************************************************************************************************/
+@media(min-width:768px){
+#risoluzione{background-color:blue} 
+/*********NAVBAR*768px*******/     
+}
+/*992***LG****992***************************************************************************************************/
+/********APPARE IL PULSANTE NEL NAVBAR****************************************************************************/
+@media(min-width:992px){
+#risoluzione{background-color:red} 
+/*********NAVBAR*992*******/  
+nav{height:100px;opacity:0.5} 
+.navbar-brand{width:60%;height:100%} 
+#navbar-div{height:100%;margin-left:10px} 
+.navbar-nav{padding:0} 
+.nav-item{padding:0 30px} 
+.nav-link{padding:0;font-size:1.5rem;border:none;text-align:left} 
+.nav-link:hover{background-color:transparent;box-shadow:0 5px 0rgb(29, 17, 17);opacity:1}  
+
+.nav-top {animation:top-size 1s forwards, top-alpha 1s forwards}
+.nav-bottom{animation:bottom-size 1s forwards, bottom-alpha 1s forwards}  
+
+@keyframes top-size {from {height:60px} to {height:100px}}
+@keyframes bottom-size {from {height:100px}to {height:60px}}
+@keyframes top-alpha {from {opacity:1}to {opacity:0.5}}
+@keyframes bottom-alpha {from {opacity:0.5}to {opacity:1}} 
+}
+/*1200*****XL******1200*********************************************************************************************/
+@media(min-width:1200px){  
+#risoluzione{background-color:violet} 
+/*********NAVBAR*1200*******/
+}    
+
+
+
+
+ 
+ 
+
+   

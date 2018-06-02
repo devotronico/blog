@@ -11,18 +11,21 @@ class Image {
     protected $fileExtension; // estensione del file es. jpg, jpeg, png, gif, etc.. che otteniamo noi per sicurezza
     protected $fileNewName; // rinominiamo il file in un formato più adatto  per essere memorizzato nel database
     protected $img_resource; // è una risorsa/copia del file originale sul quale andremo a fare le modifiche e salvarlo
+    protected $scaleType; // tipo di ridimensionamento da applicare all'immagine
     protected $img_width; // larghezza del' immagine
     protected $img_height; // laltezza del' immagine
     protected $max_width; // massima larghezza del file da noi accettato
     protected $max_height;  // massima altezza del file da noi accettato
     protected $folder; // 'public/img/posts/'; // percorso del file dove andremo a salvarlo
+   // protected $test;
 
 
-public function __construct(int $max_width, int $max_height, int $max_size, string $folder, array $data ){
+public function __construct(string $scaleType, int $max_width, int $max_height, int $max_size, string $folder, array $data ){
 
- 
-    if ( !$data['file']['error']  ||  is_uploaded_file($data['file']['tmp_name'])    )  {// { exit;} // file non caricato
    
+    if ( !$data['file']['error']  ||  is_uploaded_file($data['file']['tmp_name']) )  {
+   
+ 
         $MB = $max_size * 0.000001;
         $this->message =  $data['file']['size'] > $max_size ? "Il file caricato supera il limite di ".$MB." Megabytes": '';
 
@@ -31,6 +34,8 @@ public function __construct(int $max_width, int $max_height, int $max_size, stri
         $this->fileTmpName = $data['file']['tmp_name'];
 
         $this->max_width = $max_width;
+        $this->scaleType = $scaleType;
+
         $this->max_height = $max_height;
         $this->folder = "public/img/$folder/"; 
 
@@ -43,14 +48,14 @@ public function __construct(int $max_width, int $max_height, int $max_size, stri
         $this->scale();
         $this->save(); // +m
         }
-
     } 
+    
  }
 
- public function getMessage(){
+public function getMessage() {
   
-        return $this->message;
- }
+    return $this->message;
+}
 
 
   
@@ -92,7 +97,7 @@ public function getExtension(){
     $ext_ok = array('jpg', 'jpeg', 'png'); // creiamo un array con i tipi di file
     $temp = explode('.', $this->fileName); // dividiamo il nome del file dove c'è il punto [ immagine.jpg = 'immagine' e 'jpg' ]  
     $extension = strtolower(end($temp)); // ritorna la parte finale del nome spezzato es. 'jpg' in minuscolo 
-    if (!in_array($extension, $ext_ok))   {   // se non c'è il la parola 'jpg' nell'array ('doc', 'docx', 'pdf') 
+    if (!in_array($extension, $ext_ok)) {   // se non c'è il la parola 'jpg' nell'array ('doc', 'docx', 'pdf') 
         $this->message .= "I file con l' estensione ".$this->fileType." non sono ammessi!";
        
     } else {
@@ -139,10 +144,11 @@ public function resource(){
 public function rotate() {                                            
    
     if (function_exists('exif_read_data')) {
+
         $exif = @exif_read_data($this->fileTmpName);
-        if($exif && isset($exif['Orientation'])) // se ci sono informazioni sull orientamento dell'immagine
-        {
-            if($exif['Orientation'] != 1){ // se è diverso da 1 vuol dire che l'immagine è ruotata
+        if( $exif && isset($exif['Orientation']) )  {// se ci sono informazioni sull orientamento dell'immagine
+       
+            if( $exif['Orientation'] != 1 ) { // se è diverso da 1 vuol dire che l'immagine è ruotata
                 $deg = 0;
                 switch ($orientation) {
                     case 3: $deg = 180; break;
@@ -152,26 +158,63 @@ public function rotate() {
                 if ( $deg ) { // se diverso da zero
                     $this->img_resource = imagerotate($this->img_resource, $deg, 0);  // ruota l immagine    
                 }
-            } 
-        }
-    }
-}  
-           
-
-
-
-public function scale(){                                       
-    // RIDIMENSIONARE L IMMAGINE
-    $img_ratio = $this->img_width/$this->img_height; // rapporto originale dell immagine | es se 960*640 ratio: 1,5
-    $standard_ratio = $this->max_width/$this->max_height; // rapporto standard dell immagine es. 800 x 600 ratio: 1.33
-
-    if ( $standard_ratio > $img_ratio) { // si verifica quando MAX_FILE_HEIGHT è minore dell'altezza del file caricato
-        $this->max_width = $this->max_width * $img_ratio;
+            }
+        } 
     } 
-    else {
-        $this->max_height = $this->max_width / $img_ratio; //  600 / 1,5 = 400
+}  
+       
+
+/***************************************************************************************************************************************| 
+* W-FIXED                                                                                                                               |
+* Nel caso si voglia avere una larghezza fissa e l'altezza che si ridimensiona proporzionalmente, il calcolo è lo stesso nei casi che   | 
+* la larghezza dell'immagine caricata sia più grande o più piccola della larghezza standard                                             |
+*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++|
+* dimensione_immagine_caricata = 120*100                                                                                                |
+* larghezza standard = 300                                                                                                              |
+* ratio_immagine =  120/100 = 1.2                                                                                                       |
+* 300/1.2 = 250                                                                                                                         |
+* nuove dimensioni = 300*250                                                                                                            |
+*---------------------------------------------------------------------------------------------------------------------------------------|
+* dimensione_immagine_caricata = 800*400                                                                                                |
+* larghezza standard = 300                                                                                                              |
+* ratio_immagine =  800/400 = 2                                                                                                         |
+* 300/2 = 150                                                                                                                           |
+* nuove dimensioni = 300*150                                                                                                            |
+========================================================================================================================================|
+* FLUID                                                                                                                                 |
+*                                                                                                                                       |
+*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++|
+*                                                                                                                                       |
+****************************************************************************************************************************************/
+public function scale() {           
+  
+  // rapporto originale dell immagine | es se 960*640 ratio: 1,5
+    switch ( $this->scaleType ) {
+
+        case 'wFixed':
+            $img_ratio = $this->img_width / $this->img_height; 
+            $this->max_height =  $this->max_width / $img_ratio; 
+        break;
+
+        case 'fixed':
+         
+       // $this->max_height =  $this->max_width / $img_ratio; 
+        break;
+
+        case 'fluid':
+            $img_ratio = $this->img_width / $this->img_height; 
+            $standard_ratio = $this->max_width / $this->max_height; // rapporto standard dell immagine es. 800 x 600 ratio: 1.33
+
+            if ( $standard_ratio > $img_ratio) { // si verifica quando MAX_FILE_HEIGHT è minore dell'altezza del file caricato
+                $this->max_width = $this->max_width * $img_ratio;
+            } 
+            else {
+                $this->max_height = $this->max_width / $img_ratio; //  600 / 1,5 = 400
+            }
+        break;
+
     }
-    $this->img_resource = imagescale($this->img_resource,  $this->max_width, $this->max_height); // ridimensiona la risorsa dell immagine
+    $this->img_resource = imagescale($this->img_resource, $this->max_width, $this->max_height); // ridimensiona la risorsa dell immagine
 }    
 
 
@@ -185,7 +228,7 @@ public function scale(){
 * imagejpeg e imagepng creano un immagine in base alla risorsa dell'immagine e la posizionano nella path della directory da noi scelta  |
 * come secondo parametro delle funzioni possiamo scegliere la qualità del file che va da 0(bassa) a 100(alta).                          |          
 ****************************************************************************************************************************************/   
-public function save(){     
+public function save() {     
   
     switch ($this->fileExtension)  { 
         case 'jpg':$result = imagejpeg($this->img_resource, $this->folder.$this->fileNewName, 100 );  break; // best quality

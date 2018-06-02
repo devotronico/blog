@@ -1,4 +1,4 @@
-<!-- NAVBAR HOME -->
+<!-- MOBILE NAVBAR HOME -->
 <header>
   <a href="#home" class="logo">dm</a>
   <div id="toggleNav" class="navClass"></div>

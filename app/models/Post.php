@@ -18,12 +18,12 @@ class Post
 /*******************************************************************************************************|
 * ALL                                                                                                   |
 * Facciamo una JOIN tra posts e users per ottenere tutti i posts con i dati dell' autore del post       |
-* dalla tabella posts prendiamo [post_ID, title, datecreated, message]                                       |
+* dalla tabella posts prendiamo [post_ID, title, datecreated, message]                                  |
 * dalla tabella users prendiamo [user_email, user_name]                                                 |
 * la relazione tra le tabelle posts e users è il campo posts.user_id e users.ID                         |
 * in questo modo per ogni post abbiamo accesso ai dati dell'utente che ha scritto quel determinato post |                                              |
 ********************************************************************************************************/
-    public function all(){
+  /*  public function all_Old(){
     
         $sql = 'SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT 0, 2';
 
@@ -36,7 +36,7 @@ class Post
         }
     }
 
-
+*/
 
         
 /*******************************************************************************************************|
@@ -49,11 +49,9 @@ class Post
 ********************************************************************************************************/
 public function pagePosts($postStart){
   
-    //$sql = "SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT $postStart, 2";
     $sql = "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT $postStart, 2";
 
-
-    $stm = $this->conn->query( $sql);
+    $stm = $this->conn->query($sql);
     if ( $stm ){
 
         $res = $stm->fetchAll(PDO::FETCH_OBJ);
