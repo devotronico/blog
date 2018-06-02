@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use \PDO; // importiamo le classi 'PDO' e 'Post'
+use \PDO; // importiamo la classe 'PDO' 
 use App\Models\Email;
 
 class HomeController extends Controller
@@ -9,7 +9,6 @@ class HomeController extends Controller
    
     protected $conn;
  
-
     public function __construct(PDO $conn){ 
          // ereditiamo il costruttore della classe madre (Controller) per ottenere il valore di $this->device che può essere 'desktop' oppure 'mobile'
         parent::__construct(); 
@@ -19,7 +18,6 @@ class HomeController extends Controller
     }
 
 
-    
 //====================================================================================================== 
 //========== FRONT PAGE ========================= FRONT PAGE ===========================================
 //======================================================================================================     
@@ -39,6 +37,7 @@ public function home(){
         $this->device.'.contact',
         $this->device.'.footer'
         ];
+    
     $this->content = View('home', $files, compact('photo'));
 }
 
@@ -96,8 +95,7 @@ public function download(){
         $this->device.'.contact',
         $this->device.'.footer'
         ];
-    $this->content = View('home', $files, compact('photo', 'message'));  // ritorniamo il template con il form per fare la registrazione
-    //redirect("/");
+    $this->content = View('home', $files, compact( 'photo', 'message'));  
  }
 
 

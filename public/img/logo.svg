@@ -10,11 +10,11 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="200.00005"
-   height="272"
-   viewBox="0 0 52.916681 71.966664"
+   height="135.99992"
+   viewBox="0 0 52.916681 35.983312"
    version="1.1"
    id="svg3958"
-   sodipodi:docname="logo.svg"
+   sodipodi:docname="logo1.svg"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
   <defs
      id="defs3952" />
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="-110.66922"
-     inkscape:cy="-162.04703"
+     inkscape:cx="-390.66922"
+     inkscape:cy="-230.04707"
      inkscape:document-units="mm"
      inkscape:current-layer="g4519"
      showgrid="false"
@@ -59,7 +59,7 @@
      inkscape:label="Livello 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(98.651795,-150.48203)">
+     transform="translate(98.651795,-168.47371)">
     <g
        id="g4513"
        transform="translate(2.7387049,90.536418)">

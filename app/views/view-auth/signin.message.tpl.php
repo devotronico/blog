@@ -1,8 +1,8 @@
-<div id='auth' class='auth-verify'>
-    <h2>Login riuscito</h2>
+<main role="main">
+<div id='signin'>
     <?php if (isset($_SESSION['user_id'])): ?>
-    <div class="alert alert-success" role="alert"><?=$message?></div>
-    <a href="/posts" class="btn">Entra</a>
+        <h1 id="access-title"><?=$message?></h1>
+        <a href="/posts" id="access-btn" class="btn">Entra</a>
     <?php else: ?>
     <h2>Attiva il tuo account</h2>
     <div class="alert alert-danger" role="alert">
@@ -10,6 +10,7 @@
     </div>
     <?php endif ?>
 </div>
+</main>
 
 
 

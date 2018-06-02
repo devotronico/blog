@@ -113,8 +113,6 @@ class Router
             //preg_replace ( pattern di ricerca, dove cercare, array(post/, 8) )
             if (preg_match($pattern, $uri, $matches)) { // $uri potrebbe essere 'post/2'
                 // rimuove la prima parte trovata
-                GLOBAL $navbarLink;
-                 $navbarLink = $matches[0];   //print($matches[0]);
                 array_shift($matches); // elimina $matches[0] = 'post/8' e quindi rimane solo $matches[1] = '8'
                 return $this->route($callback, $matches); 
             }

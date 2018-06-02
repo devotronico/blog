@@ -11,6 +11,7 @@
      <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
      <!-- CSS -->
+    <link rel="stylesheet" href="/css/<?=$this->navbar?>.css">
     <link rel="stylesheet" href="/css/<?=$this->style?>.css">
     <!-- FONTAWESOME -->
     <!-- <link href="img/fontawesome/css/fontawesome-all.min.css" rel="stylesheet"> -->
