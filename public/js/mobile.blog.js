@@ -49,9 +49,9 @@ function clickFunc(e){
 
       //  document.body.scrollTop = 0;
      //   document.documentElement.scrollTop = 0;
-        while (document.documentElement.scrollTop > 0){
-            console.log('document.documentElement.scrollTop '+document.documentElement.scrollTop);
-            document.documentElement.scrollTop-=0.1;
+      
+           
+            document.documentElement.scrollTop=0;
         }
      // window.scrollY = 0;
         console.log('window.scrollY '+window.scrollY);

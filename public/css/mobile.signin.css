@@ -5,7 +5,7 @@
 @media(min-width:230px){
 /*********FORM********/  
 main{min-height:100vh;background-color:#fff}
-#signin{padding:5rem 0.5rem;margin:0 auto;text-align:center;line-height:1;} 
+#signin{padding:1rem 0.5rem;margin:0 auto;text-align:center;line-height:1;} 
 #signin #signin-title{font-size:1.2rem;margin:0}
 .form-group{margin-bottom:0.4rem}
 .input-group-addon{display:none;width:2.5rem;height:3rem;padding:0.5rem;color:#fff;background-color:#202225}

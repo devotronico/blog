@@ -4,10 +4,10 @@
 /*260***XS****260**************************************************************************************************260*/
 @media(min-width:230px){
 /* ALL POSTS*/
-main{font-size:0.8rem;background-color:yellow}
-#blog{padding:74px 0 0;background-color:#fff} 
+main{min-height:100vh;font-size:0.8rem;background-color:#fff}
+#blog{padding:1rem 0.5rem;background-color:#fff} 
 .posts{padding:1rem 1rem 0 1rem;margin:0}
-.posts h1{font-size:1.2rem;}
+h1{font-size:1.2rem;}
 .comment-num{margin:0}
 .posts hr{margin-bottom:0}
 

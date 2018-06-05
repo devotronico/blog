@@ -42,7 +42,7 @@
                     <p class="card-text">Un videogame che mescola uno stile grafico 8bit con un gameplay moderno</p>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <a href='/home/download' target="_blank" class="btn">Visita</a>
+                    <a href='/home/download' class="btn">Scarica</a>
                 </div>
             </div>
         </div>

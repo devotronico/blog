@@ -22,7 +22,7 @@ nav{padding:0;color:#fff;background-color:#2c8cff}
 .navbar-toggler{margin-right:20px} 
 #navbar-div{margin:0;padding:0}           
 .nav-item{text-align: center} 
-.nav-link{padding:20px 0;font-size:25px;border-top:1px solid#999999} 
+.nav-link{padding:20px 0;font-size:25px;border-top:1px solid rgba(0, 0, 0, 0.1)} 
 .nav-link:hover{background-color:#6baeff}  
 }
 /*576***SM****576***************************************************************************************************/

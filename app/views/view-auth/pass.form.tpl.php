@@ -1,5 +1,5 @@
 <main role="main">
-  <div id="newpass"> 
+  <div id="newpass" class='newpass'> 
   <form action='/auth/password/check' method="POST" autocomplete='off'>
   <h1>Password dimenticata?</h1>
   <div class="<?=isset($message)? 'alert alert-danger' : '' ?>" role="alert"><?=isset($message)? $message : '' ?></div>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="form-group">
-    <button type="submit" id="newpass-btn"class="btn">Procedi</button>
+    <button type="submit" id="newpass-btn" class="btn btn-newpass">Procedi</button>
     </div>
   </form>
   </div>  

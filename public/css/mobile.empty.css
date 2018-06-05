@@ -1,0 +1,19 @@
+@media screen and (orientation: portrait)  {   
+@media(min-width:0) {
+}
+/*260***XS****260**************************************************************************************************260*/
+@media(min-width:230px){
+
+#empty{text-align:center;padding:1rem 0 0 0;background-color:#fff}
+h1{font-size:2rem}
+#empty-btn{margin-top:1rem;border:none;color:#fff;background-color:#2c8cff} 
+#empty-btn:hover{background-color:#6baeff} 
+
+}
+@media(min-width:320px){
+}
+}
+@media screen and (orientation: landscape) {
+@media(min-width:260px){
+}
+}

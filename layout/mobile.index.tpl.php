@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/<?=$this->navbar?>.css">
     <link rel="stylesheet" href="/css/<?=$this->style?>.css">
     <!-- FONTAWESOME -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"> -->
     <!-- DEVICON -->
     <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css"> -->
     <!-- PRETTYPRINT -->
@@ -27,7 +27,7 @@
       <?=$this->content?>
     </div>
     <!-- Da eliminare  -->
-   <script src="/js/jquery.js"></script>   
+   <!-- <script src="/js/jquery.js"></script>    -->
   <!-- Mobile NO | Desktop NO -->
   <!-- <script src="/js/tether.js"></script>    -->
    <!-- Mobile NO -->

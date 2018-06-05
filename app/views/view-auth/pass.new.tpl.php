@@ -1,5 +1,5 @@
 <main role="main">
-  <div id='newpass-create'>
+  <div id='newpass-create' class='newpass'>
     <form class='auth-form' action="/auth/password/save" method="POST" autocomplete='off'>
     <h1>Nuova Password</h1>
     <?php if (!empty($message)): ?>
@@ -41,7 +41,7 @@
         </div>
       </div> 
       <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-lg btn-submit">Salva</button>
+        <button type="submit" class="btn btn-newpass">Salva</button>
       </div>
     </form>
   </div>

@@ -7,15 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
         window.scrollTo(0, 0);
     }
     
-    console.log('window.location.pathname');
-    console.log(window.location.pathname);
+    console.log('window.location.pathname:'+window.location.pathname);
+    
     
     switch (window.location.pathname) {
         
       case '/' : 
     
          
-          let scriptHome = document.createElement('script');
+          var scriptHome = document.createElement('script');
           scriptHome.setAttribute('src', '/js/mobile.home.js');   
           
           var body = document.querySelector('body');
@@ -23,7 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
           
     
       break;
-    
+/*
+      case '/home/contact':
+      var scriptHome = document.createElement('script');
+        scriptHome.setAttribute('src', '/js/mobile.home.js');   
+        
+        var body = document.querySelector('body');
+        body.appendChild(scriptHome);
+      break;
+    */
       default : 
     
       let scriptBlog = document.createElement('script');

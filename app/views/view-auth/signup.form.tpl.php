@@ -1,5 +1,5 @@
 <main role="main">
-<form id='signup' class='auth-form' action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
+<form id='signup-form' class='signup' action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
 <h1 class='container-title text-center'>Registrati</h1>
 <?php if (!empty($imgMessage)): ?>
     <div class='alert alert-danger alert-dismissible fade show' role='alert'>

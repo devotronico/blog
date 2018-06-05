@@ -18,49 +18,36 @@ class PostController extends Controller
        
     }
 
-
-/***************************************************|
-* GETPOSTS          metodo = GET    path = posts    |
-* Otteniamo tutti i post                            |
-****************************************************/
- /*   public function getPostsOld(){
-        $this->page = 'blog';
-        $totalPosts = $this->Post->totalPosts(); 
-        $link="posts";
-        if ( empty($totalPosts ) ) { 
-
-            $files=[$this->device.'.navbar-blog', 'post.empty'];
-            $this->content = View('blog', $files, compact('link'));
-
-         } else {
-
-            $posts = $this->Post->all(); // prendiamo tutti i post dal database 
-            $files=[$this->device.'.navbar-blog', 'post.all', $this->device.'.pagination'];
-            $page = 1;
-            $this->content = View('blog', $files, compact('link', 'posts', 'page', 'totalPosts')); 
-         }
-    }
-*/
-
-/***********************************************************|
-* GETPOSTS          metodo = GET    path = posts/page/id    |
-* Otteniamo tutti i post di una pagina                      |             
-************************************************************/
-public function getPosts($page=1){ 
-    $this->page = 'blog';
+/*******************************************************************************************************************|
+* GETPOSTS          metodo = GET    path = posts/page/id                                                            |
+* Otteniamo tutti i post di una pagina                                                                              |     
+* Se ci sono i post allora viene caricato anche il template della paginazione                                       |   
+* Spiegazione Paginazione                                                                                           |
+* 'page' è la il numero della pagina in cui ci troviamo                                                             |
+* 'postForPage' è il numero di post che ci sono per ogni pagina                                                     |
+* 'postStart' è uguale al numero precedente del primo post della pagina in cui ci troviamo                          |
+* Se ci troviamo nella pagina 3 {'currentPage'=3} e abbiamo deciso che ogni pagina deve avere 2 post{'postForPage'=2}      |
+* allora il primo post della terza pagina deve essere il post numero 4{'postStart'=4}                               |
+* 1  2  3 pagine {'currentPage'}                                                                                           |
+* 12 34 56 il numero dei post che visualizza se abbiamo impostato {'postForPage'=2}                                 |
+* 0  2  4 sono i valori che ci servono per cominciare a contare i post da visualizzare {'postStart'}                |
+********************************************************************************************************************/
+public function getPosts($currentPage=1){ 
+   
     $totalPosts = $this->Post->totalPosts();
     $link="posts";
     if ( empty($totalPosts ) ) { 
-
+        $this->page = 'empty';
         $files=[$this->device.'.navbar-blog', 'post.empty'];
-        $this->content = View('blog', $files, compact('link')); 
+        $this->content = View('blog', $files, compact('link', 'page')); 
 
      } else {
-          
-        for ($i=0, $postStart=-2; $i<$page; $postStart+=2, $i++);
-        $posts = $this->Post->pagePosts($postStart); 
+        $this->page = 'blog';
+        $postForPage = 3;  
+        for ($i=0, $postStart=-$postForPage; $i<$currentPage; $postStart+=$postForPage, $i++);
+        $posts = $this->Post->pagePosts($postStart, $postForPage); 
         $files=[$this->device.'.navbar-blog', 'post.all', $this->device.'.pagination'];
-        $this->content = View('blog', $files, compact('link', 'posts', 'page', 'totalPosts')); 
+        $this->content = View('blog', $files, compact('link', 'posts', 'currentPage', 'totalPosts', 'postForPage')); 
      }
 }
     

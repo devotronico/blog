@@ -6,7 +6,7 @@
 
                 <div class="form-group">
                     <label for="title">Titolo</label>
-                    <input type="text" class="form-control" name="title" required>
+                    <input type="text" class="form-control" name="title" placeholder="titolo del post" required>
                 </div>
 
                 <div class="form-group">
@@ -19,9 +19,9 @@
 
                 <div class="form-group">
                     <label for="message">Messaggio</label>
-                    <textarea class="form-control" name="message" rows='10' required></textarea>
+                    <textarea class="form-control" name="message" rows='10' placeholder="testo del post" required></textarea>
                 </div>
-                <button id="create-btn" class="btn">Save</button>
+                <button class="btn">Save</button>
             </form>
         </div>
     </div>

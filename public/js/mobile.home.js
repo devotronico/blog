@@ -1,6 +1,6 @@
 
-    /********** NAVBAR SENZA BOOTSTRAP **********/
-
+console.log('HOME script');
+/********** SMOOTH SCROLL ON AUTOMATIC SCROLL **********/
     window.smoothScroll = function(target) {
         var scrollContainer = target;
         do { //find scroll container
@@ -12,6 +12,7 @@
         var targetY = 0;
         do { //find the top of target relatively to the container
             if (target == scrollContainer) break;
+           
             targetY += target.offsetTop;
         } while (target = target.offsetParent);
         
@@ -25,79 +26,92 @@
     }
     
 
-
+/********** NAVBAR SENZA BOOTSTRAP **********/
 document.addEventListener('touchstart', clickFunc,  {passive: false}); // mouseenter
     
-let navState = false;
+let navbarIsOpen = false;
     
 function clickFunc(e){ 
 
-  let element = e.target;
- // console.log( element);
-  if ( element.classList.contains('navClass') ) 
-  {
-    let nav = document.querySelector('nav');
+    let element = e.target;
 
-        if ( element.id === 'toggleNav' )
-        { 
-            element.classList.toggle('active');
-            if ( navState === false) {
+    switch ( element.classList.item(0) ) {
 
-                nav.style.display = 'block';
-            } else {
+        case 'toggleNav':   //se è stato cliccato il bottone del menu della navbar
+            // alert('toggleNav'); 
+            let nav = document.querySelector('nav');
 
-                nav.style.display = 'none';
+            element.classList.toggle('active'); // aggiunge la classe .active al bottone del menu
+            if ( navbarIsOpen === false) { // se navbarIsOpen è su false diventa true
+                // console.log('DISATTIVA LO SCROLL');
+                document.body.style.overflow = 'hidden'; 
+                nav.style.display = 'block'; // mostra la lista dei link per la navigazione
+                //   navbarIsOpen = true;
+            } else {    // se navbarIsOpen è su true diventa false
+                //  console.log('ATTIVA LO SCROLL');
+                document.body.style.overflow = 'visible'; 
+                nav.style.display = 'none'; // nasconde la lista dei link per la navigazione
             }
-            navState = !navState;
-           
-        }
-        else
-        {
-            if (element.href === undefined) {  
+            navbarIsOpen = !navbarIsOpen; // cambia lo stato da false a true e viceversa
+        break; 
 
-                var goToId = element.firstElementChild.hash.slice(1);
+
+        case 'navClass' : 
+        
+            e.preventDefault();
+            setTimeout(function(){ console.log('navbarIsOpen = false'); navbarIsOpen = false; }, 500);
+            document.body.style.overflow = 'visible'; // attiva lo scroll
+            if (element.href == undefined) { 
+                // se clicchiamo sul elemento <li> che NON ha link{href}
+                // del tag <a> che è filgio dell' elemento  <li> 
+                // seleziona il nome del link con l'hash{#}    
+                let goToId = element.firstElementChild.hash.slice(1);
+        
+                smoothScroll(document.getElementById(goToId))
             }  
             else
             {
-                var goToId = element.hash.slice(1);
+                // se clicchiamo sul elemento <a> che ha link{href}
+                let goToId = element.hash.slice(1);
+            
+                smoothScroll(document.getElementById(goToId))
             }
+            //taglia il primo char che è il simbolo '#'.               
+            // es. se il link è href="#contact" diventa contact
+            //goToId = goToId.slice(1); 
+            document.querySelector('nav').style.display = 'none';
+            document.querySelector('.toggleNav').classList.toggle('active'); // 
+        break;
 
-            smoothScroll(document.getElementById(goToId))
-            navState = false;
-            nav.style.display = 'none';
-            let toggleNav = document.querySelector('#toggleNav');
-            toggleNav.classList.toggle('active');
-        }
-    }
-    else if ( element.id === 'scrollFA' ) 
-    {
 
-      //  document.body.scrollTop = 0;
-     //   document.documentElement.scrollTop = 0;
-      //  while (document.documentElement.scrollTop > 0){
-     //       console.log('document.documentElement.scrollTop '+document.documentElement.scrollTop);
-            document.documentElement.scrollTop=0;
-      //  }
-     // window.scrollY = 0;
-        console.log('window.scrollY '+window.scrollY);
-        console.log('document.documentElement.scrollTop '+document.documentElement.scrollTop);
-      //  console.log('document.body.scrollTop '+document.body.scrollTop);
-       // window.scrollY = 0;
-       // console.log(window.scrollY);
-    }
-    else
-    {
-        // if (element.href !== undefined) {  
-        if (navState) {  
+        case 'blogLink' : 
+
+    
+        break; 
+
+
+        case 'scrollFA' :
+
+        document.documentElement.scrollTop=0;
+
+        console.log(document.documentElement.scrollTop);
+        break;
+
+
+        default :
+        
+        if (navbarIsOpen) {  // se la navbar è aperta
             e.preventDefault();
-           if (e.defaultPrevented) {
-                // console.log('disattiva link')
-          }
-         // console.log('navbar attivata')
-       }
+        }
+
+        if (e.defaultPrevented) {
+            console.log('defaultPrevented TRUE')
+        } else {
+            console.log('defaultPrevented FALSE')
+        }
+
     }
-   // console.log(navState);
-  
+
 }
 
 /********** END NAVBAR SENZA BOOTSTRAP **********/
@@ -107,12 +121,10 @@ function clickFunc(e){
     
     
     
-    
     /**********SCROLL LOADING*********/
     
     document.addEventListener('scroll', scrollLoad, false);
 
-    
     
     let altezza = document.querySelector('#portfolio').offsetTop - window.innerHeight * 0.8;
     state = ['init', 'portfolio', 'skill', 'contact', 'footer', 'end'];
@@ -124,10 +136,9 @@ function clickFunc(e){
     function scrollLoad(e){
 
        
-        
-      //  console.log('altezza pagina '+document.body.scrollHeight);
-      //  console.log('altezza '+altezza);
-      //  console.log('altezza scroll '+window.scrollY);
+        //  console.log('altezza pagina '+document.body.scrollHeight);
+        //  console.log('altezza '+altezza);
+        //  console.log('altezza scroll '+window.scrollY);
         if ( window.scrollY >  offset ) {
            
             if (!scrollBtn.classList.contains('scrollDown')) {
@@ -152,24 +163,21 @@ function clickFunc(e){
     
           case 'portfolio': //APRE PORTFOLIO ------------------------------------------------------
             console.log('portfolio loading'); 
-    /*
-            // <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+            let head = document.querySelector('head');
+
+            // <link href="img/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">          
             let fontawesome = document.createElement('link');
+            fontawesome.setAttribute('href', 'img/fontawesome/css/fontawesome-all.min.css');  
             fontawesome.setAttribute('rel', 'stylesheet');   
-            fontawesome.setAttribute('href', 'https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css');  
-            fontawesome.setAttribute('integrity', 'sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp'); 
-            fontawesome.setAttribute('crossorigin', 'anonymous'); */
+            head.appendChild(fontawesome);
     
-            //  <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
+            // <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
             let devicon = document.createElement('link');
             devicon.setAttribute('rel', 'stylesheet');   
             devicon.setAttribute('href', 'https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css');
-    
-            let head = document.querySelector('head');
-          //  head.appendChild(fontawesome);
             head.appendChild(devicon);
     
-             // src="/js/jquery.js"
+            // src="/js/jquery.js"
             let scriptJQ = document.createElement('script');
             scriptJQ.setAttribute('src', '/js/jquery.js');   
             let body = document.querySelector('body');
@@ -382,6 +390,11 @@ function clickFunc(e){
           //console.log('fine pagina');
          }
     }
+//} else { 
+
+    // console.log('DISATTIVA LO SCROLL');
+    //  document.body.style.overflow = 'hidden'; 
+  //  }
     
     /**********END SCROLL LOADING*********/
     

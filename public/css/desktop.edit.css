@@ -3,16 +3,29 @@
 /*260***XS****260**************************************************************************************************260*/
 @media(min-width:260px) {
 /*EDIT POST*/
-#edit-post{margin:2rem 0 0 0;background-color:#fff} 
+/* #edit-post{margin:2rem 0 0 0;background-color:#fff} 
 #edit-post h1{font-size:2rem}
 #edit-btn{margin-top:1rem;border:1px solid#fff;color:#fff;background-color:#6baeff} 
-#edit-btn:hover{background-color:green} 
+#edit-btn:hover{background-color:green}  */
+
+
+
+.container{height:100vh;background-color:#fff}
+
+#edit-post{padding:1rem 0.2rem 2rem 0.2rem;text-align:center;font-size:0.9rem;background-color:#fff} 
+h1{font-size:1.2rem}
+.form-control {padding:.25rem .75rem;font-size: 0.9rem;line-height: 1.2;}
+button{margin-top:1rem;border:1px solid#fff;color:#fff;background-color:#2c8cff} 
+button:hover{background-color:#6baeff} 
 }
 /*576***SM****576***************************************************************************************************/
 @media(min-width:576px){
+    #edit-post{width:70%;margin:0 auto;font-size:1rem}
+    .form-control {padding:.4rem .75rem;font-size:1rem;line-height: 1.5}
 }
 /*768***MD****768***************************************************************************************************/
 @media(min-width:768px){
+    #edit-post{width:60%}
 }
 /*992***LG****992***************************************************************************************************/
 /********APPARE IL PULSANTE NEL NAVBAR******************************************************************************/
@@ -20,9 +33,9 @@
 }
 /*1200*****XL******1200*********************************************************************************************/
 @media(min-width:1200px){  
-/*EDIT POST*/
-#edit-post{margin:5rem 0 0 0} 
-#edit-post h1{font-size:2.5rem}
+
+
+h1{font-size:2.5rem}
 }    
      
 
