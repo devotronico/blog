@@ -129,3 +129,6 @@ input[type=number]{display:block}
 #box-sign{display:block;min-width:100vw;min-height:100vh;margin:0;padding:2rem;text-align:center;background:linear-gradient(to bottom, royalblue, cornflowerblue)} 
 #sign{display:inline;writing-mode:vertical-rl;text-orientation:upright;color:#fff}
 }
+
+
+/* body {overflow: hidden; } */

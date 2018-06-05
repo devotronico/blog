@@ -47,9 +47,9 @@ class Post
 * la relazione tra le tabelle posts e users è il campo posts.user_id e users.ID                         |
 * in questo modo per ogni post abbiamo accesso ai dati dell'utente che ha scritto quel determinato post |                                              |
 ********************************************************************************************************/
-public function pagePosts($postStart){
+public function pagePosts($postStart, $postForPage){
   
-    $sql = "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT $postStart, 2";
+    $sql = "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT $postStart, $postForPage";
 
     $stm = $this->conn->query($sql);
     if ( $stm ){

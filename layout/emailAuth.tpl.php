@@ -1,6 +1,8 @@
 <?php
 return <<<HTML
-<html><body>
+<html>
+<head><meta charset="utf-8"></head>    
+<body>
 <table cellpadding="0" width="580" cellspacing="0" border="0" bgcolor="#F4F7FA" align="center" style="margin:0 auto;table-layout:fixed"  bgcolor="blue">      
     <tbody>  
         <tr> 

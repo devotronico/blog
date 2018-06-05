@@ -1,7 +1,7 @@
-<div id='auth' class='auth-verify'>
-    <h2>Errore</h2>
+<div id='pass-error' class='newpass'>
+    <h1>Errore</h1>
     <div class="alert alert-danger" role="alert"><?=$message?></div>
-    <a href="/posts" class="btn">Ritenta</a>
+    <a href="/posts" class="btn btn-newpass">Ritenta</a>
 </div>
 
 

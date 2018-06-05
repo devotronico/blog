@@ -49,24 +49,35 @@ public function download(){
   
     $dir = 'public/download/';
   
-    $filename = 'testFile.zip';
+   // $filename = 'testFile.zip'; // Ninja_Bit.zip
+    $filename = 'NinjaBit.zip'; // 
    // $fn = (isset($_GET['filename']) ? $_GET['filename'] : false);
     
     // controlliamo che ci siano caratteri validi nel nome del file
-    if (!preg_match('/^[a-z0-9]+\.[a-z]{2,3}$/i',$filename)) {
-        $filename = false;
+    if (!preg_match('/^[a-zA-Z0-9]+\.[a-z]{2,3}$/i',$filename)) {
+        $filename = false; die('errore');
       }else{
        $file = $dir . $filename;  
       }
     
-    // verifico che il file esista
     if (!file_exists($file))
     {
-      // se non esiste stampo un errore
+    
       echo "Il file NON esiste!";
     }else{
-        echo "Il file esiste!";
+      //  echo "Il file esiste!";
     
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="'.basename($file).'"');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file));
+    readfile($file);
+    exit;
+
+/*
     header("Cache-Control: public");
     header("Content-Description: File Transfer");
     header("Content-disposition: attachment; filename=$file");
@@ -75,6 +86,7 @@ public function download(){
     readfile("download/testFile.txt");
     //redirect("");
     header("index.php"); //redirect("/posts");
+    */
     }
  }
 

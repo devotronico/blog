@@ -111,9 +111,9 @@ class Email{
   
 
     /***************************|
-    *    EMAIL INVIO            |
+    *    EMAIL INVIO       https://support.google.com/a/answer/176600?hl=it     |
     ****************************/  
-    public function sendtest(){
+    public function send(){
 
         $mail = new PHPMailer(true);                  
         try { //Server settings
@@ -121,11 +121,11 @@ class Email{
         //  GMAIL SMTP
         $mail->SMTPDebug = 0;                       // Enable verbose debug output
         $mail->isSMTP();                            // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';             // Specify main and backup SMTP servers    //[mailtrap: 'smtp.mailtrap.io']  
+        $mail->Host = 'smtp.gmail.com';             // Server di posta in uscita(SMTP)    //[mailtrap: 'smtp.mailtrap.io']  
         $mail->SMTPAuth = true;                     // Enable SMTP authentication
         $mail->Username = 'dmanzi83@gmail.com';     // SMTP username                            //[mailtrap: 'b34b7169adb122'] 
         $mail->Password = 'DMbr0l1@XIX83.google';   // SMTP password                            //[mailtrap: '8d0c925142f07b'] 
-        $mail->SMTPSecure = 'tls';                  // Enable TLS encryption, `ssl` also accepted
+        $mail->SMTPSecure = 'tls';                  // attiva 'tls' per porta '587' oppure `ssl` per porta '465'
         $mail->Port = 587;                          // TCP port to connect to                   //[mailtrap: 465] 
 
 
@@ -137,7 +137,7 @@ class Email{
         $mail->isHTML(true);                                  
         $mail->Subject = $this->subject; 
 
-        $body = require 'layout\\'.$this->template.'.tpl.php';  
+        $body = require 'layout/'.$this->template.'.tpl.php';  // 'layout\\'.$this->template.'.tpl.php';
         $mail->Body = $body; 
         $mail->AltBody = strip_tags($body);
 
@@ -153,7 +153,7 @@ class Email{
 /***************************|
 *    EMAIL INVIO            |
 ****************************/  
-public function send(){
+public function sendTest(){
 
     
       $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
@@ -179,7 +179,7 @@ public function send(){
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = $this->subject;  // Crea una nuova password // Benvenuto in danielemanzi.it // Account su danielemanzi.it cancellato
 
-        $body = require 'layout\\'.$this->template.'.tpl.php';  
+        $body = require 'layout/'.$this->template.'.tpl.php';  
         $mail->Body = $body; 
         $mail->AltBody = strip_tags($body);
           
@@ -229,7 +229,7 @@ public function telValidetion($num) {
     }
 }
 
-/***************************************************************|
+/**************************************************************|
 * VALIDATE EMAIL BASE                                          |
 * fa una prima validificazione del 'email                      |
 * Controlla: che non sia vuota e che abbia caratteri validi    |

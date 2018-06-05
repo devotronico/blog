@@ -5,7 +5,7 @@
 @media(min-width:230px) {
 /* SINGLE POSTS*/
 main{font-size:0.8rem;background-color:green}
-#post{padding:4.5rem 0 3rem 0;background-color:#fff}
+#post{padding:1rem 0.5rem;background-color:#fff}
 #post article{width:100%;margin:0 auto;text-align:center}
 #post h1{font-size:1.2rem;}
 #post img{width:100%;} 
@@ -22,7 +22,7 @@ main{font-size:0.8rem;background-color:green}
 #textarea-btn:hover{background-color:green} 
 
 #comments-container{background-color:#fff}
-.centertitle{text-align:center}
+.centertitle{text-align:center;margin:0;padding:1rem}
 .comment-box{padding:0.3rem}
 .comment-head{padding:1px;background-color:#fff}
 .comment-head a{text-decoration:none}

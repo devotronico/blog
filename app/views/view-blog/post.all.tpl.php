@@ -13,7 +13,7 @@
         </article>
     <?php endforeach; ?>
     </div>
-</main>
+
 
 
 
