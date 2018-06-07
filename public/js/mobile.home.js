@@ -34,8 +34,9 @@ let navbarIsOpen = false;
 function clickFunc(e){ 
 
     let element = e.target;
+  
 
-    switch ( element.classList.item(0) ) {
+    switch ( element.classList.item(0) ) { // controlliamo il nome della prima classe dell' elemento
 
         case 'toggleNav':   //se è stato cliccato il bottone del menu della navbar
             // alert('toggleNav'); 
@@ -55,38 +56,51 @@ function clickFunc(e){
             navbarIsOpen = !navbarIsOpen; // cambia lo stato da false a true e viceversa
         break; 
 
-
-        case 'navClass' : 
+        case 'liNavLink' : 
         
             e.preventDefault();
             setTimeout(function(){ console.log('navbarIsOpen = false'); navbarIsOpen = false; }, 500);
             document.body.style.overflow = 'visible'; // attiva lo scroll
-            if (element.href == undefined) { 
-                // se clicchiamo sul elemento <li> che NON ha link{href}
-                // del tag <a> che è filgio dell' elemento  <li> 
-                // seleziona il nome del link con l'hash{#}    
-                let goToId = element.firstElementChild.hash.slice(1);
-        
-                smoothScroll(document.getElementById(goToId))
-            }  
-            else
-            {
-                // se clicchiamo sul elemento <a> che ha link{href}
-                let goToId = element.hash.slice(1);
-            
-                smoothScroll(document.getElementById(goToId))
-            }
+
+            // se clicchiamo sul elemento <li> che NON ha link{href}
+            // del tag <a> che è figlio dell' elemento  <li> 
+            // seleziona il nome del link con l'hash{#}   
             //taglia il primo char che è il simbolo '#'.               
-            // es. se il link è href="#contact" diventa contact
-            //goToId = goToId.slice(1); 
+            // es. se il link è href="#contact" diventa contact 
+            var goToId = element.firstElementChild.hash.slice(1);
+
+            smoothScroll(document.getElementById(goToId))
+
             document.querySelector('nav').style.display = 'none';
             document.querySelector('.toggleNav').classList.toggle('active'); // 
         break;
 
+        case 'aNavLink' : 
+        
+            e.preventDefault();
+            setTimeout(function(){ console.log('navbarIsOpen = false'); navbarIsOpen = false; }, 500);
+            document.body.style.overflow = 'visible'; // attiva lo scroll
 
-        case 'blogLink' : 
+            // se clicchiamo sul elemento <a> che ha il link{href}
+            // seleziona il nome del link con l'hash{#}   
+            //taglia il primo char che è il simbolo '#'.               
+            // es. se il link è href="#contact" diventa contact 
+            var goToId = element.hash.slice(1);
+            console.log(goToId);
+            smoothScroll(document.getElementById(goToId))
 
+            document.querySelector('nav').style.display = 'none';
+            document.querySelector('.toggleNav').classList.toggle('active'); 
+        break;
+
+
+        case 'liPageLink' : 
     
+            window.location.href = '/blog';
+        break; 
+        
+        case 'aPageLink' : 
+
         break; 
 
 
@@ -99,17 +113,10 @@ function clickFunc(e){
 
 
         default :
-        
+   
         if (navbarIsOpen) {  // se la navbar è aperta
             e.preventDefault();
         }
-
-        if (e.defaultPrevented) {
-            console.log('defaultPrevented TRUE')
-        } else {
-            console.log('defaultPrevented FALSE')
-        }
-
     }
 
 }

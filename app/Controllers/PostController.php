@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Image;
+use App\Models\Auth;
 use \PDO;
 
 class PostController extends Controller
@@ -34,6 +35,11 @@ class PostController extends Controller
 ********************************************************************************************************************/
 public function getPosts($currentPage=1){ 
    
+    if ( isset($_COOKIE['user_id']) ) {
+         $Auth = new Auth($this->conn);
+         $Auth->loginWithCookie(); 
+    }
+
     $totalPosts = $this->Post->totalPosts();
     $link="posts";
     if ( empty($totalPosts ) ) { 
@@ -98,7 +104,7 @@ public function getPosts($currentPage=1){
             $this->Post->save($_POST, $imageName); 
         } else {
 
-            die ($Auth->getMessage());
+          //  die ($Auth->getMessage());
         }
     }
     else 

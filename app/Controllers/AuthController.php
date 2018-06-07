@@ -154,10 +154,10 @@ public function signupStore(){
 }
 
 /***********************************************************************************************|
-* SIGNUP VERIFY     metodo = GET   route = auth/signup/verify                                   |                                                              
+* SIGNUP VERIFY     metodo = GET   route = auth/signup/verify    COOKIE                                    |                                                              
 * Quando all'interno della Mail clicchiamo il link verremo indirizzati di nuovo sul sito per    |
 * verificare se i parametri del link siano validi e se l'account non era già stato attivato.    |
-* Se è andato tutto bene verremo loggati                                                        |
+* Se è andato tutto bene verremo loggati                                                   |
 ************************************************************************************************/
 public function signupVerify() {  
     $this->page = 'signup';
@@ -187,7 +187,7 @@ public function signinForm(){
 }
 
 /***************************************************************************************************************************|
-* SIGNIN ACCESS     metodo = POST    route = auth/signin/access                                                             | 
+* SIGNIN ACCESS     metodo = POST    route = auth/signin/access       $_COOKIE                                                      | 
 * In questo metodo vengono controllate la email e la password che abbiamo inserito nel form del login                       |
 * Se sono correte allora verremo indirizzati in una pagina che ci da il benvenuto [a]                                       |
 * Altrimenti se l'email e la password sono errate resteremo nella pagina del login con un messaggio di errore [b]           | 
@@ -202,6 +202,7 @@ public function signinAccess() {
     if (  empty( $Auth->getMessage()) )
     {
         if (isset($_SESSION['user_id'])): 
+            setcookie("user_id", $_SESSION['user_id'], time()+3600, '/');
             $message = "Login riuscito";   
             $files=[$this->device.'.navbar-auth', 'signin.message'];
             $this->content = View('auth', $files, compact( 'message')); // [a]   
@@ -226,6 +227,8 @@ public function signinAccess() {
 ****************************************************************************************************/
 public function logout(){
     if (session_status() == PHP_SESSION_ACTIVE) { session_destroy();  session_unset(); }
+    //setcookie("user_id", null);
+    setcookie("user_id", null, time()-3600, '/');
     redirect("/posts");
 }
 
