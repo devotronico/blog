@@ -30,7 +30,7 @@
     <label for='username'></label> 
     <div class='input-group'>
       <div class='input-group-addon'><i class='fas fa-user fa-lg'></i></div> 
-      <input type='text' class='form-control' name='user_name' aria-describedby='username' placeholder='Username'>
+      <input type='text' class='form-control' name='user_name' aria-describedby='username' placeholder='Username' autocomplete="off">
     </div>
   </div>
 
@@ -38,14 +38,14 @@
     <label for='email'></label> 
     <div class='input-group'>
       <div class='input-group-addon'><i class='fas fa-envelope fa-lg'></i></div> 
-      <input type='email' class='form-control' name='user_email' aria-describedby='emailHelp' placeholder='Enter email *' required='required'>
+      <input type='email' class='form-control' name='user_email' aria-describedby='emailHelp' placeholder='Enter email *' required='required' autocomplete="off">
     </div>
   </div>
   <div class='form-group'>
     <label for='password'></label> 
     <div class='input-group'>
       <div class='input-group-addon'><i class='fas fa-key fa-lg'></i></div> 
-      <input type='password' class='form-control' name='user_pass' placeholder='Password *' required='required'>
+      <input type='password' class='form-control' name='user_pass' placeholder='Password *' required='required' autocomplete="off">
     </div>
     <small>la password deve avere minimo 8 caratteri</small>
   </div> 

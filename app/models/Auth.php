@@ -132,7 +132,7 @@ public function deleteAvatar($id) {
             
 
     /***************************************************************************************************************|
-    * MOD USER TYPE                                                                                                 |                                                                                        
+    * MOD USER TYPE    [!]                                                                                             |                                                                                        
     ****************************************************************************************************************/
     public function modUserType($id, $type) { 
         $sql = 'UPDATE users SET user_type = :user_type WHERE users.ID = :id LIMIT 1';
@@ -147,6 +147,37 @@ public function deleteAvatar($id) {
 //====================================================================================================== 
 //========== SIGNIN GROUP  ========================= SIGNIN GROUP  =====================================
 //======================================================================================================  
+
+
+
+    /***************************************************************************************|
+     * GET USER TYPE                                                                        |
+     * otteniamo dalla tabella 'users' solo il valore del campo 'user_type'                 |
+     * che verrà utilizzato nella pagina profilo per modificare i valori degli altri utenti |
+    ****************************************************************************************/
+    public function loginWithCookie() {       
+
+        $sql = 'SELECT ID, user_type FROM users WHERE ID = :id LIMIT 1';
+        
+        if ($stmt = $this->conn->prepare($sql)) 
+        {
+            $stmt->bindParam(':id', $_COOKIE['user_id'], PDO::PARAM_INT);
+            if ($stmt->execute()) 
+            {
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $_SESSION['user_id'] = $user['ID']; // ($user['user_status']);
+                    $_SESSION['user_type'] = $user['user_type'];
+                  //  $_SESSION['user_name'] = $user['user_name'];
+                   // return $res;
+            }
+        }
+    }
+
+
+
+
+
+
     public function signin()
     {
 
@@ -257,6 +288,7 @@ public function deleteAvatar($id) {
                         $_SESSION['user_id'] = $user['ID'];
                         $_SESSION['user_type'] = $user['user_type'];
                         $_SESSION['user_name'] = $user['user_name'];
+                        setcookie("user_id", $user['ID'], time()+3600, '/');
 
                         $sql = "UPDATE users SET user_status = 1 WHERE user_email = :email"; //  attiviamo l' account {set user_status ='1'}
                         if ($stmt = $this->conn->prepare($sql)) // Prepariamo lo Statement

@@ -243,6 +243,7 @@ public function setUserType(){
                             $_SESSION['user_id'] = $user['ID']; // ($user['user_status']);
                             $_SESSION['user_type'] = $user['user_type'];
                             $_SESSION['user_name'] = $user['user_name'];
+                          
                             return $password;
                             // if ( array_key_exists('setcookie', $_POST) && $_POST['setcookie'] == '1')  {
                             //     setcookie('id', $_SESSION['user_id'], time()+60*60*24*365);   // }

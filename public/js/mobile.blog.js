@@ -1,78 +1,71 @@
 console.log('blog script');
 
 
+
+/********** NAVBAR SENZA BOOTSTRAP **********/
 document.addEventListener('touchstart', clickFunc,  {passive: false}); // mouseenter
     
-let navState = false;
+let navbarIsOpen = false;
     
 function clickFunc(e){ 
 
-  let element = e.target;
-  console.log( element);
-  if ( element.classList.contains('navClass') ) //{  console.log('ok')}
-  {
-    let nav = document.querySelector('nav');
+    let element = e.target;
 
-        if ( element.id === 'toggleNav' )
-        { 
-            element.classList.toggle('active');
-            if ( navState === false) {
+    switch ( element.classList.item(0) ) {
 
-                nav.style.display = 'block';
-            } else {
+        case 'toggleNav':   //se è stato cliccato il bottone del menu della navbar
+            // alert('toggleNav'); 
+            let nav = document.querySelector('nav');
 
-                nav.style.display = 'none';
+            element.classList.toggle('active'); // aggiunge la classe .active al bottone del menu
+            if ( navbarIsOpen === false) { // se navbarIsOpen è su false diventa true
+                // console.log('DISATTIVA LO SCROLL');
+                document.body.style.overflow = 'hidden'; 
+                nav.style.display = 'block'; // mostra la lista dei link per la navigazione
+                //   navbarIsOpen = true;
+            } else {    // se navbarIsOpen è su true diventa false
+                //  console.log('ATTIVA LO SCROLL');
+                document.body.style.overflow = 'visible'; 
+                nav.style.display = 'none'; // nasconde la lista dei link per la navigazione
             }
-            navState = !navState;
-           
-        }
-        else
-        {
-            if (element.href === undefined) {  
+            navbarIsOpen = !navbarIsOpen; // cambia lo stato da false a true e viceversa
+        break; 
 
-                var goToId = element.firstElementChild.hash.slice(1);
-            }  
-            else
-            {
-                var goToId = element.hash.slice(1);
-            }
 
-            smoothScroll(document.getElementById(goToId))
-            navState = false;
-            nav.style.display = 'none';
-            let toggleNav = document.querySelector('#toggleNav');
-            toggleNav.classList.toggle('active');
-        }
-    }
-    else if ( element.id === 'scrollFA' ) 
-    {
+        case 'liPageLink' : // se non clicchiamo sul tag <a> ma sul elemento genitore <li> 
 
-      //  document.body.scrollTop = 0;
-     //   document.documentElement.scrollTop = 0;
-      
-           
-            document.documentElement.scrollTop=0;
-        }
-     // window.scrollY = 0;
-        console.log('window.scrollY '+window.scrollY);
-        console.log('document.documentElement.scrollTop '+document.documentElement.scrollTop);
-      //  console.log('document.body.scrollTop '+document.body.scrollTop);
-       // window.scrollY = 0;
-       // console.log(window.scrollY);
-    }
-    else
-    {
-        // if (element.href !== undefined) {  
-        if (navState) {  
+            window.location.href = element.firstElementChild.href;
+   
+        break;  
+
+        case 'aPageLink' : // se clicchiamo direttamente sul tag <a>
+
+        break; 
+
+
+        case 'scrollFA' :
+
+        document.documentElement.scrollTop=0;
+
+        console.log(document.documentElement.scrollTop);
+        break;
+
+
+        default :
+        
+        if (navbarIsOpen) {  // se la navbar è aperta
             e.preventDefault();
-           if (e.defaultPrevented) {
-                // console.log('disattiva link')
-          }
-         // console.log('navbar attivata')
-       }
+        }
+
+        if (e.defaultPrevented) {
+            console.log('defaultPrevented TRUE')
+        } else {
+            console.log('defaultPrevented FALSE')
+        }
+
     }
-   // console.log(navState);
-  
+
 }
 
 /********** END NAVBAR SENZA BOOTSTRAP **********/
+    

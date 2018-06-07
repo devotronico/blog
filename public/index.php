@@ -13,7 +13,6 @@ echo session_id();
 
 //var_dump($_SERVER['DOCUMENT_ROOT']); // C:\xampp\htdocs\blog\public
 
-//$navbarLink = 'posts'; da eliminare in futuro
 
 // die (__DIR__); //= C:\xampp\htdocs\blog\public
 // __DIR__ restituisce l'intero path/percorso in cui viene richiamata la costante-magica __DIR__ 
@@ -29,9 +28,6 @@ echo session_id();
 // In questo modo se vogliamo accedere al file index.tpl.php scriviamo 'layout/index.tpl.php' invece di '../layout/index.tpl.php';
 chdir(dirname(__DIR__)); // setta questa cartella(public) come quella predefinita per fare il require dei file
 
-
-
-//if ( file_exists('config/database.php') ) {die ("File found2");}
 
 
 //die (__DIR__.'/../core/bootstrap.php'); // C:\xampp\htdocs\blog\public/../core/bootstrap.php
@@ -57,10 +53,6 @@ try{
     $conn = $pdoConn->getConn(); // otteniamo la connessione al database
 
     
-    //$inst = new App\Controllers\PostController($conn);
-    //die ( $inst->getTest() );
-    //$inst->home();
-    //$inst->display();
 
     //ROTTE
 

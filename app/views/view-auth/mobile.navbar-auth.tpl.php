@@ -8,30 +8,30 @@
   </div>
   <nav class="nav-collapse">
     <ul>
-      <li class="linkClass deactive">
-        <a class="linkClass" href="/">Home</a>
+      <li class="liPageLink deactive">
+        <a class="aPageLink" href="/">Home</a>
       </li>
-      <li class="linkClass deactive">
-        <a class="linkClass" href="/posts">Posts</a>
+      <li class="liPageLink deactive">
+        <a class="aPageLink" href="/posts">Posts</a>
       </li>
       <?php if ( isset($_SESSION['user_type']) && $_SESSION['user_type'] != 'reader' ) : ?>
-      <li class="linkClass deactive">
-        <a class="linkClass" href="/post/create">New&nbsp;Post</a>
+      <li class="liPageLink deactive">
+        <a class="aPageLink" href="/post/create">New&nbsp;Post</a>
       </li>
       <?php endif ?>
       <?php if ( isset($_SESSION["user_id"]) ) : ?>
-      <li class="linkClass <?=$link=="profile"? 'active' : 'deactive' ?>">
-        <a class="linkClass" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
+      <li class="liPageLink <?=$link=="profile"? 'active' : 'deactive' ?>">
+        <a class="aPageLink" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
       </li>
-      <li class="linkClass">
-        <a class="linkClass" href="/auth/logout">Logout</a> 
+      <li class="liPageLink">
+        <a class="aPageLink" href="/auth/logout">Logout</a> 
       </li>
       <?php else: ?>
-      <li class="linkClass <?=$link=='signin'? 'active' : 'deactive' ?>">
-        <a class="linkClass" href="/auth/signin/form">Accedi</a> 
+      <li class="liPageLink <?=$link=='signin'? 'active' : 'deactive' ?>">
+        <a class="aPageLink" href="/auth/signin/form">Accedi</a> 
       </li>
-      <li class="linkClass <?=$link=='signup'? 'active' : 'deactive' ?>">
-        <a class="linkClass" href="/auth/signup/form">Registrati</a> 
+      <li class="liPageLink <?=$link=='signup'? 'active' : 'deactive' ?>">
+        <a class="aPageLink" href="/auth/signup/form">Registrati</a> 
       </li>
       <?php endif ?>
     </ul>
