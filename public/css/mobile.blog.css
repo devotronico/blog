@@ -1,29 +1,47 @@
-@media screen and (orientation: portrait)  {   
-@media(min-width:0) {
-}
-/*260***XS****260**************************************************************************************************260*/
+/* route = [posts/page/id] */
+/* tpl   = [post.all] */
+@media screen and (orientation: portrait) {   
+@media(min-width:0){}
 @media(min-width:230px){
 /* ALL POSTS*/
-main{min-height:100vh;font-size:0.8rem;background-color:#fff}
-#blog{padding:1rem 0.5rem;background-color:#fff} 
-.posts{padding:1rem 1rem 0 1rem;margin:0}
-h1{font-size:1.2rem;}
+main{min-height:100%;font-size:0.7rem;background-color:#fff}
+#blog{padding:0 0.5rem}  
+.posts{padding-top:0.5rem} 
+h1{font-size:1rem}
+.title, .author, .read{text-decoration:none;color:#3399ff}
+.messtruncate{display:none}
 .comment-num{margin:0}
 .posts hr{margin-bottom:0}
-
-/*********FOOTER********/ 
-footer{padding:2rem 0 6rem;background-color:#fff} 
-footer li:nth-of-type(1){border:none}
-.page-item{padding: 0;border:none;}
-.pagination-lg .page-link {padding: 1rem 1.2rem;}
-#copyright{margin:10px;padding:10px;}
-#btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size: 16vw;}
-#btn-scroll:hover{opacity:1;}
+/* FOOTER */ 
+footer{padding:0.5rem 0 0 0}
+#pagination{list-style-type:none;margin:0;padding:0;text-align:center}
+.page-item{display:inline-block;height:3rem;padding:0 1.2rem;font-size:2rem;line-height:1.4;border:1px solid#66ccff}
+.page-item:nth-of-type(1){border-bottom-left-radius:.25rem;border-top-left-radius:.25rem}
+.page-item:nth-of-type(2){color:#66ccff}
+.page-item:nth-of-type(3){border-bottom-right-radius:.25rem;border-top-right-radius:.25rem}
+.disabled{color:#999}
+.page-link{text-decoration:none;color:#3399ff}
 }
 @media(min-width:320px){
+/* ALL POSTS */
+main{font-size:0.8rem}
+#blog{padding:0 1rem} 
+.posts{padding-top:0.7rem} 
+h1{font-size:1.1rem}
+.messtruncate{display:block}
+/* FOOTER */ 
+footer{padding-top:0.8rem}
+.page-item{height:3.8rem;padding:0 2rem;font-size:2rem;line-height:1.8}
+}
+@media(min-width:375px){
+/* ALL POSTS */
+main{font-size:1rem}
+.posts{padding-top:1rem} 
+h1{font-size:1.4rem}
+/* FOOTER */
+footer{padding-top:2rem}
 }
 }
 @media screen and (orientation: landscape) {
-@media(min-width:260px){
-}
+@media(min-width:260px){}
 }

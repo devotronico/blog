@@ -4,8 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //quando viene ricaricata la pagina viene visualizzata la parte più alta della pagina
     window.onbeforeunload = function () { 
-        window.scrollTo(0, 0);
+     // window.scrollTo({top: 0,behavior: "smooth"});
+       // window.scrollTo(0, 0);
     }
+
+     setTimeout (function () {
+      window.scrollTo(0,0);
+      }, 500); //100ms for example
     
     console.log('window.location.pathname:'+window.location.pathname);
     
@@ -14,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
       case '/' : 
     
-         
           var scriptHome = document.createElement('script');
           scriptHome.setAttribute('src', '/js/mobile.home.js');   
           

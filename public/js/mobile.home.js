@@ -27,7 +27,7 @@ console.log('HOME script');
     
 
 /********** NAVBAR SENZA BOOTSTRAP **********/
-document.addEventListener('touchstart', clickFunc,  {passive: false}); // mouseenter
+document.addEventListener('touchstart', clickFunc, {passive: false}); // mouseenter
     
 let navbarIsOpen = false;
     
@@ -56,7 +56,7 @@ function clickFunc(e){
             navbarIsOpen = !navbarIsOpen; // cambia lo stato da false a true e viceversa
         break; 
 
-        case 'liNavLink' : 
+        case 'liNavLink' : //se è stato cliccato il tag <li> del menu della navbar
         
             e.preventDefault();
             setTimeout(function(){ console.log('navbarIsOpen = false'); navbarIsOpen = false; }, 500);
@@ -74,8 +74,8 @@ function clickFunc(e){
             document.querySelector('nav').style.display = 'none';
             document.querySelector('.toggleNav').classList.toggle('active'); // 
         break;
-
-        case 'aNavLink' : 
+       
+        case 'aNavLink' : //se è stato cliccato il tag <a> del menu della navbar
         
             e.preventDefault();
             setTimeout(function(){ console.log('navbarIsOpen = false'); navbarIsOpen = false; }, 500);
@@ -92,23 +92,32 @@ function clickFunc(e){
             document.querySelector('nav').style.display = 'none';
             document.querySelector('.toggleNav').classList.toggle('active'); 
         break;
+        case 'cover-btn': // se è stato cliccato il tag <a> del bottone sulla Cover
+            e.preventDefault();
+            var goToId = element.hash.slice(1);
+            console.log(goToId);
+            smoothScroll(document.getElementById(goToId))
+        break;
 
 
-        case 'liPageLink' : 
+        case 'liPageLink' : //se dal menu della navbar è stato cliccato il tag <li> del link per il blog 
     
             window.location.href = '/blog';
         break; 
         
-        case 'aPageLink' : 
+        case 'aPageLink' : //se dal menu della navbar è stato cliccato il tag <a> del link per il blog 
+            window.location.href = '/blog';
 
         break; 
 
 
         case 'scrollFA' :
+        e.preventDefault();
+        window.scrollTo({top: 0,behavior: "smooth"});
+        //window.scrollTo(0, 0);
+        //document.documentElement.scrollTop=0;
 
-        document.documentElement.scrollTop=0;
-
-        console.log(document.documentElement.scrollTop);
+        //console.log(document.documentElement.scrollTop);
         break;
 
 
@@ -125,15 +134,12 @@ function clickFunc(e){
     
 
     
-    
-    
-    
     /**********SCROLL LOADING*********/
     
     document.addEventListener('scroll', scrollLoad, false);
 
-    
-    let altezza = document.querySelector('#portfolio').offsetTop - window.innerHeight * 0.8;
+    let dist = 1;
+    let altezza = document.querySelector('#portfolio').offsetTop - window.innerHeight * dist;
     state = ['init', 'portfolio', 'skill', 'contact', 'footer', 'end'];
     let index = 0;
     
@@ -142,7 +148,6 @@ function clickFunc(e){
 
     function scrollLoad(e){
 
-       
         //  console.log('altezza pagina '+document.body.scrollHeight);
         //  console.log('altezza '+altezza);
         //  console.log('altezza scroll '+window.scrollY);
@@ -170,6 +175,7 @@ function clickFunc(e){
     
           case 'portfolio': //APRE PORTFOLIO ------------------------------------------------------
             console.log('portfolio loading'); 
+
             let head = document.querySelector('head');
 
             // <link href="img/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">          
@@ -191,89 +197,121 @@ function clickFunc(e){
             body.appendChild(scriptJQ);
     
     
-    
-            let titleList = ['Meteo', 'Social Network', 'Blog', 'Android Game', 'Wordpress', 'Appunti', 'Cryptovalute', 'Database'];
+            let titleList = ['Meteo', 'Network', 'Blog', 'Android Game', 'Wordpress', 'Appunti', 'Cryptovalute', 'Database'];
             let faIcon = ['s fa-sun', 'b fa-connectdevelop', 'b fa-blogger-b', 'b fa-android', 'b fa-wordpress', 's fa-sticky-note', 'b fa-bitcoin', 's fa-database'];
+            let arr_portfolioText =  ['Previsioni del meteo', 'Prototipo di un social', 'Un videogame 8bit', 'App per smartphone', 'Wordpress e WooCommerce', 'Scrittura di appunti', 'Bitcoin, Ethereum, Dash,', 'Database con funzioni'];
             let address =  ['meteo', 'socialnetwork', 'blog', '', 'wp-site', 'note', 'cryptocoin', 'database'];
             
             let portfolio = document.querySelector('#portfolio');
             portfolio.classList.add('visibileBlue');
-    
-            let titleBox = document.createElement('div'); 
-            titleBox.classList.add('section-title');
-            let title = document.createElement('p'); 
-            title.innerHTML = 'Portfolio';
-            titleBox.appendChild(title);
-            portfolio.appendChild(titleBox);
-            
-    
+
+            let portfolioBoxTitle = document.createElement('div'); 
+            portfolioBoxTitle.id = 'portfolio-title';
+            let portfolioTitle = document.createElement('p'); 
+            portfolioTitle.innerHTML = 'Projects';
+            portfolioBoxTitle.appendChild(portfolioTitle); 
+            portfolio.appendChild(portfolioBoxTitle); 
+
+            let portfolioContainer = document.createElement('div'); 
+            portfolioContainer.id = "portfolio-container";
+
+            portfolio.appendChild(portfolioContainer); 
+
             for (let i=0; i<faIcon.length;  i++) {  
     
-              let card = document.createElement('div');
-              card.classList.add('card');  
-              
-              let cardBody = document.createElement('div'); 
-              cardBody.classList.add('card-body');  
-           
-              let cardTitle = document.createElement('h5'); 
-              cardTitle.innerHTML = titleList[i];
-    
-              let link = document.createElement('a');  
-              link.classList.add('btn', 'btn-primary', 'card-icon');
-              link.href = 'https://github.com/redeluni/'+address[i];   
-              link.setAttribute('target', '"_blank');
-              link.innerHTML = '<i class="fa'+faIcon[i]+'"></i>';
-    
-              cardBody.appendChild(cardTitle);
-              cardBody.appendChild(link);
-              card.appendChild(cardBody);
-              portfolio.appendChild(card);
+                let portfolioBox = document.createElement('div');
+                portfolioBox.classList.add('portfolio-box');  
+                
+                let portfolioHead = document.createElement('div');
+                portfolioHead.classList.add('portfolio-head');  
+                portfolioHead.innerHTML = titleList[i];
+
+                //let portfolioIcon = document.createElement('div');
+                //portfolioIcon.classList.add('portfolio-icon');  
+                //portfolioIcon.innerHTML = '<i class="fa'+faIcon[i]+'"></i>';
+
+                let portfolioIcon = document.createElement('a');  
+                portfolioIcon.classList.add('portfolio-icon');
+                portfolioIcon.href = 'https://github.com/redeluni/'+address[i];   
+                portfolioIcon.setAttribute('target', '_blank');
+                portfolioIcon.innerHTML = '<i class="fa'+faIcon[i]+'"></i>';
+                
+                
+                let portfolioText = document.createElement('p'); 
+                portfolioText.classList.add('portfolio-text');
+                // let arr_portfolioText =  ['meteo', 'socialnetwork', 'blog', '', 'wp-site', 'note', 'cryptocoin', 'database'];
+                portfolioText.innerHTML = arr_portfolioText[i];
+                
+                    
+                let portfolioBtn = document.createElement('a');  
+                portfolioBtn.classList.add('portfolio-btn');
+                portfolioBtn.href = 'https://github.com/redeluni/'+address[i];   
+                portfolioBtn.setAttribute('target', '_blank');
+                portfolioBtn.innerHTML = 'visita';
+                
+                portfolioBox.appendChild(portfolioHead); 
+                portfolioBox.appendChild(portfolioIcon); 
+                portfolioBox.appendChild(portfolioText); 
+                portfolioBox.appendChild(portfolioBtn); 
+                portfolioContainer.appendChild(portfolioBox); 
             }
-           
-    
-    
-            altezza = document.querySelector('#skill').offsetTop - window.innerHeight * 0.8;
+            altezza = document.querySelector('#skill').offsetTop - window.innerHeight * dist;
             console.log('portfolio completato'); 
           break;  //CHIUDE PORTFOLIO
     
     
           case 'skill':  //APRE SKILLS ------------------------------------------------------
           console.log('skill loading'); 
-    
-          let skillsId = document.querySelector('#skill');
-          skillsId.classList.add('visibileWhite');
-    
-          let sTitleBox = document.createElement('div'); 
-          sTitleBox.classList.add('section-title');
-          let sTitle = document.createElement('p'); 
-          sTitle.innerHTML = 'Skills';
-          sTitleBox.appendChild(sTitle);
-          skillsId.appendChild(sTitleBox);
-    
-          let row = document.createElement('div');                      
-          row.classList.add('row', 'justify-content-center');                   
-          skillsId.appendChild(row);
-    
-          let skill = ['html5', 'css3', 'javascript', 'jquery', 'php', 'mysql', 'bootstrap', 'git', 'github', 'photoshop', 'inkscape', 'angularjs'];
-    
+          let skill = ['html5', 'css3', 'javascript', 'jquery', 'php', 'mysql', 'bootstrap', 'git', 'github', 'photoshop', 'inkscape', 'wordpress'];
+  
+          let skillContainer = document.querySelector('#skill');
+          skillContainer.classList.add('visibileWhite');
+
+          let skillTitleBox = document.createElement('div'); 
+          skillTitleBox.id = "skill-title";
+          let skillTitle = document.createElement('p'); 
+          skillTitle.innerHTML = 'Skills';
+          skillTitleBox.appendChild(skillTitle);
+          skillContainer.appendChild(skillTitleBox);
+
+        //   let skillBox = document.createElement('div');                      
+        //   skillBox.id = "skill-box";     
+          
+          let skillBoxIcon = document.createElement('div');                      
+          skillBoxIcon.id = "skill-box-icon";   
+
+        //   skillBox.appendChild(skillBoxIcon);
+
+/*
+        let skillBoxBg = document.createElement('div');    
+        skillBoxBg.id ="skill-box-bg";
+       
+        skillBox.appendChild(skillBoxBg);
+         */
+
+          skillContainer.appendChild(skillBoxIcon);
+
+
           for (let i=0; i<skill.length; i++) {
     
-              let col = document.createElement('div');
-              col.classList.add('col-auto');
+            let devIcon = document.createElement('div');
+            devIcon.classList.add('dev-icon');
+            devIcon.innerHTML = '<i class="devicon-'+skill[i]+'-plain colored"></i>'; 
+            // devIcon.innerHTML = 'item'; 
+          
     
-              let icon = document.createElement('div');
-              icon.innerHTML = '<i class="devicon-'+skill[i]+'-plain colored"></i>'; 
-              icon.classList.add('skill-icon');
-             
-              col.appendChild(icon); 
-              row.appendChild(col);
-          }
-          let bg = document.createElement('div');    
-          bg.classList.add('show-bg');                //  <div id="skill-bg"></div>
-          bg.id = "skill-bg"; 
-          skillsId.appendChild(bg);
-       
-          altezza = document.querySelector('#contact').offsetTop - window.innerHeight * 0.8;
+            skillBoxIcon.appendChild(devIcon); 
+        }
+
+       /*
+        let skillBg = document.createElement('div');             
+        skillBg.id = "skill-bg"; 
+        skillBoxBg.appendChild(skillBg);
+        */
+        
+        altezza = document.querySelector('#contact').offsetTop - window.innerHeight * dist;
+
+   
           console.log('skills completato'); 
           break;  //CHIUDE SKILLS
     
@@ -281,71 +319,70 @@ function clickFunc(e){
           case 'contact': //APRE CONTACT ------------------------------------------------------
             console.log('contact loading'); 
     
-            let campi = ['nome', 'cognome', 'tel', 'email'];
-            let tipo = ['text', 'text', 'number', 'email'];
+            let campi = ['nome', 'cognome', 'tel', 'email', 'descrivi il lavoro', 'invia'];
+            let tipo = ['text', 'text', 'tel', 'email', '', 'submit'];
+            let textLen = [32, 32, 16, 32, 64];
     
             let contact = document.querySelector('#contact'); // <div class="form-group">
             contact.classList.add('visibileGray');
-    
-            let fTitleBox = document.createElement('div'); 
-            fTitleBox.classList.add('section-title');
-            let fTitle = document.createElement('p'); 
-            fTitle.innerHTML = 'Contatti';
-            fTitleBox.appendChild(fTitle);
-            contact.appendChild(fTitleBox);
-    
-            let form = document.createElement('form'); 
-            form.classList.add('contact-form');
-            form.setAttribute('method', 'post');   
-            form.setAttribute('action', '/home/contact'); //  form.setAttribute('action', 'email.php'); 
-            contact.appendChild(form);
-    
-            let formGroup = document.createElement('div'); // <div class="form-group">
-            formGroup.classList.add('form-group');
-            form.appendChild(formGroup);
+
+            let contactBoxTitle = document.createElement('div'); 
+            contactBoxTitle.id = 'contact-title';
+            let contactTitle = document.createElement('p'); 
+            contactTitle.innerHTML = 'Contact';
+            contactBoxTitle.appendChild(contactTitle); 
+            contact.appendChild(contactBoxTitle); 
+
+            let contactForm = document.createElement('form'); 
+            contactForm.id = 'contact-form';
+            contactForm.setAttribute('method', 'post');   
+            contactForm.setAttribute('action', '/home/contact'); 
+            contact.appendChild(contactForm);
                 
-                for (let i=0; i<campi.length; i++) {
-                
+            for (let i=0; i<campi.length; i++) {
+            
+                if ( i < 4) { // campi.length-1
                     let label = document.createElement('label');
                     label.setAttribute('for', campi[i]);
                     label.innerHTML = campi[i];
         
-                    formGroup.appendChild(label); 
+                    contactForm.appendChild(label); 
         
                     let input = document.createElement('input');
                     input.setAttribute('type', tipo[i] );  //   
-                    input.classList.add('form-control');
                     input.setAttribute('name', campi[i]);    
                     input.setAttribute('placeholder', campi[i]); 
-                  
-                    formGroup.appendChild(input); 
-                }
-        
+                    input.setAttribute('maxlength', textLen[i]); 
+                    
+                    contactForm.appendChild(input); 
+                } else if ( i==4) { 
+
+                let label = document.createElement('label');
+                label.setAttribute('for', campi[i]);
+                label.innerHTML = campi[i];
+                contactForm.appendChild(label); 
+
                 let textarea = document.createElement('textarea');
-                textarea.classList.add('form-control');
-                textarea.setAttribute('rows', '4');  
+                textarea.setAttribute('rows', '3');  
                 textarea.setAttribute('cols', '50');  
                 textarea.setAttribute('name', 'testo');    
-                textarea.setAttribute('placeholder', 'Descrivi il lavoro'); 
+                textarea.setAttribute('placeholder', campi[i]); 
+                textarea.setAttribute('maxlength', textLen[i]);
               
-                formGroup.appendChild(textarea); 
-        
-                let button = document.createElement('input');
-                button.classList.add('btn');
-                button.classList.add('center-block');
-                button.setAttribute('type', 'submit');  
-                button.setAttribute('name', 'submit');  
-                button.setAttribute('id', 'submit');    
-                button.setAttribute('value', 'invia'); 
-        
-                let buttonBox = document.createElement('div');
-                buttonBox.classList.add('btn-box');
-                buttonBox.classList.add('text-center');
-                buttonBox.appendChild(button);
-        
-                formGroup.appendChild(buttonBox); 
-        
-              altezza = document.querySelector('#footer').offsetTop - window.innerHeight * 0.8;
+                contactForm.appendChild(textarea); 
+
+                } else if ( i==5) {
+
+                    let button = document.createElement('input');
+                    button.setAttribute('type', tipo[i]);  
+                   // button.setAttribute('name', tipo[i]);  
+                    button.setAttribute('id', 'contact-btn');    
+                    button.setAttribute('value', campi[i]); 
+                    contactForm.appendChild(button); 
+
+                }
+            }
+              altezza = document.querySelector('#footer').offsetTop - window.innerHeight * dist;
               console.log('contact completato');
           break; // CHIUDE CONTACT 
     
@@ -355,39 +392,35 @@ function clickFunc(e){
     
             let siteAddress = ['github.com/redeluni', 'twitter.com/JQALP', 'www.linkedin.com/in/daniele-manzi-b57529110/', 'www.facebook.com/daniele.manzi.83'];  
             let siteIcon = ['github', 'twitter', 'linkedin', 'facebook']; 
-    
+
             let footer = document.querySelector('footer');
-            footer.classList.add('visibileBlue');
-            let rowIcon = document.createElement('div');
-            rowIcon.classList.add('row', 'justify-content-center'); // row justify-content-center
-            let rowCopy = document.createElement('div');
-            rowCopy.classList.add('row', 'justify-content-center'); // row justify-content-center
-    
-            let dan = document.createElement('p'); // <p id="copyright">&copy;&nbsp;Daniele Manzi 2018</p>
-            dan.id = "copyright";
-            dan.innerHTML = '&copy;&nbsp;Daniele&nbsp;Manzi&nbsp;2018';
-            rowCopy.appendChild(dan);
-            footer.appendChild(rowIcon);
-            footer.appendChild(rowCopy);
-    
+            footer.classList.add('visibileBlue');    
+
+            let footerBoxIcon = document.createElement('div'); 
+            footerBoxIcon.id = 'footer-box-icon';    
+
+            let footerBoxCopyright = document.createElement('div'); 
+            footerBoxCopyright.id = 'footer-box-copyright';  
+
+            let footerCopyright = document.createElement('p');
+            footerCopyright.id = 'footer-copyright';  
+            footerCopyright.innerHTML = '&copy;&nbsp;Daniele&nbsp;Manzi&nbsp;2018';
+
+            footerBoxCopyright.appendChild(footerCopyright);
+
+            footer.appendChild(footerBoxIcon);
+            footer.appendChild(footerBoxCopyright);
+
             for (let i=0; i<siteIcon.length;  i++) {  
     
-              let col = document.createElement('div');   
-              col.classList.add('col-sm-3'); //  col-auto     col-sm-3
-    
-              let link = document.createElement('a');   
-              link.classList.add('footer-icon');
-              link.href = 'https://'+siteAddress[i];   
-              link.setAttribute('target', '"_blank');
-    
-              let d = document.createElement('div');
-              d.innerHTML = '<i class="fab fa-'+siteIcon[i]+'"></i>'; 
-              d.classList.add('footer-fontawesome');
-    
-              rowIcon.appendChild(col); 
-              col.appendChild(link); 
-              link.appendChild(d);
-            }
+                let footerIcon = document.createElement('a');
+                footerIcon.classList.add('footer-icon');
+                footerIcon.href = 'https://'+siteAddress[i];   
+                footerIcon.setAttribute('target', '_blank');
+                footerIcon.innerHTML = '<i class="fab fa-'+siteIcon[i]+'"></i>'; 
+                footerBoxIcon.appendChild(footerIcon); 
+              }
+
             altezza = document.body.scrollHeight; // altezza Totale della pagina
            // document.removeEventListener('scroll', scrollLoad);
             console.log('footer completato');

@@ -30,7 +30,7 @@ class AuthController extends Controller
         $user = $Auth->getUserType();
         $link="profile";
         $files=[$this->device.'.navbar-auth', 'profile'];
-        $this->content = View('auth', $files, compact( 'data', 'user', 'link', 'message')); 
+        $this->content = View($this->device, 'auth', $files, compact( 'data', 'user', 'link', 'message')); 
     }
 
 /***************************************************************************************************************|
@@ -87,7 +87,7 @@ class AuthController extends Controller
             $user = $Auth->getUserType();
             $link="profile";
             $files=[$this->device.'.navbar-auth', 'profile'];
-            $this->content = View('auth', $files, compact( 'data', 'user', 'link', 'message')); 
+            $this->content = View($this->device, 'auth', $files, compact( 'data', 'user', 'link', 'message')); 
         }
     }
     
@@ -107,7 +107,7 @@ public function signupForm(){
     $megabytes = $this->bytes * 0.000001;
     $files=[$this->device.'.navbar-auth', 'signup.form'];
     $link="signup";
-    $this->content = View('auth', $files, compact('link','megabytes')); 
+    $this->content = View($this->device,'auth', $files, compact('link','megabytes')); 
 }
 
 /***************************************************************************************************************************************************|
@@ -136,28 +136,28 @@ public function signupStore(){
 
             $message = "Abbiamo mandato una email di attivazione a <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
             $files=[$this->device.'.navbar-auth', 'signup.success'];
-            $this->content = View('auth', $files, compact('message')); 
+            $this->content = View($this->device, 'auth', $files, compact('message')); 
         } else {
 
             $message = $Auth->getMessage(); 
             $files=[$this->device.'.navbar-auth', 'signup.form'];
             $link="signup";
-            $this->content = View('auth', $files, compact('link', 'megabytes', 'message')); 
+            $this->content = View($this->device, 'auth', $files, compact('link', 'megabytes', 'message')); 
         }
     } else {
 
         $imgMessage = $Image->getMessage();
         $files=[$this->device.'.navbar-auth', 'signup.form'];
         $link="signup";
-        $this->content = View('auth', $files, compact('link','megabytes', 'imgMessage'));  
+        $this->content = View($this->device, 'auth', $files, compact('link','megabytes', 'imgMessage'));  
     }
 }
 
 /***********************************************************************************************|
-* SIGNUP VERIFY     metodo = GET   route = auth/signup/verify    COOKIE                                    |                                                              
+* SIGNUP VERIFY     metodo = GET   route = auth/signup/verify    COOKIE                         |                                                              
 * Quando all'interno della Mail clicchiamo il link verremo indirizzati di nuovo sul sito per    |
 * verificare se i parametri del link siano validi e se l'account non era già stato attivato.    |
-* Se è andato tutto bene verremo loggati                                                   |
+* Se è andato tutto bene verremo loggati                                                        |
 ************************************************************************************************/
 public function signupVerify() {  
     $this->page = 'signup';
@@ -167,7 +167,7 @@ public function signupVerify() {
     $message = !empty( $Auth->getMessage()) ? $Auth->getMessage() : "Complimenti ".$_SESSION['user_name']." la tua registrazione è avvenuta con successo!";
 
     $files=[$this->device.'.navbar-auth', 'signup.verify'];            
-    $this->content = View('auth', $files, compact('message'));  // ritorniamo il template views\view-auth\verify.tpl.php
+    $this->content = View($this->device, 'auth', $files, compact('message'));  // ritorniamo il template views\view-auth\verify.tpl.php
 }
 
 
@@ -183,7 +183,7 @@ public function signinForm(){
     $this->page = 'signin';
     $files=[$this->device.'.navbar-auth', 'signin.form'];
     $link="signin";
-    $this->content = View('auth', $files, compact('link'));  // ritorniamo il template con il form per fare il Login
+    $this->content = View($this->device, 'auth', $files, compact('link'));  // ritorniamo il template con il form per fare il Login
 }
 
 /***************************************************************************************************************************|
@@ -205,10 +205,10 @@ public function signinAccess() {
             setcookie("user_id", $_SESSION['user_id'], time()+3600, '/');
             $message = "Login riuscito";   
             $files=[$this->device.'.navbar-auth', 'signin.message'];
-            $this->content = View('auth', $files, compact( 'message')); // [a]   
+            $this->content = View($this->device, 'auth', $files, compact( 'message')); // [a]   
         else:   
             $files=[$this->device.'.navbar-auth', 'signin.message'];
-            $this->content = View('auth', $files, compact('email'));  // [b]  
+            $this->content = View($this->device, 'auth', $files, compact('email'));  // [b]  
         endif;
     }
     else
@@ -216,7 +216,7 @@ public function signinAccess() {
         $message = $Auth->getMessage(); 
         $files=[$this->device.'.navbar-auth', 'signin.form'];
         $link="signin";
-        $this->content = View('auth', $files, compact('link', 'message')); // [c]  
+        $this->content = View($this->device, 'auth', $files, compact('link', 'message')); // [c]  
     }  
 
 }
@@ -256,7 +256,7 @@ public function logout(){
 public function passwordForm(){
     $this->page = 'newpass';
     $files=[$this->device.'.navbar-auth', 'pass.form'];            
-    $this->content = View('auth', $files);  
+    $this->content = View($this->device, 'auth', $files);  
 }
 
 /***************************************************************************************************************************************|
@@ -275,13 +275,13 @@ public function passwordCheck(){
     {
         $message = "Ti abbiamo mandato una email al tuo indirizzo di posta <strong>".$_POST['user_email']."</strong>. Per favore segui le istruzioni contenute nell'email per creare una nuova password. Se l'email non ti arriva, controlla la tua cartella spam o prova a ripetere la procedura di cambio password";
         $files=[$this->device.'.navbar-auth', 'pass.message']; 
-        $this->content = View('auth', $files, compact( 'message'));  // ritorniamo il template con il form per fare la registrazione
+        $this->content = View($this->device, 'auth', $files, compact( 'message'));  // ritorniamo il template con il form per fare la registrazione
     }
     else
     {
         $message = $Auth->getMessage(); // redirect("/auth/signup/store?message=\$message");
         $files=[$this->device.'.navbar-auth', 'pass.form']; 
-        $this->content = View('auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
+        $this->content = View($this->device, 'auth', $files, compact('message'));  // ritorniamo il template con il form per fare la registrazione
     }  
  }
 
@@ -301,13 +301,13 @@ public function passwordCheck(){
     if ( empty( $Auth->getMessage()) )
     {
         $files=[$this->device.'.navbar-auth', 'pass.new'];   // mostra il form         
-        $this->content = View('auth', $files );  // ritorniamo il template views\view-auth\verify.tpl.php
+        $this->content = View($this->device, 'auth', $files );  // ritorniamo il template views\view-auth\verify.tpl.php
     }
     else
     {
         $message = $Auth->getMessage();
         $files=[$this->device.'.navbar-auth', 'pass.error'];            
-        $this->content = View('auth', $files, compact( 'message')); 
+        $this->content = View($this->device, 'auth', $files, compact( 'message')); 
     }  
  }
 
@@ -324,13 +324,13 @@ public function passwordSave(){
     {    
        
         $files=[$this->device.'.navbar-auth', 'pass.success'];            
-        $this->content = View('auth', $files);  
+        $this->content = View($this->device, 'auth', $files);  
     }
     else
     {
         $message = $Auth->getMessage();
         $files=[$this->device.'.navbar-auth', 'pass.new'];            
-        $this->content = View('auth', $files, compact( 'message')); 
+        $this->content = View($this->device, 'auth', $files, compact( 'message')); 
     }  
 }
 
