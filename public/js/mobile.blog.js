@@ -1,6 +1,4 @@
-console.log('blog script');
-
-
+console.log('BLOG script');
 
 /********** NAVBAR SENZA BOOTSTRAP **********/
 document.addEventListener('touchstart', clickFunc,  {passive: false}); // mouseenter
@@ -8,9 +6,9 @@ document.addEventListener('touchstart', clickFunc,  {passive: false}); // mousee
 let navbarIsOpen = false;
     
 function clickFunc(e){ 
-
+    //console.log('CLICK');
     let element = e.target;
-
+    //console.log( element.classList.item(0));
     switch ( element.classList.item(0) ) {
 
         case 'toggleNav':   //se è stato cliccato il bottone del menu della navbar
@@ -47,7 +45,12 @@ function clickFunc(e){
 
         document.documentElement.scrollTop=0;
 
-        console.log(document.documentElement.scrollTop);
+        //console.log(document.documentElement.scrollTop);
+        break;
+
+        case 'message' : // chiude i messagi di errore
+        case 'message-close' :
+            document.querySelector('.message').style.display = 'none';
         break;
 
 
@@ -58,9 +61,9 @@ function clickFunc(e){
         }
 
         if (e.defaultPrevented) {
-            console.log('defaultPrevented TRUE')
+          //  console.log('defaultPrevented TRUE')
         } else {
-            console.log('defaultPrevented FALSE')
+          //  console.log('defaultPrevented FALSE')
         }
 
     }

@@ -1,4 +1,4 @@
-<!-- MOBILE NAVBAR BLOG -->
+<!-- MOBILE NAVBAR AUTH -->
 <header>  
   <div id="navbar">
     <a href="/" class="logo">
@@ -6,38 +6,42 @@
     </a>
     <div class="toggleNav"></div>
   </div>
-  <nav>
-    <ul>
-      <li class="liPageLink">
+  <nav class="nav-collapse">
+    <ul id="nav-list">
+      <li class="liPageLink deactive">
         <a class="aPageLink" href="/">Home</a>
       </li>
-      <li class="liPageLink <?=$link==='posts'? 'active' : 'deactive'?>">
-          <a class="aPageLink" href="/posts">Posts</a> 
+      <li class="liPageLink deactive">
+        <a class="aPageLink" href="/posts">Posts</a>
       </li>
-      <?php if ( isset($_SESSION['user_type']) &&  $_SESSION['user_type'] !== 'reader' ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
-      <li class="liPageLink <?=$link==='create'? 'active' : 'deactive' ?>">
+      <?php if ( isset($_SESSION['user_type']) && $_SESSION['user_type'] != 'reader' ) : ?>
+      <li class="liPageLink deactive">
         <a class="aPageLink" href="/post/create">New&nbsp;Post</a>
       </li>
       <?php endif ?>
       <?php if ( isset($_SESSION["user_id"]) ) : ?>
-      <li class="liPageLink">
+      <li class="liPageLink <?=$link=="profile"? 'active' : 'deactive' ?>">
         <a class="aPageLink" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
       </li>
       <li class="liPageLink">
         <a class="aPageLink" href="/auth/logout">Logout</a> 
       </li>
       <?php else: ?>
-      <li class="liPageLink deactive">
+      <li class="liPageLink <?=$link=='signin'? 'active' : 'deactive' ?>">
         <a class="aPageLink" href="/auth/signin/form">Accedi</a> 
       </li>
-      <li class="liPageLink deactive">
+      <li class="liPageLink <?=$link=='signup'? 'active' : 'deactive' ?>">
         <a class="aPageLink" href="/auth/signup/form">Registrati</a> 
       </li>
       <?php endif ?>
     </ul>
   </nav>
-</header>  
-<!-- END NAVBAR BLOG -->
+</header>
+<!-- END NAVBAR AUTH -->
+
+
+
+    
 
 
 

@@ -27,7 +27,7 @@ class HomeController extends Controller
 *************************************************/
 public function home(){
   
-    $photo =  $this->device.'.photo';
+    $photo = $this->device.'.photo';
     $files=[
        
         $this->device.'.navbar-home',
@@ -38,7 +38,7 @@ public function home(){
         $this->device.'.footer'
         ];
     
-    $this->content = View('home', $files, compact('photo'));
+    $this->content = View($this->device,'home', $files, compact('photo'));
 }
 
 

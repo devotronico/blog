@@ -9,7 +9,7 @@
     <!-- FAVICON -->
     <link rel="icon" href="/img/favicon.ico">
      <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
      <!-- CSS -->
     <link rel="stylesheet" href="/css/<?=$this->navbar?>.css">
     <link rel="stylesheet" href="/css/<?=$this->style?>.css">
