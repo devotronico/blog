@@ -126,7 +126,7 @@ class Router
 
 
 
-    protected function route($callback, array $matches =[])
+    protected function route($callback, array $matches=[])
     {
         try {
             if ( is_callable($callback) ) { //se trova la funzione

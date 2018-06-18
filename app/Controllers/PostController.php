@@ -49,7 +49,8 @@ public function getPosts($currentPage=1){
 
      } else {
         $this->page = 'blog';
-        $postForPage = 3;  
+        //$postForPage = 3;  
+        $postForPage = $this->device === 'desktop'? 5 : 3;
         for ($i=0, $postStart=-$postForPage; $i<$currentPage; $postStart+=$postForPage, $i++);
         $posts = $this->Post->pagePosts($postStart, $postForPage); 
         $files=[$this->device.'.navbar-blog', 'post.all', $this->device.'.pagination'];
@@ -65,11 +66,12 @@ public function getPosts($currentPage=1){
     public function postSingle($postid){ 
         $this->page = 'post';
         $post =  $this->Post->find($postid); // prendiamo il post con un determinato id dal database 
+       // $user = $this->Post->getUserType();// getUserType
         $comment = new Comment($this->conn); // istanziamo la classe Comment
         $comments =  $comment->all($postid); // prendiamo tutti i commenti che hanno lo stesso id del post
 
         $files=[$this->device.'.navbar-blog', 'post.single'];
-        $this->content = View($this->device, 'blog', $files, compact('post','comments'));  // usando la funzione View ritorniamo il template con i post all' interno
+        $this->content = View($this->device, 'blog', $files, compact('post', 'comments'));  // usando la funzione View ritorniamo il template con i post all' interno
     }
 
 

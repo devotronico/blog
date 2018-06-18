@@ -6,6 +6,14 @@
     </div>
 </main>
 
+<!-- <main role="main">
+    <form action="/posts" method="GET" autocomplete='off'>
+        <h1>Password salvata</h1>
+        <div class="message">La tua nuova password è stata salvata con successo!</div>
+        <button type="submit">Entra</button>
+    </form>
+</main> -->
+
 
 
 

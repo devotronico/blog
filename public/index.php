@@ -1,8 +1,8 @@
 <?php
 if (!isset($_SESSION)) { session_start(); } 
 session_regenerate_id(true);
-
 //echo '<pre>', print_r($_SESSION) ,'</pre>'; 
+//echo '<pre>', print_r($_COOKIE) ,'</pre>'; 
 /*
 if (session_status() == PHP_SESSION_DISABLED) {  echo '<br> PHP_SESSION_DISABLED <br>';} // si disabilita nel file php.ini session.auto_start = "0"
 if (session_status() == PHP_SESSION_NONE )    {  echo '<br> PHP_SESSION_NONE  <br>'   ;} // session_start() NON inizializzato
@@ -71,6 +71,6 @@ try{
 } catch (\PDOException $e) {
     echo $e->getMessage();
 } catch (\Exception $e){
-       echo $e->getMessage();
+    echo $e->getMessage();
 }
  

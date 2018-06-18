@@ -4,6 +4,16 @@
     <a href="/posts" class="btn btn-newpass">Ritenta</a>
 </div>
 
+<!-- <main role="main">
+    <form action="/posts" method="GET" autocomplete='off'>
+        <h1>Errore</h1>
+        <?php if (!empty($message)): ?>
+        <div class='message'><?=$message?></div>
+        <?php endif?>
+        <button type="submit">Riprova</button>
+    </form>
+</main> -->
+
 
 
 

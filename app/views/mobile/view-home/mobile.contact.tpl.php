@@ -1,7 +1,5 @@
 <!-- CONTACT -->
-<div id='contact'>
-<div class='contact-message'><?=isset($message) ? $message : '' ?></div> 
-</div>
+<div id='contact'></div>
 <!-- END CONTACT -->
 
 

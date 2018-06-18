@@ -11,7 +11,7 @@
         <a class="nav-link" href="/blog">blog</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#portfolio">portfolio</a>
+        <a class="nav-link" href="#portfolio">projects</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="#skill">skill</a>

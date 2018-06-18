@@ -38,7 +38,6 @@ public function __construct(){
 }
 
     
-    
 /***************************************************************************|
 * DISPLAY                                                                   |
 * la variabile 'layout' contiene il file 'layout/index.tpl.php' che mostra  |

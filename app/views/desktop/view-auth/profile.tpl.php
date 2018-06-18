@@ -41,10 +41,13 @@
                     <td>Data Registrazione</td>
                     <td><?=$data->user_registered?></td>
                 </tr>
-                <?php if ( $user->user_type === 'administrator' ) :?>
+          
+               
+                <?php if ( isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'administrator' ) :?>
                 <tr>
                     <td>Modifica permessi</td>
                     <td>
+                        <a class='badge badge-primary' href='/auth/<?=$data->ID?>/banned'>banned</a>
                         <a class='badge badge-primary' href='/auth/<?=$data->ID?>/reader'>reader</a>
                         <a class='badge badge-primary' href='/auth/<?=$data->ID?>/contributor'>contributor </a>
                         <a class='badge badge-primary' href='/auth/<?=$data->ID?>/administrator'>administrator</a>
