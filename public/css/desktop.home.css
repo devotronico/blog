@@ -3,18 +3,16 @@
        
 /*260***XS****260**************************************************************************************************260*/
 @media(min-width:260px){
-/*********GENERAL*260*******/ 
-.section{min-height:100vh}
-.section-title{text-align:center} 
-.section-title p{color:white;font-size:2rem} 
-.row{margin:0}
-
+/* MESSAGE */
+#message{position:absolute;height:100vh;width:100vw;top:0;left:0;z-index:2000;display:flex;justify-content:center;align-items:center;background-color:transparent}
+#message-form{padding:1rem;text-align:center;background-color:#fff} 
+#message-btn{margin:1rem;width:50px;height:50px;border:none;border-radius:100%;color:#fff;background-color:#3399ff} 
 /*********COVER*260*******/  
-#cover{height:100vh;background-color:red;}
-#cover-container{height:100vh;display:flex;flex-direction:column;background-color:#333;}
-#cover-box-image{flex-basis:50%;display:flex;align-content:center;justify-content:center;align-items:center;background-color:silver;}
-#cover-foto{border-radius:50%;width:200px;opacity:0.5}
-#cover-box-info{flex-basis:50%;display:flex;flex-direction:column;justify-content:flex-start;align-content:center;align-items:center;height:100%;background-color:gray;}
+#cover{height:100vh;background-color:red}
+#cover-container{height:100vh;display:flex;flex-direction:column;background-color:#333}
+#cover-box-image{flex-basis:50%;display:flex;align-content:center;justify-content:center;align-items:center;background-color:silver}
+#cover-foto{border-radius:50%;width:200px;opacity:.5}
+#cover-box-info{flex-basis:50%;display:flex;flex-direction:column;justify-content:flex-start;align-content:center;align-items:center;height:100%;background-color:gray}
 #cover-text{font-family: monospace, sans-serif; z-index: 1000; font-size:2rem;font-weight:bolder;color:#fff}
 #cover-btn{text-decoration:none;padding:1rem;font-family:monospace, sans-serif;z-index:1000;border:6px solid #fff;font-weight:bolder;font-size:1.8rem;color:#fff}
 
@@ -47,7 +45,7 @@ label{display:none;color:#fff}
 input{display:block;width:100%;margin-bottom:1rem;padding:1rem 0;border:none;font-size:1rem;line-height:1;text-indent:1rem}
 textarea{width:100%;padding:1rem 0;text-indent:1rem;font:400 1rem Arial}
 input:focus, textarea:focus {border-color:#000;}
-#contact-btn{display: block;width:30%;padding:1rem 0;margin:1rem auto;border:none;text-decoration:none;font-size:1rem;color:#8c929b;background-color:#fff}
+#contact-btn{display:block;width:30%;padding:1rem 0;margin:1rem auto;border:none;text-decoration:none;font-size:1rem;color:#8c929b;background-color:#fff}
 #contact-btn:hover{color:#333;background-color:#eeeeee}
 
 /*********FOOTER*260*******/ 
@@ -62,6 +60,8 @@ input:focus, textarea:focus {border-color:#000;}
 #btn-scroll:hover{opacity:1}
 }
 @media(min-width:320px) { 
+/* MESSAGE */
+#message-form{padding:5rem;border-radius:.25rem} 
 /*********PORTFOLIO*320*******/ 
 #portfolio{line-height:1.1}
 #portfolio-container{justify-content:space-evenly}

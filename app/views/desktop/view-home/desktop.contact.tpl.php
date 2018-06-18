@@ -1,5 +1,4 @@
 <div id="contact">
-    <div class='contact-message'><?=isset($message) ? $message : '' ?></div> 
     <div id="contact-title"><p>Contact</p></div>
     <form id="contact-form" method="post" action="/home/contact">
         <label for="nome">nome</label>

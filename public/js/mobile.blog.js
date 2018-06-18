@@ -1,4 +1,4 @@
-console.log('BLOG script');
+console.log('BLOG mobile script');
 
 /********** NAVBAR SENZA BOOTSTRAP **********/
 document.addEventListener('touchstart', clickFunc,  {passive: false}); // mouseenter

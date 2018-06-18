@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     switch (window.location.pathname) {
         
       case '/' : 
+      case '/home/contact':
     
           var scriptHome = document.createElement('script');
           scriptHome.setAttribute('src', '/js/mobile.home.js');   

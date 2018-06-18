@@ -1,42 +1,47 @@
-@media(min-width:0){
-}
-/*260***XS****260**************************************************************************************************260*/
-@media(min-width:260px) {
+/* route = [posts] */
+/* tpl   = [post.all] */
+@media(min-width:0){}
+@media(min-width:230px){
 /* ALL POSTS*/
-.container{min-height:100vh;}
-main{background-color:#fff}
-.posts{padding:3rem 1rem 0 1rem;margin:0;background-color:#fff}
-.posts h1{font-size:2rem}
+main{min-height:100%;font-size:0.7rem;background-color:#fff}
+#blog{padding:0 0.5rem}  
+.posts{padding-top:0.5rem} 
+h1{font-size:1rem}
+.title, .author, .mailto, .read{text-decoration:none;color:#3399ff}
+.messtruncate{display:none}
 .comment-num{margin:0}
 .posts hr{margin-bottom:0}
-
-/*********FOOTER*260*******/ 
-footer{margin-top:2rem}
-.Pagination {position:relative;bottom:0;margin-left:50%;right:200px;width:400px;height:80px}
-.page-item{display:none}
-.page-basic{display:block}
+/* FOOTER */ 
+footer{padding:1rem}
+#pagination{list-style-type:none;margin:0;padding:0;}
+.page-item{display:inline-block;width:3.5rem;height:3.5rem;font-size:1.2rem;line-height:2;text-align:center;border:1px solid#66ccff}
+/*
+.attivo{background-color: rgb(179, 179, 248);}  
+.disabled{background-color: rgb(235, 137, 137);}
+.current{color:#333;background-color: rgb(41, 168, 41);}
+.attivo{color:#3399ff;background-color: rgb(160, 160, 240);} 
+.number{color:#3399ff;background-color: pink;}
+.dot{color:#3399ff;background-color: rgb(177, 173, 173);}*/
+.page-item > .page-link {font-size: 1.5rem;}
+.page-link{text-decoration:none;color:#666} 
+.attivo > .page-link, .number > .page-link, .dot > .page-link{color:#3399ff} 
 }
-/*576***SM****576***************************************************************************************************/
-@media(min-width:576px){
-/***********FOOTER*576***********/
-.page-item{display:block}
+@media(min-width:320px){
+/* ALL POSTS */
+main{font-size:0.8rem}
+#blog{padding:0 1rem} 
+.posts{padding-top:0.7rem} 
+h1{font-size:1.1rem}
+.messtruncate{display:block}
+/* FOOTER */ 
+footer{padding-top:0.8rem}
+/* .page-item{height:3.8rem;padding:0 2rem;font-size:2rem;line-height:1.8} */
 }
-/*768***MD****768***************************************************************************************************/
-@media(min-width:768px){
+@media(min-width:375px){
+/* ALL POSTS */
+main{font-size:1rem}
+.posts{padding-top:1rem} 
+h1{font-size:1.4rem}
+/* FOOTER */
+footer{padding-top:2rem}
 }
-/*992***LG****992***************************************************************************************************/
-@media(min-width:992px){
-/*********BLOG*992*******/ 
-}
-/*1200*****XL******1200*********************************************************************************************/
-@media(min-width:1200px){  
-/* ALL POSTS 1200*/
-.posts{padding:4rem 4rem 0 4rem;margin:0}
-.posts h1{font-size:2.5rem}
-.comment-num{margin:0}
-.posts hr{margin-bottom:0}
-footer{margin-top:2rem}
-}    
-     
-
-

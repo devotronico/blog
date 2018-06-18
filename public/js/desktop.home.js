@@ -6,8 +6,13 @@ window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 
 }
-
+//    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
 console.log('home');
+let head = document.querySelector('head');
+let bootstrapstyle = document.createElement('link');
+bootstrapstyle.setAttribute('rel', 'stylesheet');   
+bootstrapstyle.setAttribute('href', '/css/bootstrap.min.css');  
+head.appendChild(bootstrapstyle);
 
 /**********SCROLL LOADING*********/
 
@@ -31,7 +36,7 @@ function scrollLoad(e){
       case 'portfolio': //APRE PORTFOLIO ------------------------------------------------------
         console.log('portfolio loading'); 
 
-      let head = document.querySelector('head');
+      //let head = document.querySelector('head');
        // FONTAWESOME --> <link href="img/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">
        let fontawesome = document.createElement('link');
        fontawesome.setAttribute('rel', 'stylesheet');   

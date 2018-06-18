@@ -12,6 +12,7 @@ console.log(window.location.pathname);
 switch (window.location.pathname) {
     
   case '/' : 
+  case '/home/contact':
 
      
       let scriptHome = document.createElement('script');

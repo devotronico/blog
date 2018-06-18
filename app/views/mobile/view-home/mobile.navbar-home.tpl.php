@@ -1,7 +1,7 @@
 <!-- MOBILE NAVBAR HOME -->
 <header>  
   <div id="navbar">
-    <a href="#home" class="logo">
+    <a href="/" class="logo">
       <img src="/img/logo.svg" alt="logo">
     </a>
     <div class="toggleNav"></div>

@@ -12,33 +12,7 @@ class Post
         $this->conn = $conn;
     }
     
-
-
-    
-/*******************************************************************************************************|
-* ALL                                                                                                   |
-* Facciamo una JOIN tra posts e users per ottenere tutti i posts con i dati dell' autore del post       |
-* dalla tabella posts prendiamo [post_ID, title, datecreated, message]                                  |
-* dalla tabella users prendiamo [user_email, user_name]                                                 |
-* la relazione tra le tabelle posts e users è il campo posts.user_id e users.ID                         |
-* in questo modo per ogni post abbiamo accesso ai dati dell'utente che ha scritto quel determinato post |                                              |
-********************************************************************************************************/
-  /*  public function all_Old(){
-    
-        $sql = 'SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID ORDER BY posts.datecreated DESC LIMIT 0, 2';
-
-        $stm = $this->conn->query( $sql);
-        if ( $stm ){
-
-            $res = $stm->fetchAll(PDO::FETCH_OBJ);
-
-            return $res;
-        }
-    }
-
-*/
-
-        
+ 
 /*******************************************************************************************************|
 * PAGE POSTS                                                                                            |
 * Facciamo una JOIN tra posts e users per ottenere tutti i posts con i dati dell' autore del post       |
@@ -81,22 +55,47 @@ public function totalPosts(){
 
 
 
-/***************************************************************************************|
-* FIND !                                                                                |
-****************************************************************************************/
+    /***************************************************************************************|
+    * FIND                                                                                  |
+    ****************************************************************************************/
     public function find($postid){
         
-        $sql = 'SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID AND posts.post_ID = :postid ORDER BY posts.datecreated DESC';
+      //  $sql = 'SELECT * FROM posts INNER JOIN users WHERE posts.user_id = users.ID AND posts.post_ID = :postid ORDER BY posts.datecreated DESC';
       
+        $sql = 'SELECT * FROM posts
+        LEFT JOIN users ON users.ID = posts.user_id
+        WHERE posts.post_ID = :postid
+        ORDER BY posts.datecreated DESC';
+
+
         $stm = $this->conn->prepare($sql); 
 
         $stm->execute(['postid'=>$postid]); 
 
         if ( $stm ){
-            $result = $stm->fetch(PDO::FETCH_OBJ);
+            $data = $stm->fetch(PDO::FETCH_OBJ);
+             //echo '<pre>', print_r($data) ,'</pre>';
+            return $data;
         }
-        return $result;
      }
+
+    /***************************************************************************************|
+    * GETUSER                                                                               |
+    ****************************************************************************************/
+    // public function getUserType() {       
+
+    //     $sql = 'SELECT ID, user_type FROM users WHERE ID = :id LIMIT 1';
+        
+    //     if ($stmt = $this->conn->prepare($sql)) 
+    //     {
+    //         $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+    //         if ($stmt->execute()) 
+    //         {
+    //             $res = $stmt->fetch(PDO::FETCH_OBJ);
+    //             return $res;
+    //         }
+    //     }
+    // }
     
 
 
