@@ -6,8 +6,8 @@
         <label for="image">Immagine</label>
         <input type="file" name="file" id="image"> 
         <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>
-        <label for="message">Messaggio</label>
-        <textarea name="message" id="message" rows='7' placeholder="Testo del post" maxlenght="2000" required></textarea>
-        <button type='submit' name='submit'>Salva</button>
+        <label for="textarea">Messaggio</label>
+        <textarea name="message" id="textarea" rows='7' placeholder="Testo del post" maxlenght="2000" required></textarea>
+        <button type='submit' class="button">Salva</button>
     </form>
 </main>

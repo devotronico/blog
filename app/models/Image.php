@@ -4,53 +4,88 @@ namespace App\Models;
 
 class Image {
 
-    protected $message; // messaggio di errore
-    protected $fileName; // nome del file caricato
-    protected $fileType; // il tipo/estensione del file
-    protected $fileTmpName; // posizione temporanea del file quando viene caricato
-    protected $fileExtension; // estensione del file es. jpg, jpeg, png, gif, etc.. che otteniamo noi per sicurezza
-    protected $fileNewName; // rinominiamo il file in un formato più adatto  per essere memorizzato nel database
-    protected $img_resource; // è una risorsa/copia del file originale sul quale andremo a fare le modifiche e salvarlo
-    protected $scaleType; // tipo di ridimensionamento da applicare all'immagine
-    protected $img_width; // larghezza del' immagine
-    protected $img_height; // laltezza del' immagine
-    protected $max_width; // massima larghezza del file da noi accettato
-    protected $max_height;  // massima altezza del file da noi accettato
-    protected $folder; // 'public/img/posts/'; // percorso del file dove andremo a salvarlo
-   // protected $test;
-
+    private $message; // messaggio di errore
+    private $fileName; // nome del file caricato
+    private $fileType; // il tipo/estensione del file
+    private $fileTmpName; // posizione temporanea del file quando viene caricato
+    private $fileExtension; // estensione del file es. jpg, jpeg, png, gif, etc.. che otteniamo noi per sicurezza
+    private $fileNewName; // rinominiamo il file in un formato più adatto  per essere memorizzato nel database
+    private $img_resource; // è una risorsa/copia del file originale sul quale andremo a fare le modifiche e salvarlo
+    private $scaleType; // tipo di ridimensionamento da applicare all'immagine
+    private $img_width; // larghezza del' immagine
+    private $img_height; // laltezza del' immagine
+    private $max_width; // massima larghezza del file da noi accettato
+    private $max_height;  // massima altezza del file da noi accettato
+    private $folder; // 'public/img/posts/'; // percorso del file dove andremo a salvarlo
+ 
 
 public function __construct(string $scaleType, int $max_width, int $max_height, int $max_size, string $folder, array $data ){
 
-   
-    if ( !$data['file']['error']  ||  is_uploaded_file($data['file']['tmp_name']) )  {
-   
- 
-        $MB = $max_size * 0.000001;
-        $this->message =  $data['file']['size'] > $max_size ? "Il file caricato supera il limite di ".$MB." Megabytes": '';
+    echo '<pre>', print_r($data) ,'</pre>';
+  
+    switch ( $data['file']['error'] ) {
 
-        $this->fileName = $data['file']['name'];
-        $this->fileType = $data['file']['type'];
-        $this->fileTmpName = $data['file']['tmp_name'];
-
-        $this->max_width = $max_width;
-        $this->scaleType = $scaleType;
-
-        $this->max_height = $max_height;
-        $this->folder = "public/img/$folder/"; 
-
-        $this->fileExtension = $this->getExtension(); // +m
+        case 0: //die('Value: 0; There is no error, the file uploaded with success.');
+            if ( is_uploaded_file($data['file']['tmp_name']) ) { //die('Caricato');
+          
     
-        if ( empty($this->getMessage()) ) {
-        $this->setNewImageName();
-        $this->resource(); // +m
-        $this->rotate();
-        $this->scale();
-        $this->save(); // +m
-        }
-    } 
+            $MB = $max_size * 0.000001;
+            $this->message =  $data['file']['size'] > $max_size ? "Il file caricato deve essere minore di ".$MB." Megabytes<br>": false;
+
+            $this->fileName = $data['file']['name'];
+
+            $fileTypeArr = explode('/', $data['file']['type']);
+            $this->fileType = end($fileTypeArr);
     
- }
+            $this->fileTmpName = $data['file']['tmp_name'];
+
+            $this->max_width = $max_width;
+            $this->scaleType = $scaleType;
+
+            $this->max_height = $max_height;
+            $this->folder = "public/img/$folder/"; 
+
+            $this->fileExtension = $this->getExtension(); // +m
+        
+            if ( empty($this->getMessage()) ) {
+            $this->setNewImageName();
+            $this->resource(); // +m
+            $this->rotate();
+            $this->scale();
+            $this->save(); // +m
+            }
+            }
+            else{ die('nonCaricato'); }
+            
+        break;
+        
+        case 1: // die('Value: 1; The uploaded file exceeds the upload_max_filesize directive in php.ini.');  
+            
+            /***********************************************************************************************************************************|
+            * ATTENZIONE                                                                                                                        |                                                 
+            * Se ['file']['error'] restituisce 1 anche se apparentemente il file caricato è corretto                                            |
+            * Succede perchè abbiamo caricato un file di dimensioni(megabytes) superiore al parametro 'upload_max_filesize' del file php.ini    |  
+            * richiamare la funzione 'phpinfo()' e cercare il parametro 'upload_max_filesize' per verificare il peso massimo accettato dei file |   
+            * in questo caso ['file']['size'] restituisce 0                                                                                             
+            ************************************************************************************************************************************/ 
+            $MB = ini_get('upload_max_filesize');
+            $MB = (int)rtrim($MB, 'M');          
+            $this->message = "Il file caricato deve essere minore di ".$MB." Megabytes<br>";
+        break;
+
+        case 2: // die('Value: 2; The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.'); 
+            $MB = $max_size * 0.000001;
+            $this->message = "Il file caricato deve essere minore di ".$MB." Megabytes<br>"; 
+        break;
+
+        case 3: die('Value: 3; The uploaded file was only partially uploaded.'); break;
+        case 4:/* die('Value: 4; No file was uploaded.');*/ break;
+        case 6: die('Value: 6; Missing a temporary folder. Introduced in PHP 5.0.3.');  break;
+        case 7: die('Value: 7; Failed to write file to disk. Introduced in PHP 5.1.0.');  break;
+        case 8: die('Value: 8; A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with phpinfo() may help. Introduced in PHP 5.2.0.'); break;
+        default: die('Errore sconosciuto');
+    }
+}
 
 public function getMessage() {
   
@@ -58,7 +93,20 @@ public function getMessage() {
 }
 
 
+
   
+
+/***************************************************************************************************|
+* GET-NEW-IMAGE-NAME                                                                                |
+* otteniamo il nome univoco che abbiamo dato al file creato per poterlo memorizzare nel database    |                   
+****************************************************************************************************/  
+
+public function getNewImageName() {
+
+    return $this->fileNewName;
+}
+
+
 /*******************************************************************************************************************************|
 * SET-NEW-IMAGE-NAME                                                                                                            |
 * rinominiamo il file con un id univoco + l'estensione del file                                                                 |
@@ -66,15 +114,9 @@ public function getMessage() {
 * e non meno di 32 perchè la lunghezza della stringa data dalla funzione uniqid più l'estensione può arrivare a 32 caratteri    |
 * es.  5af08b6fe70335.78055591.tiff_ii  {= 32 caratteri}                                                                        |                          
 ********************************************************************************************************************************/  
-public function setNewImageName() {
+private function setNewImageName() {
 
     $this->fileNewName = uniqid('', true).'.'.$this->fileExtension;  
-}
-
-
-public function getNewImageName() {
-
-    return $this->fileNewName;
 }
 
 
@@ -91,19 +133,18 @@ public function getNewImageName() {
 * Se non combacia allora l'utente riceverà un messaggio di errore che lo avvisa che il tipo di file da lui caricato non è accettato |
 * Se combacia allora ritorniamo il nome dell'estensione del file.                                                                   |
 ************************************************************************************************************************************/   
-public function getExtension(){
+private function getExtension(){
                    
     // CONTROLLA L ESTENSIONE DEL FILE
-    $ext_ok = array('jpg', 'jpeg', 'png'); // creiamo un array con i tipi di file
+    $ext_ok = array('jpg', 'jpeg', 'png'); // creiamo un array con i tipi di file ammessi
     $temp = explode('.', $this->fileName); // dividiamo il nome del file dove c'è il punto [ immagine.jpg = 'immagine' e 'jpg' ]  
     $extension = strtolower(end($temp)); // ritorna la parte finale del nome spezzato es. 'jpg' in minuscolo 
     if (!in_array($extension, $ext_ok)) {   // se non c'è il la parola 'jpg' nell'array ('doc', 'docx', 'pdf') 
-        $this->message .= "I file con l' estensione ".$this->fileType." non sono ammessi!";
-       
+
+        $this->message .= "I file con l' estensione ".$this->fileType." non sono ammessi<br>";
     } else {
         return $extension;
     }
-
 }
 
             
@@ -120,14 +161,14 @@ public function getExtension(){
 * Ritorna una risorsa di immagine su cui andremo a fare tutte le modifiche(rotate e scale) prima di salvarlo nella cartella |
 * Come argomento gli dobbiamo passare il percorso temporaneo del file ($this->fileTmpName)                                  |
 ****************************************************************************************************************************/   
-public function resource(){                        
+private function resource(){                        
 
     list($this->img_width, $this->img_height, $image_type) = getimagesize($this->fileTmpName); 
    
     switch ($image_type){
         case 2: $this->img_resource = imagecreatefromjpeg($this->fileTmpName); break;  
         case 3: $this->img_resource = imagecreatefrompng($this->fileTmpName);  break;  
-        default: $this->message .='Il formato file '.$image_type.' non è supportato';
+        default: $this->message .='Il formato file '.$image_type.' non è supportato<br>';
     }
     return $this->img_resource;
 }
@@ -141,7 +182,7 @@ public function resource(){
 * poi prendiamo e controlliamo il valore della chiave 'Orientation'. Se è diverso da 1 allora l'immagine è ruotata.         |
 * tramite la funzione 'imagerotate' ruotiamo l'immagine alla sua angolazione normale                                        |
 ****************************************************************************************************************************/   
-public function rotate() {                                            
+private function rotate() {                                            
    
     if (function_exists('exif_read_data')) {
 
@@ -186,7 +227,7 @@ public function rotate() {
 *+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++|
 *                                                                                                                                       |
 ****************************************************************************************************************************************/
-public function scale() {           
+private function scale() {           
   
   // rapporto originale dell immagine | es se 960*640 ratio: 1,5
     switch ( $this->scaleType ) {
@@ -228,17 +269,17 @@ public function scale() {
 * imagejpeg e imagepng creano un immagine in base alla risorsa dell'immagine e la posizionano nella path della directory da noi scelta  |
 * come secondo parametro delle funzioni possiamo scegliere la qualità del file che va da 0(bassa) a 100(alta).                          |          
 ****************************************************************************************************************************************/   
-public function save() {     
+private function save() {     
   
     switch ($this->fileExtension)  { 
         case 'jpg':$result = imagejpeg($this->img_resource, $this->folder.$this->fileNewName, 100 );  break; // best quality
         case 'jpeg':$result = imagejpeg($this->img_resource, $this->folder.$this->fileNewName, 100 );  break; // best quality
         case 'png':$result = imagepng($this->img_resource, $this->folder.$this->fileNewName, 9); break; // no compression
-        default: $this->message .='Il formato file '.$this->fileExtension.' non è supportato';
+        default: $this->message .='Il formato file '.$this->fileExtension.' non è supportato<br>';
     }
     
     if ( !$result ) {
-        $this->message .= "Impossibile salvare l'immagine";
+        $this->message .= "Impossibile salvare l'immagine<br>";
     }  
 }
 

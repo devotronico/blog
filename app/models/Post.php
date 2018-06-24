@@ -12,6 +12,33 @@ class Post
         $this->conn = $conn;
     }
     
+
+
+
+    /***************************************************************************************|
+     * LOGIN WITH COOKIE                                                                    |
+     * Quando dalla home passiamo alla pagina del blog                                      |
+     * se abbiamo il COOKIE allora viene fatto un login automatico.                         |
+     * ci andiamo a prendere dalla tabella 'users' solo il valore del campo 'user_type'     |            
+    ****************************************************************************************/
+    public function loginWithCookie() {       
+
+        $sql = 'SELECT ID, user_type FROM users WHERE ID = :id LIMIT 1';
+        
+        if ($stmt = $this->conn->prepare($sql)) 
+        {
+            $stmt->bindParam(':id', $_COOKIE['user_id'], PDO::PARAM_INT);
+            if ($stmt->execute()) 
+            {
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $_SESSION['user_id'] = $user['ID']; 
+                    $_SESSION['user_type'] = $user['user_type'];
+                    $_SESSION['user_name'] = $user['user_name'];
+                   // return $res;
+            }
+        }
+    }
+
  
 /*******************************************************************************************************|
 * PAGE POSTS                                                                                            |

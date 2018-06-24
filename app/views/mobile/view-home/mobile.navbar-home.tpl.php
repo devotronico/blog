@@ -16,6 +16,8 @@
   </nav>
 </header>
 <!-- END NAVBAR HOME -->
+<div id='risoluzione'></div>
+<div id="btn-scroll"><i class="scrollFA fas fa-chevron-circle-up"></i></div>
 
 
 

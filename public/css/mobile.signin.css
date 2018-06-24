@@ -31,13 +31,9 @@ input{margin-bottom:1rem;padding:1rem 0;line-height:1;font:400 1rem Arial}
 button{margin:2rem auto 0;padding:1rem 0;font-size:1rem}  
 }
 @media(min-width:576px){}
-@media(min-width:768px){}
-@media(min-width:992px){}
-@media(min-width:1200px){}    
+@media(min-width:768px){}  
 }    
-@media screen and (orientation: landscape) {
-@media(min-width:260px){}
-}
+
     
 
 

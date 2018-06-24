@@ -13,7 +13,7 @@ function View($device, $view, array $files=[], array $data=[]){
 
 function redirect($uri ='/'){
   header('Location:'.$uri);
-  exit;
+  die();
 }
 
 

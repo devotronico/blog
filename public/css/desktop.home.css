@@ -1,21 +1,17 @@
-@media(min-width:0){
-}
-       
-/*260***XS****260**************************************************************************************************260*/
+@media(min-width:0){}  
 @media(min-width:260px){
 /* MESSAGE */
 #message{position:absolute;height:100vh;width:100vw;top:0;left:0;z-index:2000;display:flex;justify-content:center;align-items:center;background-color:transparent}
 #message-form{padding:1rem;text-align:center;background-color:#fff} 
 #message-btn{margin:1rem;width:50px;height:50px;border:none;border-radius:100%;color:#fff;background-color:#3399ff} 
-/*********COVER*260*******/  
-#cover{height:100vh;background-color:red}
+/*********COVER*260*******/
+#cover{height:100vh;background:linear-gradient(to bottom,#0066ff,#3399ff)}
 #cover-container{height:100vh;display:flex;flex-direction:column;background-color:#333}
 #cover-box-image{flex-basis:50%;display:flex;align-content:center;justify-content:center;align-items:center;background-color:silver}
 #cover-foto{border-radius:50%;width:200px;opacity:.5}
 #cover-box-info{flex-basis:50%;display:flex;flex-direction:column;justify-content:flex-start;align-content:center;align-items:center;height:100%;background-color:gray}
-#cover-text{font-family: monospace, sans-serif; z-index: 1000; font-size:2rem;font-weight:bolder;color:#fff}
-#cover-btn{text-decoration:none;padding:1rem;font-family:monospace, sans-serif;z-index:1000;border:6px solid #fff;font-weight:bolder;font-size:1.8rem;color:#fff}
-
+#cover-text{font-family:monospace, sans-serif;z-index:100;font-size:2rem;font-weight:bolder;color:#fff}
+#cover-btn{text-decoration:none;padding:1rem;font-family:monospace, sans-serif;z-index:100;border:6px solid#fff;font-weight:bolder;font-size:1.8rem;color:#fff}
 /*********PORTFOLIO*260*******/  
 #portfolio{height:100vh;font-family:monospace,sans-serif;line-height:1;background-color:#2c8cff}
 #portfolio-title{padding:4rem 0 2rem;text-align:center;font-size:2rem;color:#fff}
@@ -26,16 +22,14 @@
 .portfolio-text{min-height:95px;padding:0 0.2rem;margin:0;font-size:0.8rem;text-align:left;background-color:#fff}
 .portfolio-btn{display:block;padding:0.3rem;text-decoration:none;font-size:1rem;color:#2c8cff}
 .portfolio-btn:hover{text-decoration:none;color:#6baeff}
-
 /*********SKILL*260*******/ 
 #skill{height:100vh;background-color:#fff} 
 #skill-title{padding:4rem 0 2rem;text-align:center;font-size:2rem;color:#2c8cff}
-#container{height:80%;display:flex;flex-direction:column}
+#skill-container{height:80%;display:flex;flex-direction:column}
 #icon-container{flex-basis:50%;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;border-bottom: 4px dashed #2c8cff}
 .icon{line-height:1;font-size:3rem;text-align:center} 
 #bg-container{flex-basis:50%;display:flex;justify-content:center;align-content:center;align-items:center;height:100%}
 #skill-bg{background-image:url(/img/skill/building-web.svg);background-size:contain;background-repeat:no-repeat;width:96%;height:55%} 
-
 /*********CONTACT*260*******/ 
 #contact{height:100vh;line-height:1;background-color:#2c8cff;}
 #contact-title{padding:4rem 0 2rem;text-align:center;font-size:2rem;color:#fff}
@@ -47,7 +41,6 @@ textarea{width:100%;padding:1rem 0;text-indent:1rem;font:400 1rem Arial}
 input:focus, textarea:focus {border-color:#000;}
 #contact-btn{display:block;width:30%;padding:1rem 0;margin:1rem auto;border:none;text-decoration:none;font-size:1rem;color:#8c929b;background-color:#fff}
 #contact-btn:hover{color:#333;background-color:#eeeeee}
-
 /*********FOOTER*260*******/ 
 #footer{height:100vh;display:flex;flex-direction:column;background-color:#333;}
 #footer-box-icon{flex-basis:70%;display:flex;flex-direction:column;align-content:center;justify-content:space-around;align-items:center;background-color:#fff}
@@ -55,9 +48,6 @@ input:focus, textarea:focus {border-color:#000;}
 .footer-icon:hover{border-color:#2c8cff;color:#2c8cff}
 #footer-box-copyright{flex-basis:30%;display:flex;justify-content:center;align-content:center;align-items:center;height:100%;background-color:#2c8cff}
 #footer-copyright{color:#fff}
-
-#btn-scroll{display:none;position:fixed;bottom:12px;right:24px;z-index:99;cursor:pointer;outline:none;border:none;opacity:0.5;font-size:16vw}
-#btn-scroll:hover{opacity:1}
 }
 @media(min-width:320px) { 
 /* MESSAGE */
@@ -84,7 +74,6 @@ textarea{border-radius:.25rem;font:400 1.5rem Arial}
 .portfolio-icon{padding:0.5rem;font-size:2.3rem}
 .portfolio-text{min-height:150px;padding:0.5rem;font-size:1rem}
 .portfolio-btn{font-size:1.2rem} 
-
 /********SKILLS*320***************/  
 #skill-bg{height:60%} 
 .icon{font-size:4rem} 
@@ -93,7 +82,6 @@ textarea{border-radius:.25rem;font:400 1.5rem Arial}
 /***********CONTACT*576***********/
 #contact-form{width:50%}
 /***********FOOTER*576***********/
-#btn-scroll{font-size: 8vw}
 }
 /*768***MD****768***************************************************************************************************/
 @media(min-width:768px){   
@@ -107,9 +95,8 @@ textarea{border-radius:.25rem;font:400 1.5rem Arial}
 #portfolio{line-height:1.3}
 .portfolio-icon{padding:0.7rem;font-size:3rem}
 .portfolio-text{min-height:130px;padding:0.3rem;}
-
 /********SKILLS*768px***************/      
-#container{flex-direction:row}
+#skill-container{flex-direction:row}
 #icon-container{align-content:stretch;border-right:4px dashed#2c8cff;border-bottom:none}
 #skill-bg{height:25%} 
 .icon{font-size:5rem} 
@@ -117,31 +104,22 @@ textarea{border-radius:.25rem;font:400 1.5rem Arial}
 /***********FOOTER************/
 #footer{height:50vh;}
 #footer-box-icon{flex-direction:row}
-
-#btn-scroll{font-size:6vw}
 }
 /*992***LG****992***************************************************************************************************/
-/********APPARE IL PULSANTE NEL NAVBAR****************************************************************************/
 @media(min-width:992px){
 /********COVER*992**********/    
-
 /********PORTFOLIO*992**********/  
 .portfolio-box{flex-basis:23%}    
 .portfolio-icon{padding:0.8rem;font-size:3.5rem}
-
 /********SKILLS*992***************/      
 .icon{font-size:6rem} 
 #skill-bg{height:40%} 
-
 /***********CONTACT************/
 /***********FOOTER************/
-#btn-scroll{font-size:4vw}
 }
 /*1200*****XL******1200*********************************************************************************************/
 @media(min-width:1200px){    
 /********COVER*1200**********/
-
-
 /********PORTFOLIO*1200**********/ 
 #portfolio{line-height:1.5}
 #portfolio-container{justify-content:space-around}
@@ -150,17 +128,13 @@ textarea{border-radius:.25rem;font:400 1.5rem Arial}
 .portfolio-icon{font-size:4rem}
 .portfolio-text{min-height:90px;padding:0.1rem 0.8rem 0.5rem 0.8rem}
 .portfolio-btn{padding:1rem;font-size:1.5rem}
-
-
 /********SKILLS*1200***************/   
-.icon{font-size:7rem;flex-basis: 25%;} 
+.icon{font-size:7rem;flex-basis:25%} 
 #skill-bg{height:58%} 
-
 /***********CONTACT*1200***********/ 
 #contact-form{width:25%}
 /***********FOOTER*1200***********/
 .footer-icon{width:100px;height:100px;line-height:1.4;font-size:4rem}
-#btn-scroll{font-size:2vw}
 }    
 
 

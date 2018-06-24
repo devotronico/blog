@@ -14,7 +14,7 @@ class HomeController extends Controller
         parent::__construct(); 
         $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
         $this->page = 'home'; 
-        $this->grid = 'container-fluid';
+     //   $this->grid = 'container-fluid';
     }
 
 

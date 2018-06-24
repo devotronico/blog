@@ -1,7 +1,7 @@
 <!-- SKILLS -->
 <div id="skill">
         <div id="skill-title"><p>Skills</p></div>
-        <div id="container">
+        <div id="skill-container">
             <div id="icon-container">
                 <div class="icon"><i class="devicon-html5-plain colored"></i></div>
                 <div class="icon"><i class="devicon-css3-plain colored"></i></div>

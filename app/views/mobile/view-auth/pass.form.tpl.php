@@ -8,7 +8,7 @@
     <?php endif?>
     <small>Per creare una nuova password inserisci la tua email</small>
     <input type="email" name="email" aria-describedby="email" maxlenght="16" placeholder="Email" required>
-    <button type="submit">Procedi</button>
+    <button type="submit" class="button">Procedi</button>
   </form>
 </main>
 

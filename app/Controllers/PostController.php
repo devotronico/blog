@@ -10,7 +10,7 @@ use \PDO;
 class PostController extends Controller
 {
     protected $Post ;
-  
+    private $bytes = 1000000;
     public function __construct(PDO $conn) { 
   
         parent::__construct(); 
@@ -72,6 +72,7 @@ public function getPosts($currentPage=1){
 
         $files=[$this->device.'.navbar-blog', 'post.single'];
         $this->content = View($this->device, 'blog', $files, compact('post', 'comments'));  // usando la funzione View ritorniamo il template con i post all' interno
+        //die(__METHOD__);
     }
 
 
@@ -81,11 +82,12 @@ public function getPosts($currentPage=1){
 ****************************************************/
     public function create(){
         $this->page = 'create';
-        $bytes = 1000000;
-        $megabytes = $bytes * 0.000001;
+        //$bytes = 1000000;
+        $megabytes = $this->bytes * 0.000001;
         $files=[$this->device.'.navbar-blog', 'post.create'];
         $link="create";
-        $this->content = View($this->device, 'blog', $files, compact('link', 'megabytes')); 
+        $this->content = View($this->device, 'blog', $files, compact('link', 'megabytes'));
+       // die(__METHOD__);
     }
 
 
@@ -97,8 +99,8 @@ public function getPosts($currentPage=1){
 
     if ( !$_FILES['file']['error']  ||  is_uploaded_file($_FILES['file']['tmp_name']) )  {
 
-        $bytes = 1000000;
-        $Image = new Image('wFixed', 600, 10, $bytes, 'posts', $_FILES);
+        //$bytes = 1000000;
+        $Image = new Image('wFixed', 600, 10, $this->bytes, 'posts', $_FILES);
 
         if ( empty( $Image->getMessage()) )
         {
@@ -127,8 +129,9 @@ public function getPosts($currentPage=1){
 public function editPost($postid) {
     $this->page = 'edit';
     $post = $this->Post->edit($postid); 
+    $megabytes = $this->bytes * 0.000001;
     $files=[$this->device.'.navbar-blog', 'post.edit'];
-    $this->content = View($this->device, 'blog', $files, compact('post'));
+    $this->content = View($this->device, 'blog', $files, compact('post', 'megabytes'));
 }
 
 /***********************************************************************************************|
@@ -196,13 +199,15 @@ public function saveComment($postid) {
     redirect('/post/'.$postid); 
 }
 
-/*******************************************************************************************************************************************|
-* DELETE SINGLE COMMENT          metodo = GET    path = comment/id/delete                                                                   |             
-* Per avere accesso a questo metodo bisogna essere amministratore/proprietario di questo sito/blog                                          |
-* Quando si fa il login viene assegnato il proprio numero id corrispondente alla propria email alla variabile globale $_SESSION['user_id']  | 
-* Quindi se $_SESSION['user_id'] è uguale a 1 allora possiamo accedere a questo metodo.                                                     |
-* Il controllo su $_SESSION['user_id'] si trova nel template 'app\views\view-blog\post.single.tpl.php'                                      |                                                        
-********************************************************************************************************************************************/
+/***********************************************************************************************************************************************|
+* DELETE SINGLE COMMENT          metodo = GET    path = comment/id/delete                                                                       |
+* Questo metodo consente la cancellazione di un singolo commento                                                                                |             
+* Per avere accesso a questo metodo bisogna essere amministratore o contributore del sito/blog                                                  |
+* Quando si fa il login viene inizializzato $_SESSION['user_type']                                                                              |
+* Se $_SESSION['user_type'] è uguale a 'administrator' o 'contributor' allora possiamo accedere a questo metodo.                                |
+* Se $_SESSION['user_type'] è uguale a 'administrator' si può cancellare qualsiasi commento                                                     |
+* Se $_SESSION['user_type'] è uguale a 'contributor' si può cancellare solo i commenti relativi ai post che ha creato l'utente 'contributor'    |                                                                                           
+************************************************************************************************************************************************/
 public function deleteComment($commentid){
 
     $Comment = new Comment($this->conn); // istanziamo la classe Comment
@@ -214,7 +219,8 @@ public function deleteComment($commentid){
     $Comment->postNumComments(-1, $postid);
 
     $Comment->deleteOne($commentid); // prendiamo solo il commento che ha il suo id univoco
-    redirect("/posts"); 
+    
+    redirect('/post/'.$postid); 
 }    
 
 } // chiude classe PostController

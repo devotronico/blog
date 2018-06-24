@@ -4,7 +4,7 @@
         <?php if (!empty($message)): ?>
         <div class='message'><?=$message?></div>
         <?php endif?>
-        <button type="submit">Riprova</button>
+        <button type="submit" class="button">Riprova</button>
     </form>
 </main>
 

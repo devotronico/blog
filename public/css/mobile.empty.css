@@ -25,6 +25,3 @@ h1{font-size:1.8rem;margin-bottom:2.5rem}
 button{margin:1.5rem auto 0;padding:1rem 0;font-size:1rem}  
 }
 }
-@media screen and (orientation: landscape){
-@media(min-width:260px){}
-}

@@ -1,43 +1,84 @@
-@media(min-width:0){
+/* route = [auth/signup/form, auth/signup/store, auth/signup/verify] */
+/* tpl   = [signup.form, signup.success, signup.verify] */
+@media(min-width:0){}
+@media(min-width:230px){
+main{height:100%;padding-top:4rem;font-size:0.7rem} 
+form{padding:0.5rem;background-color:#fff}
+h1{margin-bottom:.5rem;text-align:center;font-size:1rem}
+.message{position:relative;color:#800000;background-color:#eee}
+.message-close{position:absolute;bottom:0;right:0;width:1.5rem;height:1.5rem;text-align:center;font-weight:bolder;line-height:2;border-radius:.25rem;border:1px solid #800000;background-color:#fff}
+label{display:none}
+input{display:block;width:100%;padding:.3rem 0;line-height:.8;text-indent:.5rem;font:400 .7rem Arial}
+input:nth-of-type(1){padding:0;text-indent:0}
+input:nth-of-type(2), input:nth-of-type(3), input:nth-of-type(4){margin-top:.5rem}
+button{display:block;width:70%;padding:.5rem 0;margin:.5rem auto 0;text-decoration:none;border:none;color:#fff;background-color:#2c8cff}
 }
-/*260***XS****260**************************************************************************************************260*/
-@media(min-width:260px){
-/*********FORM********/  
-.signup{padding:10px;margin:0 auto;margin-top:50px;width:100%;text-align:center;background-color:#fff} 
-h1{font-size:2rem}
-.input-group-addon{display:none;width:40px;height:45px;padding:8px;color:#fff;background-color:#202225}
-#signup-btn{margin-top:1rem;border:none;color:#fff;background-color:#2c8cff} 
-#signup-btn:hover{background-color:#6baeff} 
+@media(min-width:320px){
+main{font-size:.9rem}
+.message{padding:.5rem}
+.message-close{cursor:pointer;width:1.8rem;height:1.8rem;line-height:1.7}
+h1{font-size:1.5rem}
+form{padding:1rem}
+input{padding:.7rem 0;line-height:1;border-radius:.25rem;font:400 .9rem Arial}
+input:nth-of-type(2), input:nth-of-type(3), input:nth-of-type(4){margin-top:.8rem}
+button{width:50%;margin:1rem auto 0;padding:.8rem 0;border-radius:.25rem;font-size:.9rem}
 }
-/*576***SM****576***************************************************************************************************/
-@media(min-width:576px){
-/*********FORM********/  
-.signup{width:80%;padding:20px;box-shadow:0 8px 20px 0 rgba(0, 0, 0, 0.4), 0 8px 20px 0 rgba(0, 0, 0, 0.4)}
-h1{font-size:2.2rem;}
-.input-group-addon{display:block}
+@media(min-width:375px){
+main{font-size:1rem}
+form{padding:2rem}
+h1{margin-bottom:1rem;font-size:1.8rem}
+.message{padding:1rem}
+label{display:block;margin-top:1rem}
+input{padding:1rem 0;font:400 1rem Arial}
+input:nth-of-type(2), input:nth-of-type(3), input:nth-of-type(4){margin-top:0} 
+button{margin:1rem auto 0;padding:1rem 0;font-size:1rem}  
 }
-/*768***MD****768***************************************************************************************************/
-@media(min-width:768px){
-/*********FORM********/  
-.signup{width:60%;padding:20px;margin-top:150px}
-h1{font-size:2.5rem;}
-}
-/*992***LG****992***************************************************************************************************/
-/********APPARE IL PULSANTE NEL NAVBAR****************************************************************************/
-@media(min-width:992px){
-/*********FORM********/  
-.signup{padding:20px;width:40%}
-}
-/*1200*****XL******1200*********************************************************************************************/
-@media(min-width:1200px){  
-/*********FORM********/  
-.signup{padding:30px;width:35%}
-}    
+@media(min-width:576px){}
+@media(min-width:768px){}
+@media(min-width:992px){}
+@media(min-width:1200px){
+main{font-weight:400;font-style:normal;font-size:1.3rem;line-height:1.58;letter-spacing:-.003em}
+form{width:60%;margin:0 auto;padding:3rem;border-radius:.25rem;box-shadow:0px 4px 20px 0px#666}
+input{padding:1rem 0}
+button{width:40%;font-size:1.3rem}
+}  
+ 
+
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
        
   
-  
-  
-  
+
   
   
   
