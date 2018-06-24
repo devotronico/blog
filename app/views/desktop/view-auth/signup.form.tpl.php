@@ -1,57 +1,29 @@
 <main role="main">
-<form id='signup-form' class='signup' action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
-<h1 class='container-title text-center'>Registrati</h1>
-<?php if (!empty($imgMessage)): ?>
-    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-        <?= $imgMessage ?>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>
-    <?php endif?>
-
-    <div class="form-group">
-        <div class='input-group'>
-            <div class="input-group-addon"><i class="fas fa-image fa-lg"></i></div>
-            <input type="file" class="form-control" name="file"> 
+    <form action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
+        <h1>Registrati</h1>
+        <?php if (!empty($imgMessage)): ?>
+        <div class='message'><?= $imgMessage ?>
+            <div class="message-close">X</div>
         </div>
+        <?php endif?>
+        <small>carica un immagine per il tuo profilo</small>   
+        <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+        <input type="file" name="file" size="<?=$bytes?>" accept="<?=$acceptFileType?>"> 
         <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>   
-    </div>
-
-<?php if (!empty($message)): ?>
-    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-        <?=$message?>
-        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-            <span aria-hidden='true'>&times;</span>
-        </button>
-    </div>
-  <?php endif?>
-  <div class='form-group'>
-    <label for='username'></label> 
-    <div class='input-group'>
-      <div class='input-group-addon'><i class='fas fa-user fa-lg'></i></div> 
-      <input type='text' class='form-control' name='user_name' aria-describedby='username' placeholder='Username' autocomplete="off">
-    </div>
-  </div>
-
-  <div class='form-group'>
-    <label for='email'></label> 
-    <div class='input-group'>
-      <div class='input-group-addon'><i class='fas fa-envelope fa-lg'></i></div> 
-      <input type='email' class='form-control' name='user_email' aria-describedby='emailHelp' placeholder='Enter email *' required='required' autocomplete="off">
-    </div>
-  </div>
-  <div class='form-group'>
-    <label for='password'></label> 
-    <div class='input-group'>
-      <div class='input-group-addon'><i class='fas fa-key fa-lg'></i></div> 
-      <input type='password' class='form-control' name='user_pass' placeholder='Password *' required='required' autocomplete="off">
-    </div>
-    <small>la password deve avere minimo 8 caratteri</small>
-  </div> 
-  <div class='form-group text-center'>
-  <button type='submit' id="signup-btn" class='btn'>Registrati</button>
-  </div>
-</form>
+       
+        <?php if (!empty($message)): ?>
+        <div class='message'><?=$message?>
+            <div class="message-close">X</div>
+        </div>
+        <?php endif?>
+        <label for='username'>username</label> 
+        <input type='text' name='username' id='username' aria-describedby='username' placeholder='Username' maxlenght="32" autocomplete="off">
+        <label for='email'>email</label> 
+        <input type='email' name='email' id='email' aria-describedby='email' placeholder='Email *' value="<?=isset($_POST['email'])? $_POST['email'] : false ?>" required  maxlenght="32" autocomplete="off">
+        <label for='password'>password</label> 
+        <input type='password' name='password' id='password' placeholder='Password *' aria-describedby='password' required maxlenght="32" autocomplete="off">
+        <small>la password deve avere minimo 8 caratteri</small>
+        <button type='submit' class="button">Registrati</button>
+    </form>
 </main>
 

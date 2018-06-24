@@ -1,29 +1,29 @@
 <!-- DESKTOP NAVBAR BLOG -->
 <header>  
   <div id="navbar">
-    <a href="/" class="logo">
-      <img src="/img/logo.svg" alt="logo">
+    <a href="/" id="logo-link">
+      <img id="logo-img" src="/img/logo.svg" alt="logo">
     </a>
     <div class="toggleNav"></div>
   </div>
   <nav>
     <ul id="nav-list">
-      <li class="liPageLink">
+      <li class="liPageLink deactive">
         <a class="aPageLink" href="/">Home</a>
       </li>
       <li class="liPageLink <?=$link==='posts'? 'active' : 'deactive'?>">
-          <a class="aPageLink" href="/posts">Posts</a> 
+        <a class="aPageLink" href="/posts">Posts</a> 
       </li>
-      <?php if ( isset($_SESSION['user_type']) &&  $_SESSION['user_type'] !== 'reader' ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
+      <?php if ( isset($_SESSION['user_type']) && ($_SESSION['user_type'] === 'contributor' || $_SESSION['user_type'] === 'administrator') ) : ?>  
       <li class="liPageLink <?=$link==='create'? 'active' : 'deactive' ?>">
         <a class="aPageLink" href="/post/create">New&nbsp;Post</a>
       </li>
       <?php endif ?>
       <?php if ( isset($_SESSION["user_id"]) ) : ?>
-      <li class="liPageLink">
+      <li class="liPageLink deactive">
         <a class="aPageLink" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
       </li>
-      <li class="liPageLink">
+      <li class="liPageLink deactive">
         <a class="aPageLink" href="/auth/logout">Logout</a> 
       </li>
       <?php else: ?>
@@ -37,5 +37,7 @@
     </ul>
   </nav>
 </header>  
+<div id='risoluzione'></div>
+<div class="btn-scroll"></div>
 <!-- END NAVBAR BLOG -->
 

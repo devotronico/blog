@@ -1,17 +1,13 @@
 <main role="main">
-    <div id="edit-post" > 
-            <h1>Modifica il post</h1>
-            <form action="/post/<?=$post->post_ID?>/update" method="POST">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input class="form-control" type="text" name="title" value="<?=$post->title?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="title">Message</label>
-                    <textarea class="form-control" name="message" rows='12' required><?=$post->message?></textarea>
-                </div>
-                <button class="btn">Save</button>
-            </form>
-    
-    </div>
+    <form action="/post/<?=$post->post_ID?>/update" method="POST" enctype="multipart/form-data">
+        <h1>Modifica il post</h1>
+        <label for="title">Titolo</label>
+        <input type="text" name="title" id="title" value="<?=$post->title?>" required>
+        <label for="image">Immagine</label>
+        <input type="file" name="file" id="image"> 
+        <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>
+        <label for="textarea">Testo</label>
+        <textarea name="message" id="textarea" rows='12' maxlenght="2000" required><?=$post->message?></textarea>
+        <button type="submit" class="button">Salva</button>
+    </form>
 </main>

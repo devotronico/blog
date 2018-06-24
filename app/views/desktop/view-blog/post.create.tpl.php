@@ -1,31 +1,17 @@
 <main role="main">
-     <div id="create-post" class="row align-items-center"> 
-        <div class="col-md-6 offset-md-3 text-center">
-            <h1>Crea un nuovo post</h1>
-            <form action="/post/save" method="POST" enctype="multipart/form-data">
-
-                <div class="form-group">
-                    <label for="title">Titolo</label>
-                    <input type="text" class="form-control" name="title" placeholder="titolo del post" required>
-                </div>
-
-                <div class="form-group">
-                    <div class='input-group'>
-                        <div class="input-group-addon"><i class="fas fa-image fa-lg"></i></div>
-                        <input type="file" class="form-control" name="file"> 
-                    </div>
-                    <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>
-                </div> 
-
-                <div class="form-group">
-                    <label for="message">Messaggio</label>
-                    <textarea class="form-control" name="message" rows='10' placeholder="testo del post" required></textarea>
-                </div>
-                <button class="btn">Save</button>
-            </form>
-        </div>
-    </div>
+    <form action="/post/save" method="POST" enctype="multipart/form-data">
+        <h1>Crea un nuovo post</h1>
+        <label for="title">Titolo</label>
+        <input type="text" name="title" id="title" placeholder="Titolo del post" maxlenght="64" required>
+        <label for="image">Immagine</label>
+        <input type="file" name="file" id="image"> 
+        <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>
+        <label for="message">Messaggio</label>
+        <textarea name="message" id="message" rows='7' placeholder="Testo del post" maxlenght="2000" required></textarea>
+        <button type='submit' class="button">Salva</button>
+    </form>
 </main>
+
 
 
 

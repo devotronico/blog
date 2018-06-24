@@ -182,7 +182,7 @@ public function validateEmail()
 * Al primo utente che si registra in automatico il campo 'user_type' viene settato come 'administrator'                 |
 * Mentre agli utenti che si registrano successivamente, in automatico il campo 'user_type' viene settato come 'reader'  | 
 * Solo l' utente che ha il campo 'user_type' settato come 'administrator' può  cambiare                                 |
-* il campo 'user_type' degli altri utenti nei valori 'administrator', 'contributor', 'reader'                           |
+* il campo 'user_type' degli altri utenti nei valori 'administrator', 'contributor', 'reader', banned                   |
 ************************************************************************************************************************/
 public function setUserType(){
     

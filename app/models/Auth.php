@@ -17,12 +17,11 @@ class Auth extends Validate
 //========== SIGNIN GROUP  ========================= SIGNIN GROUP  =====================================
 //======================================================================================================  
 
-
-
     /***************************************************************************************|
-     * GET USER TYPE                                                                        |
-     * otteniamo dalla tabella 'users' solo il valore del campo 'user_type'                 |
-     * che verrà utilizzato nella pagina profilo per modificare i valori degli altri utenti |
+     * LOGIN WITH COOKIE                                                                    |
+     * Quando dalla home passiamo alla pagina del blog                                      |
+     * se abbiamo il COOKIE allora viene fatto un login automatico.                         |
+     * ci andiamo a prendere dalla tabella 'users' solo il valore del campo 'user_type'     |            
     ****************************************************************************************/
     public function loginWithCookie() {       
 
@@ -41,10 +40,6 @@ class Auth extends Validate
             }
         }
     }
-
-
-
-
 
 
     public function signin()

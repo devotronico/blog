@@ -19,7 +19,7 @@ class Controller {
     //$script =  { identifica il file immagine da linkare nel template a seconda del dispositivo }
   //  protected $photo;
     //$grid =  { serve a identificare la classe bootstrap .container-fluid utilizzata nei template home e .container in blog e auth } 
-    protected $grid = 'container';
+   // protected $grid = 'container';
 
     protected $conn;
     
@@ -32,8 +32,8 @@ public function __construct(){
         $this->device = 'mobile';
         
     } else {
-        $this->device = 'desktop';
-            
+
+        $this->device = 'desktop';   
     }
 }
 
@@ -43,7 +43,7 @@ public function __construct(){
 * la variabile 'layout' contiene il file 'layout/index.tpl.php' che mostra  |
 * il layout completo che è sempre uguale per ogni pagina del sito.          |
 * All' interno del file 'layout/index.tpl.php' cè la variabile 'content'    | 
-* che contiene un template diverso in base alla rotta che c'è nel browser   |
+* che contiene un template diverso in base alla rotta che c'è nell'url      |
 ****************************************************************************/
 public function display(){
  

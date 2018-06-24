@@ -22,9 +22,9 @@ class Password
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
           
-                $this->email = isset($data['email'])? $this->isEmailStored($this->validateEmail($data['email'])): $this->message = "Il parametro email è vuoto"; // route = auth/password/check
+                $this->email = isset($data['email'])? $this->isEmailStored($this->validateEmail($data['email'])): $this->message .= "Il parametro email è vuoto"; // route = auth/password/check
 
-                $this->hash = isset($data['hash'])? $this->isHashStored($this->hashUrlValidate($data['hash'])): $this->message = "Il parametro hash è vuoto";
+                $this->hash = isset($data['hash'])? $this->isHashStored($this->hashUrlValidate($data['hash'])): $this->message .= "Il parametro hash è vuoto";
 
                 break;
             case 'POST':
@@ -64,6 +64,64 @@ class Password
         }
 
     }
+
+
+
+
+
+
+
+/*******************************************************************************************************|
+ * EMAIL LINK                                                                                           |
+ * Quando clicchiamo sul link di conferma presente nell'email verremo indirizzati di nuovo sul sito     |
+ * Il link contiene le variabili/parametri $_GET['email'] e $_GET['hash']                               |
+ * Dopo aver validato la email e la hash che sono stati passati dall'url col metodo GET                 |
+ * Controlliamo se corrispondo ai valori presenti nella tabella 'users' del database                    |
+ * Se sono uguali allora facciamo un controllo sul campo 'user_status'                                  |
+ * Se il valore di 'user_status' è uguale a 0:                                                          |
+ *  cambiamo il suo valore in 1. il valore 1 sta a indicare che la registrazione al sito è completa.    |
+ * Se il valore di 'user_status' è uguale a 1:                                                          |
+ *  lasciamo il suo valore in 1. vuol dire che questo account era già stato attivato precedentemente    |                                                    
+ *******************************************************************************************************/
+public function emailLink()
+{
+    if (!empty($this->message)) {exit;}
+      
+        $email = $this->email;  
+        $hash = $this->hash; 
+
+        $sql = "SELECT user_status FROM users WHERE user_email= :email AND user_activation_key= :hash";
+
+        if ($stmt = $this->conn->prepare($sql)) 
+        {
+            $stmt->bindParam(':email', $this->email, PDO::PARAM_STR, 32);
+            $stmt->bindParam(':hash', $this->hash, PDO::PARAM_STR);
+            if ($stmt->execute()) 
+            {
+                if ($stmt->rowCount() == 1) { 
+                 
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC); 
+
+                    if ( $user['user_status'] == 0 ) {
+
+                        $sql = "UPDATE users SET user_status = 1 WHERE user_email = :email";
+                        if ($stmt = $this->conn->prepare($sql)) 
+                        {
+                            $stmt->bindParam(':email', $this->email, PDO::PARAM_STR, 32);
+            
+                            $this->message .= $stmt->execute() ? '' : "Qualcosa è andato storto. Per favore prova più tardi.";
+
+                        } else { $this->message .= "Qualcosa è andato storto. Per favore prova più tardi.";}
+                    }
+                    else {  $this->message .= 'questa account è già stato attivato';}
+                } else { $this->message .= "Qualcosa è andato storto. Per favore prova più tardi.";} 
+            } else { $this->message .= "Qualcosa è andato storto. Per favore prova più tardi.";}
+        } else { $this->message .= "Qualcosa è andato storto. Per favore prova più tardi.";}
+        $stmt = null;
+        $this->conn = null; 
+}
+
+
 
 
     /***********************************************************************************************************************|
@@ -219,13 +277,12 @@ class Password
 
 
 
-    /*******************************************************************************************************|
-     * HASH URL VALIDATE                                                                                    |
-     * Controlla se sono validi i caratteri che compongono l' hash che otteniamo dall' url                  |                                   
-     *******************************************************************************************************/
+    /***************************************************************************************************|
+     * HASH URL VALIDATE                                                                                |
+     * Controlla se sono validi i caratteri che compongono l' hash che otteniamo dall' url [metodo GET] |                                  
+     ***************************************************************************************************/
     private function hashUrlValidate($hash)
     {
-        //validiamo l'hash che viene passata attraverso il metodo GET dall URL 
         if (preg_match('/^[a-f0-9]{32}$/', $hash)) {
             return $hash;
         } else {

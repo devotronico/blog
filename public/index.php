@@ -1,6 +1,9 @@
 <?php
 if (!isset($_SESSION)) { session_start(); } 
 session_regenerate_id(true);
+//phpinfo();
+
+
 //echo '<pre>', print_r($_SESSION) ,'</pre>'; 
 //echo '<pre>', print_r($_COOKIE) ,'</pre>'; 
 /*

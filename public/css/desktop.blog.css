@@ -12,9 +12,9 @@ h1{font-size:1rem}
 .comment-num{margin:0}
 .posts hr{margin-bottom:0}
 /* FOOTER */ 
-footer{padding:1rem}
+footer{padding:.5rem}
 #pagination{list-style-type:none;margin:0;padding:0;}
-.page-item{display:inline-block;width:3.5rem;height:3.5rem;font-size:1.2rem;line-height:2;text-align:center;border:1px solid#66ccff}
+.page-item{display:inline-block;width:2rem;height:2rem;text-align:center;border:1px solid#66ccff}
 /*
 .attivo{background-color: rgb(179, 179, 248);}  
 .disabled{background-color: rgb(235, 137, 137);}
@@ -22,8 +22,9 @@ footer{padding:1rem}
 .attivo{color:#3399ff;background-color: rgb(160, 160, 240);} 
 .number{color:#3399ff;background-color: pink;}
 .dot{color:#3399ff;background-color: rgb(177, 173, 173);}*/
-.page-item > .page-link {font-size: 1.5rem;}
-.page-link{text-decoration:none;color:#666} 
+.page-link {text-decoration:none;font-size:1rem;line-height:1.8;color:#666}
+/* .page-item > .page-link {text-decoration:none;font-size:1rem;line-height:1.8;color:#666} */
+/* .page-link{text-decoration:none;color:#666}  */
 .attivo > .page-link, .number > .page-link, .dot > .page-link{color:#3399ff} 
 }
 @media(min-width:320px){
@@ -44,4 +45,8 @@ main{font-size:1rem}
 h1{font-size:1.4rem}
 /* FOOTER */
 footer{padding-top:2rem}
+.page-item{width:3.5rem;height:3.5rem}
+.page-link {font-size:2rem;line-height:1.6}
+
+
 }

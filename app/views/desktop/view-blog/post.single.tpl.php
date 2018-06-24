@@ -13,7 +13,7 @@
             <?php endif;?>
             <div id="post-text"><p><?=$post->message?></p></div>
             <br>
-            <?php  if (isset($_SESSION)) : ?>
+            <?php  if (isset($_SESSION['user_type'])) : ?>
             <?php if ( $_SESSION['user_type'] === 'administrator' ) : ?>    
                 <a href="/post/<?= $post->post_ID ?>/edit" id="post-btn-edit" class="button">EDIT</a>
                 <a href="/post/<?= $post->post_ID ?>/delete" id="post-btn-delete" class="button">DELETE</a>
@@ -25,13 +25,15 @@
         </article>
     </section>
     <section id="textarea-container">
-        <h1>Partecipa alla discussione</h1>    
         <?php if ( isset($_SESSION['user_id']) ) : ?>  
+        <h1>Partecipa alla discussione</h1>    
             <form class="comment-form" action="/post/<?=$post->post_ID?>/comment" method="POST">
                 <textarea name="comment" rows="6" placeholder="Scrivi un commento" required></textarea>
                 <button class="button" <?= $_SESSION['user_type'] === 'banned'? 'disabled': ''?> >Invia</button>   
             </form>
-        <?php endif; ?>
+        <?php else: ?>
+            <p><a class="aPageLink" href="/auth/signin/form">Accedi</a> oppure <a class="aPageLink" href="/auth/signup/form">Registrati</a> per commentare questo post</p>
+        <?php endif ?>
     </section> 
     <section id='comments-container'>
     <?php  if( !empty($comments) ) : ?>
@@ -43,14 +45,13 @@
                     <time datetime="<?= $comment->c_datecreated ?>"><?=$comment->c_dateformatted?></time>
                     <span class="author">di&nbsp;<a href="/auth/<?=$comment->user_id?>/profile"><?=$comment->user_name?>&nbsp;</a></span> 
                     <span class="mailto"><a href="mailto:<?= $comment->user_email ?>">&#x2709</a></span> 
-                    <?php  if (isset($_SESSION)) : ?>
+                    <?php  if (isset($_SESSION['user_type'])) : ?>
                     <?php if ( $_SESSION['user_type'] === 'administrator' ) : ?>
                     <a href='/comment/<?=$comment->comment_ID?>/delete' class="comment-btn-delete">&#10006;</a>    
                     <?php elseif ( $_SESSION['user_type'] === 'contributor' && ($_SESSION['user_id'] === $post->user_id) ) : ?>
                     <a href='/comment/<?=$comment->comment_ID?>/delete' class="comment-btn-delete">&#10006;</a> 
                     <?php endif; ?>
                     <?php endif; ?>
-
                 <div class='clear'></div>
                 </div> 
                 <p class='comment-body'><?=$comment->comment?></p>

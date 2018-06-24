@@ -1,16 +1,15 @@
 <main role="main">
     <h1>Profilo di&nbsp;<?=$data->user_name?></h1>
     <img src="/img/auth/<?=!empty($data->user_image)?$data->user_image:'default.jpg'?>" alt="avatar personale">
-    <?php if ($data->ID === $_SESSION['user_id']): ?>
+    <?php if ( isset($_SESSION['user_id']) &&  $data->ID === $_SESSION['user_id'] ): ?>
     <form action='/auth/<?=$data->ID?>/image' method='POST' autocomplete='off' enctype="multipart/form-data">
- 
     <?php if (!empty($message)): ?>
     <div class='message'><?=$message?>
     <div class="message-close">X</div>
     </div><?php endif?>
     <label for="file">Cambia immagine</label>
     <input type="file" name="file" id="file"> 
-    <button type='submit'>Invia</button>
+    <button type='submit' class="button">Invia</button>
     </form>
     <?php endif?>
      <table>
@@ -31,13 +30,14 @@
                 <td>Data Registrazione</td>
                 <td><?=$data->user_registered?></td>
             </tr>
-            <?php if ( $user->user_type === 'administrator' ) :?>
+            <?php if ( isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'administrator' ) :?>
             <tr>
                 <td>Modifica permessi</td>
                 <td>
-                    <a href='/auth/<?=$data->ID?>/reader'>reader</a>
-                    <a href='/auth/<?=$data->ID?>/contributor'>contributor </a>
-                    <a href='/auth/<?=$data->ID?>/administrator'>administrator</a>
+                    <a class="usertype" href='/auth/<?=$data->ID?>/banned'>banned</a><br>
+                    <a class="usertype" href='/auth/<?=$data->ID?>/reader'>reader</a><br>
+                    <a class="usertype" href='/auth/<?=$data->ID?>/contributor'>contributor </a><br>
+                    <a class="usertype" href='/auth/<?=$data->ID?>/administrator'>administrator</a>
                 </td>
             </tr>
             <?php endif;?>

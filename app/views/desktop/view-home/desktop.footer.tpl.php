@@ -1,3 +1,4 @@
+<!-- FOOTER -->
 <footer id="footer">
     <div id="footer-box-icon">
         <a class="footer-icon" href="https://github.com/redeluni" target="_blank">
@@ -17,5 +18,4 @@
         <p id="footer-copyright">&copy;&nbsp;Daniele Manzi 2018</p>
     </div>
 </footer>
-<div id='risoluzione'></div>
-<div id="btn-scroll"><i class="scrollFA" class="fas fa-chevron-circle-up"></i></div>
+<!-- END FOOTER -->

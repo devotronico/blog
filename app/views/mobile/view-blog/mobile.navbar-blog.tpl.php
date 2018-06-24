@@ -14,7 +14,7 @@
       <li class="liPageLink <?=$link==='posts'? 'active' : 'deactive'?>">
           <a class="aPageLink" href="/posts">Posts</a> 
       </li>
-      <?php if ( isset($_SESSION['user_type']) &&  $_SESSION['user_type'] !== 'reader' ) : ?>  <!-- solo il proprietario del sito può modificare/eliminare i post -->
+      <?php if ( isset($_SESSION['user_type']) && ($_SESSION['user_type'] === 'contributor' || $_SESSION['user_type'] === 'administrator') ) : ?>  
       <li class="liPageLink <?=$link==='create'? 'active' : 'deactive' ?>">
         <a class="aPageLink" href="/post/create">New&nbsp;Post</a>
       </li>
@@ -38,7 +38,8 @@
   </nav>
 </header>  
 <!-- END NAVBAR BLOG -->
-
+<div id='risoluzione'></div>
+<div id="btn-scroll"><i class="scrollFA fas fa-chevron-circle-up"></i></div>
 
 
 

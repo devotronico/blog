@@ -42,8 +42,6 @@ main{font-size:0.9rem}
 #post-text{padding:1rem .5rem}
 }
 } 
-@media screen and (orientation: landscape) {
-@media(min-width:260px){}
-}
+
 
 

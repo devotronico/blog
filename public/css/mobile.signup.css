@@ -35,12 +35,7 @@ input:nth-of-type(2), input:nth-of-type(3), input:nth-of-type(4){margin-top:0}
 button{margin:1rem auto 0;padding:1rem 0;font-size:1rem}  
 }
 @media(min-width:576px){}
-@media(min-width:768px){}
-@media(min-width:992px){}
-@media(min-width:1200px){}    
-}  
-@media screen and (orientation: landscape) {
-@media(min-width:260px){}
+@media(min-width:768px){}  
 }
 
 

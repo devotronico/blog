@@ -2,7 +2,7 @@
     <form action='/posts' method='GET'>
         <?php if (isset($_SESSION['user_id'])): ?>
         <h1><?=$message?></h1>
-        <button type='submit' name='submit'>Entra</button>
+        <button type='submit' class="button">Entra</button>
         <?php else: ?>
         <h1>Attiva il tuo account</h1>
         <div class='message'>

@@ -3,12 +3,11 @@ namespace App\Controllers;
 
 use \PDO; 
 use App\Models\Password;
-//use App\Models\Image;
+use App\Models\EmailLink;
 
 
 class PasswordController extends Controller
 {
-    //protected $bytes = 500000;
     public function __construct(PDO $conn){ 
         parent::__construct(); 
         $this->conn = $conn; 
@@ -64,21 +63,40 @@ public function passwordCheck(){
  }
 
 
-/*******************************************************************************************************************************|
-* PASSWORD NEW      metodo = GET    route = auth/password/new                                                                   |
-* Cliccando sul link/bottone all'interno della Mail attiveremo la rotta '/auth/password/new' seguita dai parametri email, hash  |                |                            
-* il metodo 'passNew' controlla se i parametri {email, hash} passati attraverso il link siano validi                            |
-* Se sono validi ci mostrerà un form dove andremo a impostare una nuova password.                                               |
-* Se non sono validi non ci mostrerà un messaggio di errore e non ci consetirà di creare una nuova password                     |                                                            
-********************************************************************************************************************************/
- public function passwordNew(){
+/***************************************************************************************************************************************|
+* PASSWORD NEW      metodo = GET    route = auth/password/new                                                                           |
+* Cliccando sul link/bottone all'interno della nostra Mail attiveremo la rotta '/auth/password/new' seguita dai parametri email, hash   |                |                            
+* il metodo 'passNew' controlla se i parametri {email, hash} passati attraverso il link siano validi                                    |
+* Se sono validi ci mostrerà un form dove andremo a impostare una nuova password.                                                       |
+* Se non sono validi non ci mostrerà un messaggio di errore e non ci consetirà di creare una nuova password                             |                                                            
+****************************************************************************************************************************************/
+
+public function passwordNew(){
+    $this->page = 'newpass';
+    $EmailLink = new EmailLink($this->conn, $_GET);
+    $EmailLink->linkNewPass();
+    if ( empty( $EmailLink->getMessage()) )
+    {
+        $files=[$this->device.'.navbar-auth', 'pass.new'];    
+        $this->content = View($this->device, 'auth', $files );  
+    }
+    else
+    {
+        $message = $EmailLink->getMessage();
+        $files=[$this->device.'.navbar-auth', 'pass.error'];            
+        $this->content = View($this->device, 'auth', $files, compact( 'message')); 
+    }  
+ }
+
+/*
+public function passwordNew(){
     $this->page = 'newpass';
     $Password = new Password($this->conn, $_GET);
-
+    $Password->emailLink();
     if ( empty( $Password->getMessage()) )
     {
-        $files=[$this->device.'.navbar-auth', 'pass.new'];   // mostra il form         
-        $this->content = View($this->device, 'auth', $files );  // ritorniamo il template views\view-auth\verify.tpl.php
+        $files=[$this->device.'.navbar-auth', 'pass.new'];    
+        $this->content = View($this->device, 'auth', $files );  
     }
     else
     {
@@ -87,7 +105,7 @@ public function passwordCheck(){
         $this->content = View($this->device, 'auth', $files, compact( 'message')); 
     }  
  }
-
+*/
 
 /***********************************************************************************************************|
 * PASSWORD SAVE      metodo = POST    route = auth/password/save    [set cookie]                            |                                                                                                                                                         
