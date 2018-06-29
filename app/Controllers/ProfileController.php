@@ -24,43 +24,65 @@ class ProfileController extends Controller
         $this->page = 'profile';
         $Profile = new Profile($this->conn); 
         $data = $Profile->profile($id); 
-        $link="profile";
-        $files=[$this->device.'.navbar-auth', 'profile'];
-        $this->content = View($this->device, 'auth', $files, compact( 'data', 'link', 'message')); 
+   
+        if ( isset($_SESSION['user_id']) &&  $data->ID === $_SESSION['user_id'] ) {
+
+            $link="profile";
+            $acceptFileType=".jpg, .jpeg, .png";
+            $bytes = $this->bytes;
+            $megabytes = $bytes * 0.000001;
+            $files=[$this->device.'.navbar-auth', 'profile.user'];
+            $this->content = View($this->device, 'auth', $files, compact( 'data', 'link', 'bytes', 'megabytes', 'acceptFileType')); 
+        }
+        else
+        {
+            $files=[$this->device.'.navbar-auth', 'profile'];
+            $this->content = View($this->device, 'auth', $files, compact( 'data', 'link' )); 
+        }
     }
 
+
+
     /***************************************************************************************************************|
-    * SET ADMINISTRATOR     metodo = GET    route = auth/id/administrator                                           |                                                                                        
+    * SET USER TYPE     metodo = GET    route = profile/id/setUsertype                                               |                                                                                        
     ****************************************************************************************************************/
-    public function setAdministrator($id) { 
+    public function setUsertype($id, $usertype) { 
         $Profile = new Profile($this->conn); 
-        $Profile->modUserType($id, 'administrator'); 
+        $Profile->modUserType($id, $usertype); 
         $this->profile($id);    
     }
     /***************************************************************************************************************|
+    * SET ADMINISTRATOR     metodo = GET    route = auth/id/administrator                                           |                                                                                        
+    ****************************************************************************************************************/
+    // public function setAdministrator($id) { 
+    //     $Profile = new Profile($this->conn); 
+    //     $Profile->modUserType($id, 'administrator'); 
+    //     $this->profile($id);    
+    // }
+    /***************************************************************************************************************|
     * SET CONTRIBUTOR       metodo = GET    route = auth/id/contributor                                             |                                                                                        
     ****************************************************************************************************************/
-    public function setContributor($id) {
-        $Profile = new Profile($this->conn); 
-        $Profile->modUserType($id, 'contributor');   
-        $this->profile($id); 
-    }
+    // public function setContributor($id) {
+    //     $Profile = new Profile($this->conn); 
+    //     $Profile->modUserType($id, 'contributor');   
+    //     $this->profile($id); 
+    // }
     /***************************************************************************************************************|
     * SET READER     metodo = GET   route = auth/id/reader                                                          |                                                                                        
     ****************************************************************************************************************/
-    public function setReader($id) {  
-        $Profile = new Profile($this->conn); 
-        $Profile->modUserType($id, 'reader');   
-        $this->profile($id);     
-    }
+    // public function setReader($id) {  
+    //     $Profile = new Profile($this->conn); 
+    //     $Profile->modUserType($id, 'reader');   
+    //     $this->profile($id);     
+    // }
     /***************************************************************************************************************|
     * SET BANNED     metodo = GET   route = auth/id/banned                                                          |                                                                                        
     ****************************************************************************************************************/
-    public function setBanned($id) {  
-        $Profile = new Profile($this->conn); 
-        $Profile->modUserType($id, 'banned');   
-        $this->profile($id);     
-    }
+    // public function setBanned($id) {  
+    //     $Profile = new Profile($this->conn); 
+    //     $Profile->modUserType($id, 'banned');   
+    //     $this->profile($id);     
+    // }
 
     /***************************************************************************************************************|
     * SET AVATAR     metodo = POST   route = auth/:id/image                                                         |                                                                                        
@@ -86,15 +108,12 @@ class ProfileController extends Controller
             $message .= $Profile->getMessage();
             $message .= $Image->getMessage();
             
-            $this->page = 'profile';
-            $data = $Profile->profile($id); 
-            $user = $Profile->getUserType();
-            $link="profile";
-            $files=[$this->device.'.navbar-auth', 'profile'];
-            $this->content = View($this->device, 'auth', $files, compact( 'data', 'user', 'link', 'message')); 
+            $uri ='/auth/'.$_SESSION['user_id'].'/profile';
+
+            redirect($uri, $message);
         }
     }
     
 
 
-}
+} // chiude classe ProfileController

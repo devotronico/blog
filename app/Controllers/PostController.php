@@ -4,12 +4,13 @@ namespace App\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Image;
-use App\Models\Auth;
+//use App\Models\Auth;
 use \PDO;
 
 class PostController extends Controller
 {
     protected $Post ;
+    protected $meta;
     private $bytes = 1000000;
     public function __construct(PDO $conn) { 
   
@@ -36,8 +37,8 @@ class PostController extends Controller
 public function getPosts($currentPage=1){ 
    
     if ( isset($_COOKIE['user_id']) ) {
-         $Auth = new Auth($this->conn);
-         $Auth->loginWithCookie(); 
+     
+         $this->Post->loginWithCookie(); 
     }
 
     $totalPosts = $this->Post->totalPosts();
@@ -49,15 +50,45 @@ public function getPosts($currentPage=1){
 
      } else {
         $this->page = 'blog';
-        //$postForPage = 3;  
         $postForPage = $this->device === 'desktop'? 5 : 3;
         for ($i=0, $postStart=-$postForPage; $i<$currentPage; $postStart+=$postForPage, $i++);
         $posts = $this->Post->pagePosts($postStart, $postForPage); 
-        $files=[$this->device.'.navbar-blog', 'post.all', $this->device.'.pagination'];
-        $this->content = View($this->device, 'blog', $files, compact('link', 'posts', 'currentPage', 'totalPosts', 'postForPage')); 
+        $dates = $this->Post->getDates();
+        $files=[$this->device.'.navbar-blog', 'blog.posts', 'blog.aside', 'blog.pagination', 'blog.footer'];
+        $this->content = View($this->device, 'blog', $files, compact('link', 'posts', 'dates', 'currentPage', 'totalPosts', 'postForPage')); 
      }
 }
     
+
+//getPostsByDate
+/***************************************************************************************|
+* GET POST BY DATE      metodo = GET    path = post/id                                  |
+* questa classe mostrerà un solo post e mostrerà tutti i commenti legati a questo post  |
+****************************************************************************************/
+public function getPostsByDate($month, $year){ 
+    $link="posts";
+    $this->page = 'blog';
+    $totalPosts = $this->Post->totalPosts();
+   
+    
+        if ( empty($totalPosts ) ) { 
+            $this->page = 'empty';
+            $files=[$this->device.'.navbar-blog', 'post.empty'];
+            $this->content = View($this->device, 'blog', $files, compact('link', 'page')); 
+
+        } else {
+       
+            $this->page = 'blog';
+        
+            $posts = $this->Post->postsByDate($month, $year); 
+            $dates = $this->Post->getDates();
+            $files=[$this->device.'.navbar-blog', 'blog.posts', 'blog.aside', 'blog.footer'];
+            $this->content = View($this->device, 'blog', $files, compact('link', 'posts', 'dates')); 
+    
+        } 
+    }
+
+//======================================= POST ==============================================================================================
 
 /***************************************************************************************|
 * SHOW      metodo = GET    path = post/id                                              |
@@ -65,14 +96,18 @@ public function getPosts($currentPage=1){
 ****************************************************************************************/
     public function postSingle($postid){ 
         $this->page = 'post';
-        $post =  $this->Post->find($postid); // prendiamo il post con un determinato id dal database 
-       // $user = $this->Post->getUserType();// getUserType
+        $post = $this->Post->find($postid); // prendiamo il post con un determinato id dal database 
+      
+      //  if ( !empty($post) ) {
         $comment = new Comment($this->conn); // istanziamo la classe Comment
         $comments =  $comment->all($postid); // prendiamo tutti i commenti che hanno lo stesso id del post
-
         $files=[$this->device.'.navbar-blog', 'post.single'];
-        $this->content = View($this->device, 'blog', $files, compact('post', 'comments'));  // usando la funzione View ritorniamo il template con i post all' interno
-        //die(__METHOD__);
+        $this->content = View($this->device, 'blog', $files, compact('post', 'comments'));  
+        $files=['meta'];
+        $this->meta = View($this->device, 'blog', $files, compact('post')); 
+       // } else {
+      //      redirect("/blog/");
+      //  }
     }
 
 
@@ -87,7 +122,7 @@ public function getPosts($currentPage=1){
         $files=[$this->device.'.navbar-blog', 'post.create'];
         $link="create";
         $this->content = View($this->device, 'blog', $files, compact('link', 'megabytes'));
-       // die(__METHOD__);
+
     }
 
 
@@ -108,7 +143,7 @@ public function getPosts($currentPage=1){
             $this->Post->save($_POST, $imageName); 
         } else {
 
-          //  die ($Auth->getMessage());
+
         }
     }
     else 
@@ -117,7 +152,7 @@ public function getPosts($currentPage=1){
     }
         $this->Post->countPosts(1);
    
-        redirect("/posts");
+        redirect("/blog/");
     }
 
 /*******************************************************************************************************************************************|
@@ -129,9 +164,11 @@ public function getPosts($currentPage=1){
 public function editPost($postid) {
     $this->page = 'edit';
     $post = $this->Post->edit($postid); 
-    $megabytes = $this->bytes * 0.000001;
+    $bytes = $this->bytes;
+    $megabytes = $bytes * 0.000001;
+    $acceptFileType=".jpg, .jpeg, .png";
     $files=[$this->device.'.navbar-blog', 'post.edit'];
-    $this->content = View($this->device, 'blog', $files, compact('post', 'megabytes'));
+    $this->content = View($this->device, 'blog', $files, compact('post', 'bytes', 'megabytes', 'acceptFileType'));
 }
 
 /***********************************************************************************************|
@@ -141,15 +178,52 @@ public function editPost($postid) {
 ************************************************************************************************/
 public function updatePost($postid) {
 
+    if ( $_FILES['file']['error'] === 4  ) 
+    {
+        // immagine non caricata
+        $this->Post->update($postid, $_POST);
+        redirect("/blog/"); 
+    }
+    else
+    {
+        $Image = new Image('wFixed', 600, 10, $this->bytes, 'posts', $_FILES);
+
+        if ( empty( $Image->getMessage()) ) {
+            // immagine  caricata
+            $imageName = !is_null($Image->getNewImageName()) ? $Image->getNewImageName() : '';
+            $this->Post->deletePostImage($postid);
+            $res = $this->Post->update($postid, $_POST, $imageName);
+            echo $res;
+            if ( !empty( $res )) {
+                redirect("/blog/"); 
+            } else {
+                $message = 'Si è verificato un errore<br>'.$this->Post->getMessage();
+                $uri ='/post/'.$postid.'/edit';
+                redirect($uri, $message);
+            }
+            
+        }
+        else 
+        {
+            $message = 'Si è verificato un errore<br>'.$Image->getMessage();
+           // $message = 'Si è verificato un errore<br>';
+           // $message .= $Image->getMessage();
+            $uri ='/post/'.$postid.'/edit';
+            redirect($uri, $message);
+        }
+    }
+
+/*
     try {    
         $r = $this->Post->update($postid, $_POST); 
    
-        redirect("/posts"); 
+        redirect("/blog/"); 
 
     } catch ( PDOException $e ) {
         
         return $e->getMessage();
     }
+    */
 }
 
 
@@ -170,7 +244,7 @@ public function updatePost($postid) {
             $Comment = new Comment($this->conn); 
             $Comment->deleteAll((int)$postid);
 
-            redirect("/posts"); 
+            redirect("/blog/"); 
 
         } catch ( PDOException $e ) {
             

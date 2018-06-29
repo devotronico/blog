@@ -8,11 +8,11 @@
   </div>
   <nav>
     <ul id="nav-list">
-      <li class="liPageLink">
+      <li class="liPageLink deactive">
         <a class="aPageLink" href="/">Home</a>
       </li>
       <li class="liPageLink <?=$link==='posts'? 'active' : 'deactive'?>">
-          <a class="aPageLink" href="/posts">Posts</a> 
+          <a class="aPageLink" href="/blog/">Posts</a> 
       </li>
       <?php if ( isset($_SESSION['user_type']) && ($_SESSION['user_type'] === 'contributor' || $_SESSION['user_type'] === 'administrator') ) : ?>  
       <li class="liPageLink <?=$link==='create'? 'active' : 'deactive' ?>">
@@ -20,10 +20,10 @@
       </li>
       <?php endif ?>
       <?php if ( isset($_SESSION["user_id"]) ) : ?>
-      <li class="liPageLink">
-        <a class="aPageLink" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
+      <li class="liPageLink deactive">
+        <a class="aPageLink" href="/profile/<?=$_SESSION['user_id']?>">Profilo</a> 
       </li>
-      <li class="liPageLink">
+      <li class="liPageLink deactive">
         <a class="aPageLink" href="/auth/logout">Logout</a> 
       </li>
       <?php else: ?>

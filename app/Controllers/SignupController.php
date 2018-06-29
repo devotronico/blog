@@ -22,7 +22,6 @@ class SignupController extends Controller
 * Al submit del form attiviamo il metodo 'signupStore'                                                      |
 ************************************************************************************************************/
 public function signupForm(){ 
- 
     $this->page = 'signup';
     $link="signup";
     $acceptFileType=".jpg, .jpeg, .png";
@@ -44,16 +43,12 @@ public function signupForm(){
 public function signupStore(){ 
    
     $this->page = 'signup';
-  
-    $Image = new Image('fixed', 92, 92, $this->bytes, 'auth', $_FILES); // (int $max_width, int $max_height, int $max_size, string $folder, array $data )
 
-    if ( empty( $Image->getMessage()) ) {
-      
-        $imageName = !is_null($Image->getNewImageName()) ? $Image->getNewImageName() : 'default.jpg';
-    
+    if ( $_FILES['file']['error'] === 4  ) 
+    {
         $Signup = new Signup($this->conn, $_POST); 
 
-        $Signup->storeData($imageName); 
+        $Signup->storeData('default.jpg'); 
        
         if (  empty( $Signup->getMessage()) ) 
         {  
@@ -63,6 +58,10 @@ public function signupStore(){
         } 
         else 
         { 
+           /* $message = $Signup->getMessage();
+            $uri ='/auth/signup/form';
+            redirect($uri, $message);*/
+            
             $link="signup";
             $message = $Signup->getMessage();
             $acceptFileType=".jpg, .jpeg, .png";
@@ -71,18 +70,47 @@ public function signupStore(){
             $files=[$this->device.'.navbar-auth', 'signup.form'];
             $this->content = View($this->device, 'auth', $files, compact('link', 'message', 'acceptFileType', 'bytes', 'megabytes'));  
         }
-    } 
-    else 
-    {  
-        $link="signup";
-        $message = $Image->getMessage();
-        $acceptFileType=".jpg, .jpeg, .png";
-        $bytes = $this->bytes;
-        $megabytes = $bytes * 0.000001;
-        $files=[$this->device.'.navbar-auth', 'signup.form'];
-        $this->content = View($this->device, 'auth', $files, compact('link', 'message', 'acceptFileType', 'bytes', 'megabytes'));  
     }
-  
+    else
+    {
+        $Image = new Image('fixed', 92, 92, $this->bytes, 'auth', $_FILES);
+
+        if ( empty( $Image->getMessage()) ) {
+        
+            $imageName = !is_null($Image->getNewImageName()) ? $Image->getNewImageName() : 'default.jpg';
+        
+            $Signup = new Signup($this->conn, $_POST); 
+
+            $Signup->storeData($imageName); 
+        
+            if (  empty( $Signup->getMessage()) ) 
+            {  
+                $message = "Abbiamo mandato una email di attivazione a <strong>".$_POST['email']."</strong><br>Per favore segui le istruzioni contenute nell'email per attivare il tuo account. Se l'email non ti arriva, controlla la tua cartella spam o prova a collegarti ancora per inviare un'altra email di attivazione.";
+                $files=[$this->device.'.navbar-auth', 'signup.success'];
+                $this->content = View($this->device, 'auth', $files, compact('message')); 
+            } 
+            else 
+            { 
+                $link="signup";
+                $message = $Signup->getMessage();
+                $acceptFileType=".jpg, .jpeg, .png";
+                $bytes = $this->bytes;
+                $megabytes = $bytes * 0.000001;
+                $files=[$this->device.'.navbar-auth', 'signup.form'];
+                $this->content = View($this->device, 'auth', $files, compact('link', 'message', 'acceptFileType', 'bytes', 'megabytes'));  
+            }
+        } 
+        else 
+        {  
+            $link="signup";
+            $message = $Image->getMessage();
+            $acceptFileType=".jpg, .jpeg, .png";
+            $bytes = $this->bytes;
+            $megabytes = $bytes * 0.000001;
+            $files=[$this->device.'.navbar-auth', 'signup.form'];
+            $this->content = View($this->device, 'auth', $files, compact('link', 'message', 'acceptFileType', 'bytes', 'megabytes'));  
+        }
+    }
 }
 
 /***********************************************************************************************|

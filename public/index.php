@@ -46,7 +46,7 @@ $databaseConfig = require 'config/database.php';
 
 // $appConfig è un array
 $appConfig = require 'config/app.config.php';
-//$appConfig = require __DIR__.'/../config/app.config.php';
+
 
 try{
 
@@ -62,7 +62,8 @@ try{
 
     $router  = new Router($conn);
 
-    $router->loadRoutes($appConfig['routes']);
+    //$router->loadRoutes($appConfig['routes']);
+    $router->loadRoutes($appConfig);
 
     // dispatch chiama un metodo della classe PostController  //la classe PostController viene istanziata nella classe Router
    

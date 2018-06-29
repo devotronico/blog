@@ -14,13 +14,12 @@ h1{font-size:1.5rem}
 form{padding:1rem}
 button{width:50%;margin:1.5rem auto 0;padding:.8rem 0;border-radius:.25rem;font-size:.9rem}
 }
-@media(min-width:375px){
+@media(min-width:576px){
 main{font-size:1rem}
 form{padding:2rem}
 h1{font-size:1.8rem}
 button{margin:2rem auto 0;padding:1rem 0;font-size:1rem}  
 }
-@media(min-width:576px){}
 @media(min-width:768px){}
 @media(min-width:992px){} 
 @media(min-width:1200px){

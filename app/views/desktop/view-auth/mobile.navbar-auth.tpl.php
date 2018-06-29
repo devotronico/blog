@@ -12,7 +12,7 @@
         <a class="aPageLink" href="/">Home</a>
       </li>
       <li class="liPageLink deactive">
-        <a class="aPageLink" href="/posts">Posts</a>
+        <a class="aPageLink" href="/blog/">Posts</a>
       </li>
       <?php if ( isset($_SESSION['user_type']) && $_SESSION['user_type'] != 'reader' ) : ?>
       <li class="liPageLink deactive">
@@ -21,7 +21,7 @@
       <?php endif ?>
       <?php if ( isset($_SESSION["user_id"]) ) : ?>
       <li class="liPageLink <?=$link=="profile"? 'active' : 'deactive' ?>">
-        <a class="aPageLink" href="/auth/<?=$_SESSION['user_id']?>/profile">Profilo</a> 
+        <a class="aPageLink" href="/profile/<?=$_SESSION['user_id']?>">Profilo</a> 
       </li>
       <li class="liPageLink">
         <a class="aPageLink" href="/auth/logout">Logout</a> 

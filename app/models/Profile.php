@@ -122,8 +122,11 @@ class Profile
 
 
 
+
+
+    
     /***************************************************************************************************************|
-    * MOD USER TYPE    [!]                                                                                          |                                                                                        
+    * MOD USER TYPE                                                                                                 |                                                                                        
     ****************************************************************************************************************/
     public function modUserType($id, $type) { 
 
@@ -137,6 +140,22 @@ class Profile
             $stmt->execute();
         }
     }
+
+    /***************************************************************************************************************|
+    * MOD USER TYPE    [!]                                                                                          |                                                                                        
+    ****************************************************************************************************************/
+    // public function modUserType($id, $type) { 
+
+    //     $id = (int)$id;
+    //     $sql = 'UPDATE users SET user_type = :user_type WHERE users.ID = :id LIMIT 1';
+        
+    //     if ($stmt = $this->conn->prepare($sql)) 
+    //     {
+    //         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    //         $stmt->bindParam(':user_type', $type, PDO::PARAM_STR, 13);
+    //         $stmt->execute();
+    //     }
+    // }
 
 
 } // Chiude la classe Profile

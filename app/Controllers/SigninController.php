@@ -3,7 +3,6 @@ namespace App\Controllers;
 
 use \PDO; 
 use App\Models\Signin;
-//use App\Models\Image;
 
 
 class SigninController extends Controller
@@ -83,7 +82,7 @@ public function logout(){
     if (session_status() == PHP_SESSION_ACTIVE) { session_destroy();  session_unset(); }
     //setcookie("user_id", null);
     setcookie("user_id", null, time()-3600, '/');
-    redirect("/posts");
+    redirect("/blog/");
 }
 
 

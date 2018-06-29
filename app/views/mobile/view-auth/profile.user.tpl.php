@@ -1,6 +1,17 @@
 <main role="main">
     <h1>Profilo di&nbsp;<?=$data->user_name?></h1>
     <img src="/img/auth/<?=!empty($data->user_image)?$data->user_image:'default.jpg'?>" alt="avatar personale">
+    <form action='/profile/image/<?=$data->ID?>' method='POST' autocomplete='off' enctype="multipart/form-data">
+    <?php if ( isset($_GET['message']) ): ?>
+    <div class='message'><?=$_GET['message']?>
+    <div class="message-close">X</div>
+    </div><?php endif?>
+    <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+    <label for="file">Cambia immagine</label>
+    <input type="file" name="file"  id="file" size="<?=$bytes?>" accept="<?=$acceptFileType?>"> 
+    <button type='submit' class="button">Invia</button><br>
+    <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>
+    </form>
     <table>
         <tbody>
             <tr>
@@ -19,7 +30,7 @@
                 <td>Data Registrazione</td>
                 <td><?=$data->user_registered?></td>
             </tr>
-            <?php if ( isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'administrator' ) :?>
+            <?php if ( $_SESSION['user_type'] === 'administrator' ) :?>
             <tr>
                 <td>Modifica permessi</td>
                 <td>

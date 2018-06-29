@@ -107,7 +107,7 @@ public function download(){
     //header("Contant-type: application/txt");
     readfile("download/testFile.txt");
     //redirect("");
-    header("index.php"); //redirect("/posts");
+    header("index.php"); //redirect("/blog/");
     */
     }
  }
