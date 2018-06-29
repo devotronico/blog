@@ -12,7 +12,7 @@
         <a class="aPageLink" href="/">Home</a>
       </li>
       <li class="liPageLink deactive">
-        <a class="aPageLink" href="/posts">Posts</a>
+        <a class="aPageLink" href="/blog/">Posts</a>
       </li>
       <?php if ( isset($_SESSION['user_type']) && ($_SESSION['user_type'] === 'contributor' || $_SESSION['user_type'] === 'administrator') ) : ?>  
       <li class="liPageLink deactive">

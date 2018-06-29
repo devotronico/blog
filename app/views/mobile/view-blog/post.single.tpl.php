@@ -5,7 +5,7 @@
             <h1><?=$post->title?></h1>
             <p>
                 <time datetime="<?=$post->datecreated?>"><?=$post->dateformatted?></time>
-                <span class="author">di&nbsp;<a href="/auth/<?=$post->user_id?>/profile"><?=$post->user_name?>&nbsp;</a></span>
+                <span class="author">di&nbsp;<a href="/profile/<?=$post->user_id?>"><?=$post->user_name?>&nbsp;</a></span>
                 <span class="mailto"><a href="mailto:<?= $post->user_email ?>">&#x2709</a></span>
             </p>
             <?php if ( !empty($post->image) ) : ?>
@@ -43,7 +43,7 @@
                 <div class='comment-head'>
                     <img src="/img/auth/<?=!empty($comment->user_image)?$comment->user_image:'default.jpg'?>" alt="avatar personale">
                     <time datetime="<?= $comment->c_datecreated ?>"><?=$comment->c_dateformatted?></time>
-                    <span class="author">di&nbsp;<a href="/auth/<?=$comment->user_id?>/profile"><?=$comment->user_name?>&nbsp;</a></span> 
+                    <span class="author">di&nbsp;<a href="/profile/<?=$comment->user_id?>"><?=$comment->user_name?>&nbsp;</a></span> 
                     <span class="mailto"><a href="mailto:<?= $comment->user_email ?>">&#x2709</a></span> 
                     <?php  if (isset($_SESSION['user_type'])) : ?>
                     <?php if ( $_SESSION['user_type'] === 'administrator' ) : ?>

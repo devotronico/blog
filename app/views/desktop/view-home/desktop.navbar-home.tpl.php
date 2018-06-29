@@ -8,7 +8,7 @@
     </div>
     <nav>
         <ul id="nav-list">
-            <li class="liPageLink"><a class="aPageLink" href="/blog" data-scroll>blog</a></li>
+            <li class="liPageLink"><a class="aPageLink" href="/blog/" data-scroll>blog</a></li>
             <li class="liNavLink"><a class="aNavLink" href="#portfolio" >projects</a></li>
             <li class="liNavLink"><a class="aNavLink" href="#skill" data-scroll>skills</a></li>
             <li class="liNavLink"><a class="aNavLink" href="#contact" data-scroll>contact</a></li>

@@ -1,10 +1,10 @@
 @media(min-width:0){
 *{padding:0;margin:0}
-html{color:#003333;background-color:red}
-body{height:auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;background-color:blue}
+html{color:#003333;background-color:#fff}
+body{height:auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;background-color:#0066ff}
 ::-webkit-scrollbar{display:none}
 #container{display:none;min-height:100vh}  
-#box-sign{display:block;min-width:100vw;min-height:100vh;margin:0;padding:2rem;text-align:center;background:linear-gradient(to bottom, royalblue, cornflowerblue)} 
+#box-sign{display:block;min-width:100vw;min-height:100vh;margin:0;padding:2rem;text-align:center;background:linear-gradient(to bottom,#0066ff,#3399ff)} 
 #sign{display:inline;writing-mode:vertical-rl;text-orientation:upright;color:#fff}
 } 
 @media(min-width:230px){ 
@@ -39,7 +39,6 @@ nav{display:none;clear:both;height:100vh}
 @media(min-width:320px){ 
 #nav-list>li{padding:1.5rem}
 }
-@media(min-width:375px){}
 @media(min-width:576px){#btn-scroll{font-size:5rem}}
 @media(min-width:768px){
 header {height:100px;opacity:.5} 

@@ -19,7 +19,7 @@ h1{font-size:1.5rem}
 input{margin-bottom:1rem;padding:.7rem 0;line-height:1;border-radius:.25rem;font:400 .9rem Arial}
 .button{width:50%;margin:1.5rem auto 0;padding:.8rem 0;border-radius:.25rem;font-size:.9rem}
 }
-@media(min-width:375px){
+@media(min-width:576px){
 main{font-size:1rem}
 form{padding:2rem}
 h1{margin-bottom:1rem;font-size:1.8rem}
@@ -28,7 +28,6 @@ label{display:block}
 input{margin-bottom:1rem;padding:1rem 0;line-height:1;font:400 1rem Arial}
 .button{margin:2rem auto 0;padding:1rem 0;font-size:1rem}  
 }
-@media(min-width:576px){}
 @media(min-width:768px){}
 @media(min-width:992px){}
 @media(min-width:1200px){

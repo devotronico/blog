@@ -49,11 +49,24 @@ public function display(){
  
     $this->script = $this->device.'.script'; // è il file javascript da caricare
     if ( $this->page === 'home' ) {
-        $this->navbar = $this->device.'.navbar.'.$this->page; // è il file css da caricare
-    } else {  $this->navbar = $this->device.'.navbar.blog'; }
+
+        $this->layout = 'layout/index.tpl.php';
+        $this->navbar = $this->device.'.navbar.'.$this->page; // è il file css da caricare [dispositivo.pagina.css]
     
+    }
+    else if ( $this->page === 'post' ) {
+        $this->layout = 'layout/index.'.$this->page.'.tpl.php';
+        $this->navbar = $this->device.'.navbar.blog';
+       
+
+    } else {  
+        $this->layout = 'layout/index.tpl.php';
+        $this->navbar = $this->device.'.navbar.blog';
+     }
+    
+
     $this->style = $this->device.'.'.$this->page; // è il file css da caricare
-    $this->layout = 'layout/'.$this->device.'.index.tpl.php'; // layout/desktop.index.tpl.php // 'layout/index.tpl.php'
+   // $this->layout = 'layout/'.$this->device.'.index.tpl.php'; // layout/desktop.index.tpl.php // 'layout/index.tpl.php'
     require $this->layout;   
 }
     

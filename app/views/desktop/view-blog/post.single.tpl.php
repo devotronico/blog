@@ -5,8 +5,9 @@
             <h1><?=$post->title?></h1> 
             <p>
                 <time datetime="<?=$post->datecreated?>"><?=$post->dateformatted?></time>
-                <span class="author">di&nbsp;<a href="/auth/<?=$post->user_id?>/profile"><?=$post->user_name?>&nbsp;</a></span>
-                <span class="mailto"><a href="mailto:<?= $post->user_email ?>">&#x2709</a></span>
+                <span class="author">di&nbsp;<a href="/profile/<?=$post->user_id?>"><?=$post->user_name?>&nbsp;</a></span>
+                <span class="mailto"><a href="mailto:<?= $post->user_email ?>">&#x2709&nbsp;</a></span>
+                <span class="views"><?=$post->views?>&nbsp;visualizzazioni</span>
             </p>
             <?php if ( !empty($post->image) ) : ?>
             <img src="/img/posts/<?=$post->image?>" alt="immagine del post">
@@ -29,7 +30,12 @@
         <h1>Partecipa alla discussione</h1>    
             <form class="comment-form" action="/post/<?=$post->post_ID?>/comment" method="POST">
                 <textarea name="comment" rows="6" placeholder="Scrivi un commento" required></textarea>
-                <button class="button" <?= $_SESSION['user_type'] === 'banned'? 'disabled': ''?> >Invia</button>   
+                <?php if ( isset($_SESSION['user_type']) ) : ?>  
+                <button class="button" disabled>Invia</button>   
+                <?php else: ?>
+                <button class="button">Invia</button>   
+                <?php endif ?>
+                <!-- <button class="button" <?= $_SESSION['user_type'] === 'banned'? 'disabled': ''?> >Invia</button>    -->
             </form>
         <?php else: ?>
             <p><a class="aPageLink" href="/auth/signin/form">Accedi</a> oppure <a class="aPageLink" href="/auth/signup/form">Registrati</a> per commentare questo post</p>
@@ -43,7 +49,7 @@
                 <div class='comment-head'>
                     <img src="/img/auth/<?=!empty($comment->user_image)?$comment->user_image:'default.jpg'?>" alt="avatar personale">
                     <time datetime="<?= $comment->c_datecreated ?>"><?=$comment->c_dateformatted?></time>
-                    <span class="author">di&nbsp;<a href="/auth/<?=$comment->user_id?>/profile"><?=$comment->user_name?>&nbsp;</a></span> 
+                    <span class="author">di&nbsp;<a href="/profile/<?=$comment->user_id?>"><?=$comment->user_name?>&nbsp;</a></span> 
                     <span class="mailto"><a href="mailto:<?= $comment->user_email ?>">&#x2709</a></span> 
                     <?php  if (isset($_SESSION['user_type'])) : ?>
                     <?php if ( $_SESSION['user_type'] === 'administrator' ) : ?>

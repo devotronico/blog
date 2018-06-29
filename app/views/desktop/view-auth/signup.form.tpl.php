@@ -1,8 +1,8 @@
 <main role="main">
     <form action='/auth/signup/store' method='POST' autocomplete='off' enctype="multipart/form-data">
         <h1>Registrati</h1>
-        <?php if (!empty($imgMessage)): ?>
-        <div class='message'><?= $imgMessage ?>
+        <?php if (!empty($message)): ?>
+        <div class='message'><?=$message?>
             <div class="message-close">X</div>
         </div>
         <?php endif?>
@@ -10,12 +10,6 @@
         <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
         <input type="file" name="file" size="<?=$bytes?>" accept="<?=$acceptFileType?>"> 
         <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>   
-       
-        <?php if (!empty($message)): ?>
-        <div class='message'><?=$message?>
-            <div class="message-close">X</div>
-        </div>
-        <?php endif?>
         <label for='username'>username</label> 
         <input type='text' name='username' id='username' aria-describedby='username' placeholder='Username' maxlenght="32" autocomplete="off">
         <label for='email'>email</label> 

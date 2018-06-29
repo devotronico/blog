@@ -1,5 +1,5 @@
 <main role="main">
-    <form action="/posts" method="GET" autocomplete='off'>
+    <form action="/blog/" method="GET" autocomplete='off'>
         <h1>Errore</h1>
         <?php if (!empty($message)): ?>
         <div class='message'><?=$message?></div>

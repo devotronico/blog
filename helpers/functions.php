@@ -11,10 +11,14 @@ function View($device, $view, array $files=[], array $data=[]){
 }
 
 
-function redirect($uri ='/'){
-  header('Location:'.$uri);
-  die();
+
+function redirect($uri ='/', $message=''){
+
+  $mess = !empty($message)?"?message=".urlencode($message):'';
+  header("Location:".$uri.$mess);
+  die(); // die è più veloce di exit
 }
+
 
 
 function dateFormatted($dateOld){
@@ -45,24 +49,12 @@ function dateFormatted($dateOld){
 }
 
 
-function truncate_words($text, $limit) {
+function truncate_words($text, $limit, $ellipsis=' ...') {
   $words = preg_split("([\s])", $text, $limit + 1, PREG_SPLIT_NO_EMPTY);
   if ( count($words) > $limit ) {
       array_pop($words);
       $text = implode(' ', $words);
-      //$text = $text . $ellipsis;
+      $text = $text . $ellipsis;
   }
   return $text;
 }
-
- // echo '<pre>', print_r($res) ,'</pre>';
-
-//  function truncate_words($text, $limit, $ellipsis = '...') {
-//   $words = preg_split("([\s])", $text, $limit + 1, PREG_SPLIT_NO_EMPTY);
-//   if ( count($words) > $limit ) {
-//       array_pop($words);
-//       $text = implode(' ', $words);
-//       $text = $text . $ellipsis;
-//   }
-//   return $text;
-// }

@@ -21,7 +21,7 @@ class Image {
 
 public function __construct(string $scaleType, int $max_width, int $max_height, int $max_size, string $folder, array $data ){
 
-    echo '<pre>', print_r($data) ,'</pre>';
+    //echo '<pre>', print_r($data) ,'</pre>';
   
     switch ( $data['file']['error'] ) {
 

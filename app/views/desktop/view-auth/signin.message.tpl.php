@@ -1,5 +1,5 @@
 <main role="main">
-    <form action='/posts' method='GET'>
+    <form action='/blog/' method='GET'>
         <?php if (isset($_SESSION['user_id'])): ?>
         <h1>Login riuscito</h1>
         <button type='submit' class="button">Entra</button>
