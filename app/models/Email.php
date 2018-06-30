@@ -113,7 +113,7 @@ class Email{
     /*******************************************************************************|
     *    EMAIL INVIO [GMAIL]    https://support.google.com/a/answer/176600?hl=it    |
     ********************************************************************************/  
-    public function sendTest(){
+    public function send(){
 
         $mail = new PHPMailer(true);                  
         try { //Server settings
@@ -153,7 +153,7 @@ class Email{
 /***************************|
 *    EMAIL INVIO [MAILTRAP] |           
 ****************************/  
-public function send(){
+public function sendTest(){
 
     
       $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
