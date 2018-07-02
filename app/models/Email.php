@@ -124,7 +124,7 @@ class Email{
         $mail->Host = 'smtp.gmail.com';             // Server di posta in uscita(SMTP)    //[mailtrap: 'smtp.mailtrap.io']  
         $mail->SMTPAuth = true;                     // Enable SMTP authentication
         $mail->Username = 'dmanzi83@gmail.com';     // SMTP username                            //[mailtrap: 'b34b7169adb122'] 
-        $mail->Password = 'DMbr0l1@XIX83.google';   // SMTP password                            //[mailtrap: '8d0c925142f07b'] 
+        $mail->Password = '**********';             // SMTP password                            //[mailtrap: '8d0c925142f07b'] 
         $mail->SMTPSecure = 'tls';                  // attiva 'tls' per porta '587' oppure `ssl` per porta '465'
         $mail->Port = 587;                          // TCP port to connect to                   //[mailtrap: 465] 
 
