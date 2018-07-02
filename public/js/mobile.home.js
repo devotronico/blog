@@ -200,10 +200,10 @@ function clickFunc(e){
             body.appendChild(scriptJQ);
     
     
-            let titleList = ['Meteo', 'Network', 'Blog', 'Android Game', 'Wordpress', 'Appunti', 'Cryptovalute', 'Database'];
-            let faIcon = ['s fa-sun', 'b fa-connectdevelop', 'b fa-blogger-b', 'b fa-android', 'b fa-wordpress', 's fa-sticky-note', 'b fa-bitcoin', 's fa-database'];
-            let arr_portfolioText =  ['Previsioni del meteo', 'Prototipo di un social', 'Un videogame 8bit', 'App per smartphone', 'Wordpress e WooCommerce', 'Scrittura di appunti', 'Bitcoin, Ethereum, Dash,', 'Database con funzioni'];
-            let address =  ['meteo', 'socialnetwork', 'blog', '', 'wp-site', 'note', 'cryptocoin', 'database'];
+            let titleList = ['Meteo', 'Network', 'Blog', 'Android Game', 'Wordpress', 'Angular', 'Cryptovalute', 'Database'];
+            let faIcon = ['s fa-sun', 'b fa-connectdevelop', 'b fa-blogger-b', 'b fa-android', 'b fa-wordpress', 'b fa-angular', 'b fa-bitcoin', 's fa-database'];
+            let arr_portfolioText =  ['Previsioni del meteo', 'Prototipo di un social', 'Un videogame 8bit', 'App per smartphone', 'Wordpress e WooCommerce', 'Vari script personali', 'Bitcoin, Ethereum, Dash,', 'Database con funzioni'];
+            let address =  ['github.com/redeluni/meteo', 'github.com/redeluni/socialnetwork', 'github.com/redeluni/blog', '', 'github.com/redeluni/wp-site', 'stackblitz.com/@redeluni', 'github.com/redeluni/cryptocoin', 'github.com/redeluni/database'];
             
             let portfolio = document.querySelector('#portfolio');
             portfolio.classList.add('visibileBlue');
@@ -235,7 +235,8 @@ function clickFunc(e){
 
                 let portfolioIcon = document.createElement('a');  
                 portfolioIcon.classList.add('portfolio-icon');
-                portfolioIcon.href = 'https://github.com/redeluni/'+address[i];   
+                // portfolioIcon.href = 'https://github.com/redeluni/'+address[i];  
+                portfolioIcon.href = 'https://'+address[i];  
                 portfolioIcon.setAttribute('target', '_blank');
                 portfolioIcon.innerHTML = '<i class="fa'+faIcon[i]+'"></i>';
                 

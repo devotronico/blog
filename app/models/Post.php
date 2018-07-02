@@ -222,7 +222,45 @@ public function edit($postid){
 
                 //  L' immagine è stata eliminata.
                 } else {
-                    $this->message = "L' immagine non è stata eliminata.";
+                    //$this->message = "L' immagine non è stata eliminata.";
+                }
+            }
+        } else {
+            $this->message = "Qualcosa è andato storto. Per favore prova più tardi.";
+        }
+        $stmt = null; 
+    }
+
+
+
+    /*******************************************************************************************************************|
+    * CHECK IMAGE EXISTS                                                                                                |
+    * Se durante lo sviluppo decidiamo di cancellare delle immagini dei post a mano                                     |
+    * questo metodo in automatico si occupa di cancellare anche il nome del file che è memorizzato nel database         |
+    ********************************************************************************************************************/
+    public function checkImageExists($id) {
+    
+        $id = (int)$id;
+        $sql = "SELECT image FROM posts WHERE post_ID = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) { 
+
+            $res = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if ( $res->image != '' ) {
+
+                $filename = 'public/img/posts/'.$res->image;
+
+                if (!file_exists($filename)) {
+               
+                    $sql = "UPDATE posts SET image = null WHERE post_ID = :id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                    $stmt->execute();
                 }
             }
         } else {
@@ -240,14 +278,14 @@ public function edit($postid){
 ****************************************************************************************/
 public function update(int $postid, array $data=[], $image=''){
         
-    $messtruncate = truncate_words($data['message'], 10); 
+    $messtruncate = truncate_words($data['text'], 10); 
                                                
     $sql = "UPDATE posts SET title = :title, image = COALESCE(NULLIF(:image, ''),image), message = :message, messtruncate = :messtruncate WHERE post_ID = :id";
 
     $stmt = $this->conn->prepare($sql);
     $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR, 255);
     $stmt->bindParam(':image', $image, PDO::PARAM_STR, 32);
-    $stmt->bindParam(':message', $data['message'], PDO::PARAM_STR);
+    $stmt->bindParam(':message', $data['text'], PDO::PARAM_STR);
     $stmt->bindParam(':messtruncate', $messtruncate, PDO::PARAM_STR, 255);
     $stmt->bindParam(':id', $postid, PDO::PARAM_INT);
     $stmt->execute();
@@ -263,7 +301,7 @@ public function update(int $postid, array $data=[], $image=''){
 ****************************************************************************************/
 public function save(array $data=[], string $image=''){
 
-$messtruncate = truncate_words($data['message'], 10); 
+$messtruncate = truncate_words($data['text'], 10); 
 $datecreated = date('Y-m-d H:i:s');
 $dateformatted = dateFormatted($datecreated);
 $sql = 'INSERT INTO posts (user_id, title, image, message, messtruncate, datecreated, dateformatted) VALUES (:user_id, :title, :image, :message, :messtruncate, :datecreated, :dateformatted)';
@@ -272,7 +310,7 @@ $stm->execute([
     'user_id'=> $_SESSION['user_id'],
     'title'=> $data['title'], 
     'image'=> $image, 
-    'message'=>$data['message'], 
+    'message'=>$data['text'], 
     'messtruncate'=>$messtruncate, 
     'datecreated'=>$datecreated,
     'dateformatted'=>$dateformatted,

@@ -19,7 +19,7 @@
 #cover-foto{border-radius:50%;width:140px;opacity:0.5}
 #cover-box-info{flex-basis:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%}
 #cover-text{z-index:1;line-height:0.8;font-size:1.7rem;font-weight:bolder;color:#fff}
-.cover-btn{z-index:1;text-decoration:none;padding:0.3rem 1rem;border:6px solid #fff;font-weight:bolder;font-size:1.7rem;color:#fff} 
+.cover-btn{z-index:1;text-decoration:none;padding:.3rem 1rem;border:10px solid#fff;font-weight:bolder;font-size:1.7rem;border-radius:.25rem;color:#fff;background-color:rgba(255, 255, 255, 0.2);} 
 /*********PORTFOLIO*230*******/  
 #portfolio{height:100vh;line-height:1;background-color:#3399ff}
 #portfolio-title{padding:1rem 0 0 0;margin:0;font-size:1rem;text-align:center;color:#fff}

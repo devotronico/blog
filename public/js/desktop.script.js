@@ -19,13 +19,17 @@ function downloadJSAtOnload () {
 
   
 
-
     switch (window.location.pathname) {
         
         case '/' : 
         case '/home/contact':
     
         element.setAttribute('src', '/js/desktop.home.js');   // element.src = " example.js" ;
+        break;
+
+        case '/post/create':
+         
+            element.setAttribute('src', '/js/desktop.postcreate.js'); 
         break;
 
     

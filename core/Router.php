@@ -64,69 +64,70 @@ class Router
         // Cicla tutti gli Indici di GET oppure di POST
         // E viene controllato se la rotta esiste
         foreach ( $routes as $route => $callback ) { 
-        // $route = post/:id
-        // $callback = App\Controllers\HomeController@home, App\Controllers\PostController@getPosts, App\Controllers\PostController@create,
-        // $callback è il valore di $route    
-        //Se $method è uguale a 'GET'  $route può essere le seguenti chiavi: "", posts, post/create, post/:id, post/:postid/edit
-        //Se $method è uguale a 'POST' $route può essere le seguenti chiavi: post/save, post/:id/store, post/:id/delete, post/:id/comment
+            // $route = post/:id
+            // $callback = App\Controllers\HomeController@home, App\Controllers\PostController@getPosts, App\Controllers\PostController@create,
+            // $callback è il valore di $route    
+            //Se $method è uguale a 'GET'  $route può essere le seguenti chiavi: "", posts, post/create, post/:id, post/:postid/edit
+            //Se $method è uguale a 'POST' $route può essere le seguenti chiavi: post/save, post/:id/store, post/:id/delete, post/:id/comment
 
-  
-      
-        $hasPlaceholder = false;
-        if ( substr($route, 0, 1) == '#' ) {
-
-            $route = substr( $route, 1 );
-            $hasPlaceholder = !$hasPlaceholder;
-       
-        }
-         
-
-        if ( $hasPlaceholder) {
-
-        // fa l escape ai caratteri come ':' in questo modo '\:'
-        // I caratteri speciali per le espressioni regolari sono . + * ? [ ^ ] $ ( ) { } = ! < > | :
-        // Es. la stringa 'post/:id' diventa 'post/\:id'
-        $route = preg_quote($route); 
-     
-          
-        /* CONTROLLIAMO SE LE ROTTA HA UN PLACEHOLDER COME ':' SEGUITO DA UNA SERIE DI CARATTERI */
-        // argomento 1 = Pattern di ricerca --------------> '/\\\:[a-zA-Z0-9\_\-]+/'
-        // argomento 2 = La stringa che verrà sostituita -> '([a-zA-Z0-9\-\_]+)'
-        // argomento 3 = Stringa da modificare -----------> 'post/\:id'
-        // preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)', 'post/\:id');  diventa  'post/([a-zA-Z0-9\-\_]+)'
-        // La corrispondenza '\:id' in 'post/\:id' viene sostituita da '([a-zA-Z0-9\-\_]+) quindi diventa 'post/([a-zA-Z0-9\-\_]+)
-        // se una parte della stringa nella varibile $route è riconosciuta dal primo argomento verrà sostituita dal secondo argomento
-        // Es. Il primo argomento '/\\\:[a-zA-Z0-9\_\-]+/' , in $route = ''post/\:id', trova corrispondenza in '\:id'
-        //preg_replace ( pattern di ricerca, con cosa sostituire, dove cercare )
+    
         
-        $route = preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)', $route); // $pattern = 'post/([a-zA-Z0-9\-\_]+)' 
-        }
+            $hasPlaceholder = false;
+            if ( substr($route, 0, 1) == '#' ) {
 
-        // PREPARIAMO LA VARIABILE '$pattern' PER ESSERE CONFRONTATA CON LA VARIABILE $uri 
-        // la stringa 'post/([a-zA-Z0-9\-\_]+)' non può avere come delimitatori il carattere '/' perchè lo stesso carattere è all'interno della stringa 
-        // Quindi avvolgiamo la stringa 'post/([a-zA-Z0-9\-\_]+)' con un altro carattere non alfanumerico. es. il carattere '@'
-        $route = "@^". $route. "$@"; // = @^post/([a-zA-Z0-9\_\-]+)$@
-           
-          
+                $route = substr( $route, 1 );
+                $hasPlaceholder = !$hasPlaceholder;
+        
+            }
             
 
-        // CONFRONTIAMO IL PATTERN CHE ABBIAMO FABBRICATO CON LA URI DELL'URL
-        // argomento 1 = $pattern = Pattern di ricerca ---> '@^post/([a-zA-Z0-9\_\-]+)$@D'
-        // argomento 2 = $uri     = La stringa dell' url -> 'post/2'
-        // argomento 3 = $matches = Array di ritorno -----> [0 => 'post/2',   1 => '2']
-        $matches = [];
-        if (preg_match($route, $uri, $matches)) { // $uri potrebbe essere 'post/2'
+            if ( $hasPlaceholder) {
 
-            // rimuove il primo elemento dell'array {'post/2'} perchè non è utilizzabile per passarlo come parametro del metodo
-            // ci teniamo il secondo elemento dell'array {'2'} per passarlo come parametro del metodo della classe che chiameremo
-            // se il path è 'posts' allora $matches[0] = 'posts' e $matches[1] = null 
-            // si può passare un argomento null anche se il metodo non vuole nessun argomento
-            array_shift($matches); // elimina $matches[0] = 'post/2' e quindi rimane solo $matches[1] = '2'
-            return $this->callMethod($callback, $matches); 
+            // fa l escape ai caratteri come ':' in questo modo '\:'
+            // I caratteri speciali per le espressioni regolari sono . + * ? [ ^ ] $ ( ) { } = ! < > | :
+            // Es. la stringa 'post/:id' diventa 'post/\:id'
+            $route = preg_quote($route); 
+        
+            
+            /* CONTROLLIAMO SE LE ROTTA HA UN PLACEHOLDER COME ':' SEGUITO DA UNA SERIE DI CARATTERI */
+            // argomento 1 = Pattern di ricerca --------------> '/\\\:[a-zA-Z0-9\_\-]+/'
+            // argomento 2 = La stringa che verrà sostituita -> '([a-zA-Z0-9\-\_]+)'
+            // argomento 3 = Stringa da modificare -----------> 'post/\:id'
+            // preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)', 'post/\:id');  diventa  'post/([a-zA-Z0-9\-\_]+)'
+            // La corrispondenza '\:id' in 'post/\:id' viene sostituita da '([a-zA-Z0-9\-\_]+) quindi diventa 'post/([a-zA-Z0-9\-\_]+)
+            // se una parte della stringa nella varibile $route è riconosciuta dal primo argomento verrà sostituita dal secondo argomento
+            // Es. Il primo argomento '/\\\:[a-zA-Z0-9\_\-]+/' , in $route = ''post/\:id', trova corrispondenza in '\:id'
+            //preg_replace ( pattern di ricerca, con cosa sostituire, dove cercare )
+            
+            $route = preg_replace('/\\\:[a-zA-Z0-9\_\-]+/', '([a-zA-Z0-9\-\_]+)', $route); // $route = 'post/([a-zA-Z0-9\-\_]+)' 
+            }
+
+            // PREPARIAMO LA VARIABILE '$pattern' PER ESSERE CONFRONTATA CON LA VARIABILE $uri 
+            // la stringa 'post/([a-zA-Z0-9\-\_]+)' non può avere come delimitatori il carattere '/' perchè lo stesso carattere è all'interno della stringa 
+            // Quindi avvolgiamo la stringa 'post/([a-zA-Z0-9\-\_]+)' con un altro carattere non alfanumerico. es. il carattere '@'
+            $route = "@^". $route. "$@"; // = @^post/([a-zA-Z0-9\_\-]+)$@
+            
+            
+                
+
+            // CONFRONTIAMO IL PATTERN CHE ABBIAMO FABBRICATO CON LA URI DELL'URL
+            // argomento 1 = $pattern = Pattern di ricerca ---> '@^post/([a-zA-Z0-9\_\-]+)$@D'
+            // argomento 2 = $uri     = La stringa dell' url -> 'post/2'
+            // argomento 3 = $matches = Array di ritorno -----> [0 => 'post/2',   1 => '2']
+            $matches = [];
+            if (preg_match($route, $uri, $matches)) { // $uri potrebbe essere 'post/2'
+            
+                // rimuove il primo elemento dell'array {'post/2'} perchè non è utilizzabile per passarlo come parametro del metodo
+                // ci teniamo il secondo elemento dell'array {'2'} per passarlo come parametro del metodo della classe che chiameremo
+                // se il path è 'posts' allora $matches[0] = 'posts' e $matches[1] = null 
+                // si può passare un argomento null anche se il metodo non vuole nessun argomento
+                array_shift($matches); // elimina $matches[0] = 'post/2' e quindi rimane solo $matches[1] = '2'
+                return $this->callMethod($callback, $matches); 
+            }
         }
-           
-        }
-        throw new Exception('Nessuna rotta trovata col nome '.$uri);
+        //throw new Exception('Nessuna rotta trovata col nome '.$uri);
+        $callback = 'App\Controllers\HomeController@error';
+        return $this->callMethod($callback); 
     }
 
 
