@@ -92,8 +92,8 @@ class Email{
 
             $obj = new static;
   
-            $obj->nameSender = 'Daniele Manzi';
-            $obj->emailSender = 'dmanzi83@gmail.com';
+            $obj->nameSender = '**********'; 
+            $obj->emailSender = '**********';
             $obj->emailRecipient = $email;
          
             $obj->template = 'emailAuth'; 
@@ -103,7 +103,7 @@ class Email{
             $obj->titleTpl = 'Crea una nuova password'; 
             $obj->infoTpl = 'Per creare una nuova password clicca sul bottone nuova password';
             $obj->buttonTpl = 'Nuova password';
-            $obj->link = $obj->site.$route."?email=".$email."&hash=".$hash; //http://localhost:3000/auth/verify/?email=dmanzi83@hotmail.it&hash=a597e50502f5ff68e3e25b9114205d4a
+            $obj->link = $obj->site.$route."?email=".$email."&hash=".$hash; 
 
             return $obj;
         }
@@ -121,10 +121,10 @@ class Email{
         //  GMAIL SMTP (simple mail transfer protocol)
         $mail->SMTPDebug = 0;                       // Enable verbose debug output
         $mail->isSMTP();                            // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';             // Server di posta in uscita(SMTP)    //[mailtrap: 'smtp.mailtrap.io']  
+        $mail->Host = 'smtp.gmail.com';             // Server di posta in uscita(SMTP)     
         $mail->SMTPAuth = true;                     // Enable SMTP authentication
-        $mail->Username = 'dmanzi83@gmail.com';     // SMTP username                            //[mailtrap: 'b34b7169adb122'] 
-        $mail->Password = 'DMbr0l1@XIX83.google';   // SMTP password                            //[mailtrap: '8d0c925142f07b'] 
+        $mail->Username = '**********';     // SMTP username                           
+        $mail->Password = '**********';   // SMTP password                           
         $mail->SMTPSecure = 'tls';                  // attiva 'tls' per porta '587' oppure `ssl` per porta '465'
         $mail->Port = 587;                          // TCP port to connect to                   //[mailtrap: 465] 
 
@@ -164,8 +164,8 @@ public function sendTest(){
         $mail->isSMTP();                                        // Set mailer to use SMTP
         $mail->Host = 'smtp.mailtrap.io';                       //smtp.gmail.com  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                                 // Enable SMTP authentication
-        $mail->Username = 'b34b7169adb122';                     // dmanzi83@gmail.com // SMTP username
-        $mail->Password = '8d0c925142f07b';                     // DMbr0l1@XIX83.google  // SMTP password
+        $mail->Username = '**********';                     
+        $mail->Password = '**********';                  
         $mail->SMTPSecure = 'tls';                              // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 465;    
 
