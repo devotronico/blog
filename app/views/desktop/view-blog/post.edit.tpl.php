@@ -12,7 +12,7 @@
         <input type="file" name="file" id="image"> 
         <small>il file deve essere minore di&nbsp;<?=$megabytes?>&nbsp;megabytes</small>
         <label for="textarea">Testo</label>
-        <textarea name="message" id="textarea" rows='12' maxlenght="2000" required><?=$post->message?></textarea>
+        <textarea name="text" id="textarea" rows='7' maxlenght="2000" required><?=$post->message?></textarea>
         <button type="submit" class="button">Salva</button>
     </form>
 </main>

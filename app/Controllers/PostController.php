@@ -17,84 +17,16 @@ class PostController extends Controller
         parent::__construct(); 
         $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
         $this->Post = new Post($conn);  // creiamo qui un istanza della classe 'Post' e gli passiamo la connessione al database
-       
     }
 
-/***********************************************************************************************************************|
-* GETPOSTS          metodo = GET    route = posts/page/id                                                               |
-* Otteniamo tutti i post di una pagina                                                                                  |     
-* Se ci sono i post allora viene caricato anche il template della paginazione                                           |   
-* Spiegazione Paginazione                                                                                               |
-* 'page' è la il numero della pagina in cui ci troviamo                                                                 |
-* 'postForPage' è il numero di post che ci sono per ogni pagina                                                         |
-* 'postStart' è uguale al numero precedente del primo post della pagina in cui ci troviamo                              |
-* Se ci troviamo nella pagina 3 {'currentPage'=3} e abbiamo deciso che ogni pagina deve avere 2 post{'postForPage'=2}   |
-* allora il primo post della terza pagina deve essere il post numero 4{'postStart'=4}                                   |
-* 1  2  3 pagine {'currentPage'}                                                                                        |
-* 12 34 56 il numero dei post che visualizza se abbiamo impostato {'postForPage'=2}                                     |
-* 0  2  4 sono i valori che ci servono per cominciare a contare i post da visualizzare {'postStart'}                    |
-************************************************************************************************************************/
-public function getPosts($currentPage=1){ 
-   
-    if ( isset($_COOKIE['user_id']) ) {
-     
-         $this->Post->loginWithCookie(); 
-    }
 
-    $totalPosts = $this->Post->totalPosts();
-    $link="posts";
-    if ( empty($totalPosts ) ) { 
-        $this->page = 'empty';
-        $files=[$this->device.'.navbar-blog', 'post.empty'];
-        $this->content = View($this->device, 'blog', $files, compact('link', 'page')); 
-
-     } else {
-        $this->page = 'blog';
-        $postForPage = $this->device === 'desktop'? 5 : 3;
-        for ($i=0, $postStart=-$postForPage; $i<$currentPage; $postStart+=$postForPage, $i++);
-        $posts = $this->Post->pagePosts($postStart, $postForPage); 
-        $dates = $this->Post->getDates();
-        $files=[$this->device.'.navbar-blog', 'blog.posts', 'blog.aside', 'blog.pagination', 'blog.footer'];
-        $this->content = View($this->device, 'blog', $files, compact('link', 'posts', 'dates', 'currentPage', 'totalPosts', 'postForPage')); 
-     }
-}
-    
-
-//getPostsByDate
-/***************************************************************************************|
-* GET POST BY DATE      metodo = GET    path = post/id                                  |
-* questa classe mostrerà un solo post e mostrerà tutti i commenti legati a questo post  |
-****************************************************************************************/
-public function getPostsByDate($month, $year){ 
-    $link="posts";
-    $this->page = 'blog';
-    $totalPosts = $this->Post->totalPosts();
-   
-    
-        if ( empty($totalPosts ) ) { 
-            $this->page = 'empty';
-            $files=[$this->device.'.navbar-blog', 'post.empty'];
-            $this->content = View($this->device, 'blog', $files, compact('link', 'page')); 
-
-        } else {
-       
-            $this->page = 'blog';
-        
-            $posts = $this->Post->postsByDate($month, $year); 
-            $dates = $this->Post->getDates();
-            $files=[$this->device.'.navbar-blog', 'blog.posts', 'blog.aside', 'blog.footer'];
-            $this->content = View($this->device, 'blog', $files, compact('link', 'posts', 'dates')); 
-    
-        } 
-    }
-
-//======================================= POST ==============================================================================================
 
 /***************************************************************************************|
 * SHOW      metodo = GET    path = post/id                                              |
 * questa classe mostrerà un solo post e mostrerà tutti i commenti legati a questo post  |
 ****************************************************************************************/
     public function postSingle($postid){ 
+        $this->Post->checkImageExists($postid);
         $this->page = 'post';
         $post = $this->Post->find($postid); // prendiamo il post con un determinato id dal database 
       
@@ -104,6 +36,7 @@ public function getPostsByDate($month, $year){
         $files=[$this->device.'.navbar-blog', 'post.single'];
         $this->content = View($this->device, 'blog', $files, compact('post', 'comments'));  
         $files=['meta'];
+        //echo '<pre>', print_r($files) ,'</pre>';
         $this->meta = View($this->device, 'blog', $files, compact('post')); 
        // } else {
       //      redirect("/blog/");
@@ -116,13 +49,14 @@ public function getPostsByDate($month, $year){
 * Visualizza il form per creare un nuovo post       |
 ****************************************************/
     public function create(){
+
         $this->page = 'create';
-        //$bytes = 1000000;
-        $megabytes = $this->bytes * 0.000001;
+        $acceptFileType=".jpg, .jpeg, .png";
+        $bytes = $this->bytes;
+        $megabytes = $bytes * 0.000001;
         $files=[$this->device.'.navbar-blog', 'post.create'];
         $link="create";
-        $this->content = View($this->device, 'blog', $files, compact('link', 'megabytes'));
-
+        $this->content = View($this->device, 'blog', $files, compact('link', 'acceptFileType', 'bytes', 'megabytes'));
     }
 
 
@@ -132,27 +66,35 @@ public function getPostsByDate($month, $year){
 ************************************************/
     public function savePost(){
 
-    if ( !$_FILES['file']['error']  ||  is_uploaded_file($_FILES['file']['tmp_name']) )  {
 
-        //$bytes = 1000000;
+    if ( $_FILES['file']['error'] === 4 ) 
+    {
+        $this->Post->save($_POST);  //echo json_encode($_POST);
+        $this->Post->countPosts(1);
+        redirect("/blog/");
+    }
+    else
+    {
         $Image = new Image('wFixed', 600, 10, $this->bytes, 'posts', $_FILES);
 
         if ( empty( $Image->getMessage()) )
         {
             $imageName = $Image->getNewImageName();
             $this->Post->save($_POST, $imageName); 
+            $this->Post->countPosts(1);
+            redirect("/blog/");
         } else {
-
-
+            $message = 'Si è verificato un errore<br>'.$Image->getMessage();
+            //$uri ='/post/create';
+            //redirect($uri, $message);
+            $link="create";
+            $this->page = 'create';
+            $megabytes = $this->bytes * 0.000001;
+            $files=[$this->device.'.navbar-blog', 'post.create'];
+           
+            $this->content = View($this->device, 'blog', $files, compact('link', 'message', 'megabytes'));
         }
     }
-    else 
-    {
-        $this->Post->save($_POST);  //echo json_encode($_POST);
-    }
-        $this->Post->countPosts(1);
-   
-        redirect("/blog/");
     }
 
 /*******************************************************************************************************************************************|
@@ -201,13 +143,10 @@ public function updatePost($postid) {
                 $uri ='/post/'.$postid.'/edit';
                 redirect($uri, $message);
             }
-            
         }
         else 
         {
             $message = 'Si è verificato un errore<br>'.$Image->getMessage();
-           // $message = 'Si è verificato un errore<br>';
-           // $message .= $Image->getMessage();
             $uri ='/post/'.$postid.'/edit';
             redirect($uri, $message);
         }

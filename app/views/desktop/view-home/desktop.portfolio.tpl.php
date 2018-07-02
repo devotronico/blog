@@ -7,7 +7,7 @@
                 <i class="fas fa-sun"></i>
             </div>
             <p class="portfolio-text">Previsioni del meteo ogni 3 ore per 5 giorni-Previsioni del meteo</p>
-            <a class="portfolio-btn" href="https://github.com/redeluni/meteo">Visita</a>
+            <a class="portfolio-btn" href="https://github.com/redeluni/meteo" target="_blank">Visita</a>
         </div>
         <div class="portfolio-box">
             <div class="portfolio-head">Network</div>
@@ -15,7 +15,7 @@
                 <i class="fab fa-connectdevelop"></i>
             </div>
             <p class="portfolio-text">Prototipo di un social network-Prototipo di un social network</p>
-            <a class="portfolio-btn" href="https://github.com/redeluni/socialnetwork">Visita</a>
+            <a class="portfolio-btn" href="https://github.com/redeluni/socialnetwork" target="_blank">Visita</a>
         </div>
         <div class="portfolio-box">
             <div class="portfolio-head">Ninja Bit</div>
@@ -31,7 +31,7 @@
                 <i class="fab fa-android"></i>
             </div>
             <p class="portfolio-text">App per smartphone pubblicato sul play store android</p>
-            <a class="portfolio-btn" href="https://play.google.com/store/apps/details?id=com.manzidevelopment.fantasyflappy">Visita</a>
+            <a class="portfolio-btn" href="https://play.google.com/store/apps/details?id=com.manzidevelopment.fantasyflappy" target="_blank">Visita</a>
         </div>
         <div class="portfolio-box">
             <div class="portfolio-head">Wordpress</div>
@@ -42,12 +42,12 @@
             <a class="portfolio-btn" href="https://github.com/redeluni/wp-site">Visita</a>
         </div>
         <div class="portfolio-box">
-            <div class="portfolio-head">Appunti</div>
+            <div class="portfolio-head">Angular</div>
             <div class="portfolio-icon">
-                <i class="far fa-sticky-note"></i>
+                <i class="fab fa-angular"></i>
             </div>
-            <p class="portfolio-text">Scrittura e salvataggio di appunti con sistema di login e signin</p>
-            <a class="portfolio-btn" href="https://github.com/redeluni/note">Visita</a>
+            <p class="portfolio-text">Vari script personali sulle funzionalità del framework di Google</p>
+            <a class="portfolio-btn" href="https://stackblitz.com/@redeluni" target="_blank">Visita</a>
         </div>
         <div class="portfolio-box">
             <div class="portfolio-head">Cryptovalute</div>
@@ -55,7 +55,7 @@
                 <i class="fab fa-bitcoin"></i>
             </div>
             <p class="portfolio-text">Bitcoin, Ethereum, Dash, Monero, Ripple, Litecoin, e tante altre</p>
-            <a class="portfolio-btn" href="https://github.com/redeluni/cryptocoin">Visita</a>
+            <a class="portfolio-btn" href="https://github.com/redeluni/cryptocoin" target="_blank">Visita</a>
         </div>
         <div class="portfolio-box">
             <div class="portfolio-head">Database</div>
@@ -63,7 +63,7 @@
                 <i class="fas fa-database"></i>
             </div>
             <p class="portfolio-text">Database con funzioni di ricerca inserimento cancellazione dati</p>
-            <a class="portfolio-btn" href="https://github.com/redeluni/database">Visita</a>
+            <a class="portfolio-btn" href="https://github.com/redeluni/database" target="_blank">Visita</a>
         </div>
     </div>
 </div>

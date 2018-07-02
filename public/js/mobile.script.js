@@ -20,18 +20,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
       let element = document.createElement ("script");
   
-      switch (window.location.pathname) {
+    switch (window.location.pathname) {
           
-          case '/' : 
-          case '/home/contact':
-      
-          element.setAttribute('src', '/js/mobile.home.js');   
-          break;
-      
-          default : 
-      
-          element.setAttribute('src', '/js/mobile.blog.js');    
-      }
+        case '/' : 
+        case '/home/contact':
+
+        element.setAttribute('src', '/js/mobile.home.js');   
+        break;
+
+        case '/post/create':
+
+        element.setAttribute('src', '/js/desktop.postcreate.js'); 
+        break;
+
+        default : 
+
+        element.setAttribute('src', '/js/mobile.blog.js');    
+    }
   
       document.body.appendChild (element); 
   }

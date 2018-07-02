@@ -18,9 +18,6 @@ class HomeController extends Controller
     }
 
 
-//====================================================================================================== 
-//========== FRONT PAGE ========================= FRONT PAGE ===========================================
-//======================================================================================================     
 
 /***********************************************|
 * HOME  metodo = GET    route = home            |        
@@ -115,7 +112,13 @@ public function download(){
 
 
 
+public function error() {
 
+
+    $message = 'Access Denied';
+    $files=['access.denied'];
+    $this->content = View($this->device, 'auth', $files, compact('message'));  
+}
 
 
 

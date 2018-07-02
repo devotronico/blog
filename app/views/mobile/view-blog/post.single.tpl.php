@@ -25,11 +25,15 @@
         </article>
     </section>
     <section id="textarea-container">
-        <?php if ( isset($_SESSION['user_id']) ) : ?>  
+        <?php if ( isset($_SESSION['user_type']) ) : ?>  
         <h1>Partecipa alla discussione</h1>    
             <form class="comment-form" action="/post/<?=$post->post_ID?>/comment" method="POST">
                 <textarea name="comment" rows="6" placeholder="Scrivi un commento" required></textarea>
-                <button class="button" <?= $_SESSION['user_type'] === 'banned'? 'disabled': ''?> >Invia</button>   
+                <?php if ( $_SESSION['user_type'] == 'banned' ) : ?>  
+                <button class="button" disabled>Invia</button>  
+                <?php else: ?>
+                <button class="button">Invia</button>   
+                <?php endif ?>
             </form>
         <?php else: ?>
             <p><a class="aPageLink" href="/auth/signin/form">Accedi</a> oppure <a class="aPageLink" href="/auth/signup/form">Registrati</a> per commentare questo post</p>

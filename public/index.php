@@ -1,8 +1,11 @@
 <?php
 if (!isset($_SESSION)) { session_start(); } 
 session_regenerate_id(true);
+
+//print( 1 <=> 1);print("<br/>");
 //phpinfo();
 
+//die($_SERVER['DOCUMENT_ROOT']); // = C:\xampp\htdocs\blog\public | /web/htdocs/www.danielemanzi.it/home/
 
 //echo '<pre>', print_r($_SESSION) ,'</pre>'; 
 //echo '<pre>', print_r($_COOKIE) ,'</pre>'; 
