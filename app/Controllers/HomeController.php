@@ -21,17 +21,18 @@ class HomeController extends Controller
 
 /***********************************************|
 * HOME  metodo = GET    route = home            |        
-*************************************************/
+************************************************/
 public function home(){
   
     $photo = $this->device.'.photo';
     $files=[
        
-        $this->device.'.navbar-home',
+        $this->device.'.navbar',
         $this->device.'.cover',
-        $this->device.'.portfolio',
+        $this->device.'.project',
         $this->device.'.skills', 
         $this->device.'.contact',
+        $this->device.'.about',
         $this->device.'.footer'
         ];
     
@@ -41,8 +42,8 @@ public function home(){
 
 public function contact() {
  
-   // $Email = Email::toMe($_POST);
-   // $Email->send();
+    $Email = Email::toMe($_POST);
+    $Email->send();
 
     $message = "Grazie per averci contattato, risponderemo il prima possibile";
     $photo = $this->device.'.photo';

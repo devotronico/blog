@@ -1,0 +1,81 @@
+
+/*******************************************************************|
+* virtual host php in apache                                        |
+* Settare punto di ingresso in una sottocartella del progetto       |
+*                                                                   |
+* blog/public/index.php                                             |
+* blog = cartella root(radice)                                      |
+* es. Se il file index.php non si trova nella                       |
+* cartella root ma si trova in una sottocartella                    |
+* allora dobbiamo fare in modo che venga letta la                   |
+* sottocartella come punto di ingresso                              |
+*                                                                   |
+* In CMD posizionarsi nella cartella C:\xampp\htdocs>               |
+*                                                                   |
+* C:\xampp\htdocs>php -S localhost:3000 -t blog\public              |
+* PHP 7.2.3 Development Server started at Fri Mar 23 18:16:34 2018  |
+* Listening on http://localhost:3000                                |
+* Document root is C:\xampp\htdocs\blog\public                      |
+* Press Ctrl-C to quit.                                             |
+*                                                                   |
+* [!] scrivere: php -S localhost:3000 -t blog\public                | 
+* [!] altrimenti se non funziona fare:                              |
+* [!] scrivere: php -S localhost:3000 -t blog/public                |
+*                                                                   |
+* prima bisognava digitare tutto il percorso per                    |
+* arrivare al file index.php.                                       |
+* es. =>  localhost/blog/public/index.php                           |
+* adesso basta digitare nel browser => localhost:3000               |
+********************************************************************/
+
+
+/***********************************************************************************|
+* Creare un virtual host php in apache                                              |
+* Sezione 25, lezione 180                                                           |
+* Esempio di virtual host:                                                          |
+*                                                                                   |
+* <VirtualHost *:8000>                                                              |
+*     ServerName MusicStreaming                                                     |
+*     DocumentRoot "C:\xampp\htdocs\MusicStreaming\public\"                         |
+*                                                                                   |
+*    <Directory "C:\xampp\htdocs\MusicStreaming\public">                            |
+*         DirectoryIndex index.php                                                  |
+*         AllowOverride All                                                         |
+*         Require all granted                                                       |
+*     </Directory>                                                                  |
+* </VirtualHost>                                                                    |
+* Ricordare di aggiungere al file host il Servername :                              |
+*                                                                                   |
+* 127.0.0.1 localhost  MusicStreaming                                               |
+*                                                                                   |
+* Se volete, potete usare il server interno di php.                                 |
+*                                                                                   |
+* Andare dal terminal/cmd Sotto la cartella MusicStreaming e immettere il comando:  |
+*                                                                                   |
+* php -S localhost:8000 -t public/index.php                                         |
+*                                                                                   |
+* e poi  basta chiamare localhost:8000 .                                            |
+************************************************************************************/
+
+/***************************************************|
+se invece il mio sito sta su un server di hosting   | 
+come si fa a indirizzare alla cartella public?      |
+                                                    |
+Ciao Daniele,                                       |
+                                                    |
+Lo si fa con un file .htacces ,nel caso di Apache,  |
+dove si indica di passare tutto il traffico         |
+da index.php a public/index.php,                    |
+almeno che non siano risorse statiche.              |
+                                                    |
+Un esempio:                                         |
+                                                    |
+<IfModule mod_rewrite.c>                            |
+RewriteEngine On                                    |
+RewriteRule ^(.*)$ public/$1 [L]                    |
+</IfModule>                                         |
+****************************************************/
+
+
+
+

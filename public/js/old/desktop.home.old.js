@@ -1,11 +1,14 @@
+/*
 window.onbeforeunload = function () { 
     window.scrollTo(0, 0); //quando viene ricaricata la pagina viene visualizzata la parte più alta della pagina
 }
+import {canvas, init, animate} from "../modules/animation.js"; 
 console.log('home');
 
 
 
 /********** CLICK ********** CLICK ********** CLICK ********** CLICK ********** CLICK **********/
+/*
 document.addEventListener('click', clickFunc, {passive: false}); 
 
 let navbarIsOpen = false;
@@ -123,6 +126,7 @@ switch ( element.classList.item(0) ) { // controlliamo il nome della prima class
 
 
 /********** AUTOMATIC SCROLL **********/
+/*
 window.smoothScroll = function(target) {
   var scrollContainer = target;
   do { //find scroll container
@@ -147,7 +151,7 @@ window.smoothScroll = function(target) {
   scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
 }
 /********** END AUTOMATIC SCROLL **********/
-
+/*
 
 document.addEventListener('scroll', Scrolling, false);
 
@@ -155,8 +159,8 @@ document.addEventListener('scroll', Scrolling, false);
 
 // variabili per lo scroll loading
 let altezza = document.querySelector('#portfolio').offsetTop - window.innerHeight * 0.8;
-state = ['init', 'portfolio', 'skill', 'contact', 'footer', 'end'];
-let index = 0;
+const state = ['init', 'portfolio', 'skill', 'contact', 'canvas', 'footer', 'end'];
+let indexOfState = 0;
 
 // variabili per lo scroll navbar
 let offset = 0;
@@ -167,7 +171,7 @@ function Scrolling(e) {
 
 
 /**********SCROLL NAVBAR AND BUTTON ANIMATION*********/
-
+/*
   if ( window.scrollY > offset ) {
 
     navbar.classList.add('nav-bottom');
@@ -194,11 +198,12 @@ function Scrolling(e) {
 
 
 /**********SCROLL LOADING*********/
+/*
   if ( window.scrollY > altezza ) {
     
-    index++;
+    indexOfState++;
 
-    switch( state[index] ) {
+    switch( state[indexOfState] ) {
 
       case 'portfolio': //APRE PORTFOLIO ------------------------------------------------------
         console.log('portfolio loading'); 
@@ -219,21 +224,40 @@ function Scrolling(e) {
 
 
         let body = document.querySelector('body');
-
+        altezza = document.querySelector('#skill').offsetTop - window.innerHeight * 0.8;
         console.log('portfolio completato'); 
       break;  //CHIUDE PORTFOLIO
 
       case 'skill':  //APRE SKILLS ------------------------------------------------------
-      console.log('skill loading'); 
-
-      console.log('skills completato'); 
+        console.log('skill loading'); 
+        altezza = document.querySelector('#contact').offsetTop - window.innerHeight * 0.8;
+        console.log('skills completato'); 
       break;  //CHIUDE SKILLS
 
       case 'contact': //APRE CONTACT ------------------------------------------------------
         console.log('contact loading'); 
-
+        altezza = document.querySelector('#canvas').offsetTop - window.innerHeight * 0.8;
         console.log('contact completato');
       break; // CHIUDE CONTACT 
+
+      case 'canvas': //APRE CANVAS ------------------------------------------------------
+        console.log('canvas loading'); 
+        
+       
+        // import {init, animate} from "./modules/animation.js";
+        var play = true;
+        init();
+        animate(play);
+        canvas.addEventListener('click', function(){
+
+            play = !play;
+            animate(play);
+        });
+
+
+        altezza = document.querySelector('#footer').offsetTop - window.innerHeight * 0.8;
+        console.log('canvas completato');
+      break; // CHIUDE CANVAS 
 
       case 'footer':   //APRE FOOTER ------------------------------------------------------
         console.log('footer loading');
@@ -247,8 +271,6 @@ function Scrolling(e) {
 /**********END SCROLL LOADING*********/
 
      
-
-
 
 
 

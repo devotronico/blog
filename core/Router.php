@@ -1,7 +1,5 @@
 <?php
 
-//use App\Controllers;
-
 class Router
 {
     protected $conn;
@@ -53,13 +51,10 @@ class Router
     return $this->processQueue($uri, $method);
     }
 
-
-
     
     protected function processQueue($uri, $method='GET'){
 
         $routes = $this->routes[$method]; // GET o POST
-
 
         // Cicla tutti gli Indici di GET oppure di POST
         // E viene controllato se la rotta esiste
@@ -67,20 +62,16 @@ class Router
             // $route = post/:id
             // $callback = App\Controllers\HomeController@home, App\Controllers\PostController@getPosts, App\Controllers\PostController@create,
             // $callback è il valore di $route    
-            //Se $method è uguale a 'GET'  $route può essere le seguenti chiavi: "", posts, post/create, post/:id, post/:postid/edit
-            //Se $method è uguale a 'POST' $route può essere le seguenti chiavi: post/save, post/:id/store, post/:id/delete, post/:id/comment
+            // Se $method è uguale a 'GET'  $route può essere le seguenti chiavi: "", posts, post/create, post/:id, post/:postid/edit
+            // Se $method è uguale a 'POST' $route può essere le seguenti chiavi: post/save, post/:id/store, post/:id/delete, post/:id/comment
 
-    
-        
             $hasPlaceholder = false;
             if ( substr($route, 0, 1) == '#' ) {
 
                 $route = substr( $route, 1 );
                 $hasPlaceholder = !$hasPlaceholder;
-        
             }
             
-
             if ( $hasPlaceholder) {
 
             // fa l escape ai caratteri come ':' in questo modo '\:'
@@ -159,67 +150,6 @@ class Router
         } catch (Exception $e){
             die($e->getMessage());
         }
-       
     }
-
-}
- 
-
     
-   
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-    /*
-        $str = explode('/', $url); // se $url = post/2  allora  $str['0'] = post e  $str['1'] = 2
-
-        switch ( $str['0'] )
-        {
-            case '': 
-            case 'home': 
-            case 'posts': 
-                //$this->content = call_user_func(array($this, 'getPosts')); // chiamiamo il metodo 'getPosts' di questa classe
-                $this->content = $this->getPosts(); // chiamiamo il metodo 'getPosts' di questa classe
-            break;
-            case 'post': 
-                if ( $_SERVER['REQUEST_METHOD'] === 'GET' ){           
-                            
-                    if ( is_numeric($str['1']) ) { // is_numeric considera numeri anche quelli tra virgolette. es. '35' da true
-                        $this->content = $this->show($str['1']); //chiama il metodo 'Show' di questa classe | $str['1'] è il param di Show($str['1']) 
-
-                    }
-                    else { //  $str['1'] = create
-                        $this->content = $this->create(); //   
-                    }
-                } else   if ( $_SERVER['REQUEST_METHOD'] === 'POST' ){           
-                            
-                    if ( is_numeric($str['1']) ) { // is_numeric considera numeri anche quelli tra virgolette. es. '35' da true
-                        $this->content = $this->update($str['1']); //chiama il metodo 'update' di questa classe | $str['1'] è il param di Show($str['1']) 
-
-                    }
-                    else {  //  $str['1'] = save
-                        $this->content = $this->save(); //   
-                    }
-                }
-            break;
-        //  default: $this->content = call_user_func(array($this, 'getPosts')); 
-        }
-        return $this->content;
-    }
-
-    */
-?>
+}  // chiude classe Router
