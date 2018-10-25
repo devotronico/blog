@@ -2,6 +2,8 @@
 if (!isset($_SESSION)) { session_start(); } 
 session_regenerate_id(true);
 
+//die($_SERVER['SERVER_NAME']);
+
 //print( 1 <=> 1);print("<br/>");
 //phpinfo();
 

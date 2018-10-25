@@ -1,0 +1,42 @@
+se dichiarato in una pagina inizializzata con session_start() ritorna
+come valore una stringa 26 caratteri alfanumerici
+session_id() = PHPSESSID conserva lo stesso valore se apriamo il sito in un altra finestra del browser
+session_id() = PHPSESSID cambia il suo valore se chiudiamo e riapriamo il browser 
+
+
+session_status() = ritorna PHP_SESSION_DISABLED, PHP_SESSION_NONE, PHP_SESSION_ACTIVE
+
+
+if (session_status() == PHP_SESSION_DISABLED) {  echo '<br> PHP_SESSION_DISABLED <br>';} // si disabilita nel file php.ini session.auto_start = "0"
+if (session_status() == PHP_SESSION_NONE )    {  echo '<br> PHP_SESSION_NONE  <br>'   ;} // session_start() NON inizializzato
+if (session_status() == PHP_SESSION_ACTIVE)   {  echo '<br> PHP_SESSION_ACTIVE <br>'  ;} // session_start() inizializzato
+
+se session_start() è inizializzato
+--> session_status() == PHP_SESSION_ACTIVE
+--> session_id() = assume il valore di PHPSESSID che è una stringa 26 caratteri alfanumerici
+--> PHPSESSID è possibile visualizzarlo nella console di chrome in Application->Cookies
+
+
+se session_start() NON è inizializzato
+--> session_regenerate_id() darà errore 
+--> si possono inizializzare le sessioni personali come per esempio $_SESSION['colore'] = 'nero';
+--> session_status() è uguale a PHP_SESSION_NONE
+
+
+esempio session_destroy()
+--> se session_start() è inizializzato
+------> con if (session_status() == PHP_SESSION_ACTIVE) { session_destroy(); }
+----------> distruggiamo il valore di session_id() 
+----------> NON distrugge il valore delle sessioni personali come per esempio $_SESSION['colore'] = 'nero'; 
+----------> session_status() diventa = PHP_SESSION_NONE
+----------> PHPSESSID conserva il suo valore
+
+
+
+esempio print_r($_SESSION);
+--> visualizzeremo le sessioni che inizializziamo noi
+--> ma non il valore di session_id() o altro
+
+
+ session_destroy(); // distrugge session_id() | NON distrugge il valore delle sessioni personali 
+ session_unset(); // NON distrugge session_id() | distrugge il valore delle sessioni personali 

@@ -47,26 +47,23 @@ public function __construct(){
 ****************************************************************************/
 public function display(){
  
-    $this->script = $this->device.'.script'; // è il file javascript da caricare
+    $this->script = 'script'; // è il file javascript da caricare
+    // $this->script = $this->device.'/script'; // è il file javascript da caricare
     if ( $this->page === 'home' ) {
 
         $this->layout = 'layout/index.tpl.php';
-        $this->navbar = $this->device.'.navbar.'.$this->page; // è il file css da caricare [dispositivo.pagina.css]
-    
+        $this->navbar = 'navbar.'.$this->page; // è il file css da caricare [dispositivo.pagina.css]
     }
     else if ( $this->page === 'post' ) {
         $this->layout = 'layout/index.'.$this->page.'.tpl.php';
-        $this->navbar = $this->device.'.navbar.blog';
-       
-
+        $this->navbar = 'navbar.blog';
     } else {  
         $this->layout = 'layout/index.tpl.php';
-        $this->navbar = $this->device.'.navbar.blog';
+        $this->navbar = 'navbar.blog';
      }
     
 
-    $this->style = $this->device.'.'.$this->page; // è il file css da caricare
-   // $this->layout = 'layout/'.$this->device.'.index.tpl.php'; // layout/desktop.index.tpl.php // 'layout/index.tpl.php'
+    $this->style = $this->page; // è il file css da caricare
     require $this->layout;   
 }
     

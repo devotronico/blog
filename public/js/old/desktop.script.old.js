@@ -1,4 +1,3 @@
-    
 document.addEventListener('DOMContentLoaded', function() {
 
 //quando viene ricaricata la pagina viene visualizzata la parte più alta della pagina
@@ -24,7 +23,8 @@ function downloadJSAtOnload () {
         case '/' : 
         case '/home/contact':
     
-        element.setAttribute('src', '/js/desktop.home.js');   // element.src = " example.js" ;
+        element.setAttribute('type', 'module');   // element.src = " example.js" ;
+        element.setAttribute('src', '/js/desktop/home.js');   // element.src = " example.js" ;
         break;
 
         case '/post/create':

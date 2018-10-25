@@ -1,0 +1,30 @@
+/***********************************************|
+* SAVE      metodo = POST    path = post/save   |
+* Salviamo un post nel database                 |
+************************************************/
+    public function savePost(){
+
+    if ( !$_FILES['file']['error']  ||  is_uploaded_file($_FILES['file']['tmp_name']) )  {
+
+        $Image = new Image('wFixed', 600, 10, $this->bytes, 'posts', $_FILES);
+
+        if ( empty( $Image->getMessage()) )
+        {
+            $imageName = $Image->getNewImageName();
+            $this->Post->save($_POST, $imageName); 
+            $this->Post->countPosts(1);
+        } else {
+            $message = 'Si è verificato un errore<br>'.$Image->getMessage();
+            $uri ='/post/'.$postid.'/edit';
+            redirect($uri, $message);
+        }
+    }
+    else 
+    {
+        $this->Post->save($_POST);  //echo json_encode($_POST);
+        $this->Post->countPosts(1);
+    }
+      
+   
+        redirect("/blog/");
+    }

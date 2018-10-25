@@ -1,0 +1,89 @@
+/********** PORTRAIT **********PORTRAIT ********** PORTRAIT ********** PORTRAIT ********** PORTRAIT ********** PORTRAIT **********/
+@media screen and (orientation: portrait){
+@media(min-width:0){} 
+@media(min-width:230px){ 
+/*********GENERAL*230*******/ 
+.visibileBlue {background-color:#0066ff;animation: alphaTo1 3s forwards}
+.visibileGray {background-color:#003333 ;animation: alphaTo1 3s forwards}
+.visibileWhite {background-color:#fff;animation: alphaTo1 3s forwards}
+@keyframes alphaTo1 {from {opacity: 0} to {opacity: 1}} 
+/* MESSAGE */
+#message{position:absolute;height:100vh;width:100vw;top:0;left:0;z-index:2000;display:flex;justify-content:center;align-items:center;background-color:transparent}
+#message-form{padding:1rem;text-align:center;background-color:#fff} 
+#message-btn{margin:1rem;width:50px;height:50px;border:none;border-radius:100%;color:#fff;background-color:#3399ff} 
+/*********COVER*230*******/  
+#cover{height:100vh;background:linear-gradient(to bottom,#0066ff 50%,#3399ff)}
+#cover-container{height:100vh;display:flex;flex-direction:column} /*  background:linear-gradient(to bottom, royalblue, cornflowerblue)  */
+#cover-animation{width:100%;height:100vh;position:absolute}
+#cover-box-image{flex-basis:100%;padding-top:7rem;display:flex;align-content:center;justify-content:center;align-items:center}
+#cover-foto{border-radius:50%;width:140px;opacity:0.5}
+#cover-box-info{flex-basis:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%}
+#cover-text{z-index:1;line-height:0.8;font-size:1.7rem;font-weight:bolder;color:#fff}
+.cover-btn{z-index:1;text-decoration:none;padding:.3rem 1rem;border:10px solid#fff;font-weight:bolder;font-size:1.7rem;border-radius:.25rem;color:#fff;background-color:rgba(255, 255, 255, 0.2);} 
+/*********PORTFOLIO*230*******/  
+#portfolio{height:100vh;line-height:1;background-color:#3399ff}
+#portfolio-title{padding:1rem 0 0 0;margin:0;font-size:1rem;text-align:center;color:#fff}
+#portfolio-title p{margin:0}
+#portfolio-container{height:85%;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-content:center;align-items:center}
+.portfolio-box{flex-basis:49%;text-align:center;border:1px solid rgba(0,0,0,.1);color:#333;background-color:#f6f6f6}
+.portfolio-head{padding:0.2rem 0;font-size:1rem}
+.portfolio-icon{display:block;padding:0.2rem;font-size:1.8rem;color:#0066ff;background-color:#fff}
+.portfolio-text{display:none;min-height:25px;padding:0 0.1rem;margin:0;font-size:0.7rem;line-height:0.8;text-align:left;background-color:#fff} 
+.portfolio-btn{display:none;padding:0.3rem;text-decoration:none;font-size:0.9rem;color:#0066ff}
+.portfolio-btn:hover{text-decoration:none;color:#3399ff}
+/*********SKILLS*230*******/ 
+#skill{height:100vh;background-color:#fff} 
+#skill-title{padding-top:1rem;padding-bottom:.5rem;margin:0;font-size:1rem;text-align:center;color:#0066ff}
+#skill-box-icon{height:70%;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-content:center;align-items:center;background-color:#eee}
+.dev-icon{flex-basis:25%;font-size:2rem;text-align:center}  
+/*********CONTACT*230*******/ 
+#contact{height:100vh;line-height:1;background-color:#003333}
+#contact-title{padding:1rem;margin:0;font-size:1rem;text-align:center;color:#fff}
+#contact-title p{margin:0}
+#contact-form{height:85%;width:90%;margin:0 auto}
+label{display:none;color:#fff}
+input{display:block;width:100%;margin-bottom:12px;padding:0.6rem 0;border:none;font-size:0.8rem;line-height:0.8;text-indent:8px}
+textarea{width:100%;padding:0.8rem 0;text-indent:8px;font:400 0.8rem Arial}
+#contact-btn{display:block;width:70%;padding:1rem 0;margin:12px auto;text-decoration:none;font-size:1rem;color:#8c929b;background-color:#fff}
+#contact-btn:hover{color:#333;background-color:#eeeeee}
+input[type=number]{display:none}
+input[name=cognome]{display:none}
+/*********FOOTER*230********/ 
+#footer{height:100vh;display:flex;flex-direction:column;background-color:#0066ff}
+#footer-box-icon{flex-basis:80%;display:flex;flex-wrap: wrap;flex-direction:row;justify-content:center;align-items:flex-end;align-content:flex-end}
+.footer-icon{flex-basis:40%;line-height:1.4;font-size:3.5rem;text-align:center;color:#3399ff}
+#footer-box-copyright{flex-basis:20%;display:flex;justify-content:center;align-content:flex-start;align-items:flex-start;height:100%}
+#footer-copyright{color:#3399ff}
+}
+/*320***320****320***320***********************************************************************************************320*/
+@media(min-width:320px){ 
+/* MESSAGE */
+#message-form{padding:4rem;border-radius:.25rem} 
+/*********COVER*320*******/    
+#cover-foto{width:200px}
+#cover-box-info{padding:0 0 5rem 0;}
+#cover-text{line-height:1.5;font-size:2.3rem}
+.cover-btn{padding:0.5rem 1rem;font-size:2rem}
+/*********PORTFOLIO*320*******/  
+#portfolio-title{padding:1.4rem;font-size:1.5rem;}
+#portfolio-container{height:75%;justify-content:center;align-content:center}
+.portfolio-text{display:block}
+/*********SKILLS*320*******/
+#skill-title{padding-top:1.4rem;font-size:1.5rem;}
+.dev-icon{margin-top:.5rem;font-size:3.5rem;text-align:center}  
+/*********CONTACT*320*******/ 
+#contact-title{padding:1.4rem;font-size:1.5rem}
+input{margin-bottom:16px;padding:0.7rem 0;font-size:1rem;line-height:1;border-radius:.25rem}
+textarea{line-height:1;border-radius:.25rem;font:400 1rem Arial}
+#contact-btn{width:50%;margin:16px auto}
+input[type=number]{display:block} 
+input[name=cognome]{display:block}
+/*********FOOTER*320********/ 
+#footer-box-icon{padding-top:6rem;align-items:stretch;align-content:stretch;}
+.footer-icon{flex-basis:100%;font-size:3rem} 
+}
+@media(min-width:375px){}
+}
+
+
+
