@@ -134,7 +134,7 @@ public function getDates(){
 * questo metodo verrà richiamato solo per la pagina posts/blog per creare la paginazione                |
 * Otteniamo il numero totale in assoluto di tutti i post presenti nella tabella 'posts'                 |
 * Lo scopo è quello di calcolare il numero di pagine per i post                                         |
-* es se abbiamo 30 post e vogliamo che vengano visualizzati 3 post ogni pagina                          |
+* es. se abbiamo 30 post e vogliamo che vengano visualizzati 3 post ogni pagina                         |
 * allora faremo 30post / 3 che ci darà 10 pagine. in questo modo potremo fare la paginazione            |
 ********************************************************************************************************/
 public function totalPosts(){

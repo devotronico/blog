@@ -1,27 +1,54 @@
 //======================================================================
 // CANVAS [cerchio che cade e rimbalza]
 //======================================================================
-let canvasList = [];
-let ctx = [];
-let ball = [];
+// let sectionName = ['portfolio', 'project', 'skill', 'contact', 'about', 'footer'];
+
+let canvasList = {
+    portfolio: undefined,
+    project: undefined,
+    skill: undefined,
+    contact: undefined,
+    about: undefined,
+    footer: undefined,
+};
+
+let ctx = {
+    portfolio: undefined,
+    project: undefined,
+    skill: undefined,
+    contact: undefined,
+    about: undefined,
+    footer: undefined,
+};
+
+let ball = {
+    portfolio: undefined,
+    project: undefined,
+    skill: undefined,
+    contact: undefined,
+    about: undefined,
+    footer: undefined,
+};
+
 
 // CREA CANVAS E BALL----------------------------------------------------------------------
-// function initCanvas(n, section, color) {
-function initCanvas(n, canvasBox, bgcolor, ballColor) {
+
+function initCanvas(section, canvasBox, bgcolor, ballColor) {
  
     let canvas = document.createElement("canvas");
-    canvasBox.appendChild(canvas);
-  
+    
     canvas.width = canvasBox.clientWidth 
     canvas.height = canvasBox.clientHeight; 
     canvas.style.backgroundColor = bgcolor;
+    canvasBox.appendChild(canvas);
+    
     if ( window.innerWidth < 320 ) { canvas.style.display = 'none';}
-    canvasList[n] = canvas;
-    ctx[n] = canvas.getContext("2d");  
+    canvasList[section] = canvas;
+    ctx[section] = canvas.getContext("2d");  
 
     let y = 0; 
     let radius = 60;
-    ball[n] = new Circle(canvasList[n].width*.5, y, radius, n, canvasList[n].height, ballColor);
+    ball[section] = new Circle(canvasList[section].width*.5, y, radius, section, canvasList[section].height, ballColor);
 }
 
 
@@ -44,23 +71,41 @@ function canvasResize(){
         animate(true);
     }, 1000);
 
-    
-   
-    for (let i=0; i<canvasList.length; i++) {
-        if ( canvasList[i] ) {
-     
-            canvasList[i].width = document.querySelector(".col-canvas-"+i).clientWidth;
-            canvasList[i].height = document.querySelector(".col-canvas-"+i).clientHeight;
+  
 
-            ball[i].x = canvasList[i].width *.5; // la palla si riposiziona al centro del canvas
-            ball[i].floor = canvasList[i].height; // la palla si riposiziona al centro del canvas
-            if ( window.innerWidth < 320 ) {
-                canvasList[i].style.display = 'none';
-            } else { 
-                canvasList[i].style.display = 'block';
-            }
+// CICLARE UN OGGETTO
+Object.objsize = function(canvasList) {
+    let size = 0, key;
+    for (key in canvasList) {
+        if (canvasList.hasOwnProperty(key)) {
+
+
+            if (canvasList[key] != undefined ) {  
+          
+               // console.log('OK');
+                canvasList[key].width = document.querySelector(".col-canvas-"+key).clientWidth;
+                canvasList[key].height = document.querySelector(".col-canvas-"+key).clientHeight;
+
+                ball[key].x = canvasList[key].width *.5; // la palla si riposiziona al centro del canvas
+                ball[key].floor = canvasList[key].height; // la palla si riposiziona al centro del canvas
+
+                if ( window.innerWidth < 320 ) {
+                    canvasList[key].style.display = 'none';
+                } else { 
+                    canvasList[key].style.display = 'block';
+                }
+
+            } //else {  console.log('ERRORE');  }
+         
+        size++;
         }
     }
+    return size;
+};
+
+Object.objsize(canvasList);
+// var objsize = Object.objsize(canvasList);
+//console.log('lunghezza del oggetto : '+canvasList);
 }
 
 
@@ -99,7 +144,7 @@ function Circle(x, y, radius, i, floor, ballColor) {
 
 
 let n;
-function indexOfBall(index) {return n = index}
+function indexOfBall(index) {console.log(index); return n = index}
 
 
 // ANIMAZIONE ----------------------------------------------------------------------

@@ -8,6 +8,7 @@ function about(data, div) {
     * le due colonne sono entrambi di solo testo
     */
 
+
     div.id = "about-box"; // aggiunge 'id' al contenitore senza canvas
     
     // ABOUT TITOLO
@@ -32,16 +33,16 @@ function about(data, div) {
     aboutInfoRight.classList.add("about__info-right"); // aggiunge la classe 'about__info-left'
     aboutContent.appendChild(aboutInfoRight); // appende la colonna al contenitore'about-content' 
     
-    for (let i=0; i<data.about.length; i++) {
+    for (let i=0; i<data.length; i++) {
 
         let title = document.createElement('h4'); 
         title.classList.add("about__subtitle"); 
-        title.innerHTML = data.about[i].title; 
+        title.innerHTML = data[i].title; 
         let info = document.createElement('p'); 
         info.classList.add("about__text"); 
-        info.innerHTML = data.about[i].info;  
+        info.innerHTML = data[i].info; 
 
-        if ( i < data.about.length * .5 ) {
+        if ( i < data.length * .5 ) {
             aboutInfoLeft.appendChild(title); 
             aboutInfoLeft.appendChild(info); 
         } else { 

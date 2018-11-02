@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-
+    console.log('0');
 //quando viene ricaricata la pagina viene visualizzata la parte più alta della pagina
 window.onbeforeunload = function () { 
   
