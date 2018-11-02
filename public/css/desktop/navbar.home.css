@@ -7,10 +7,10 @@
 */
 /* :root{--color-1:var(--color-1);--color-2:#3367D6;--color-3:#4285F4;--color-4:#333333;--color-5: #f5f5f5} */
 :root{
---color-1:#fff;
---color-2:#2c8cff;
---color-3:#6baeff;
---color-4:#333333
+    --color-1:#fff;
+    --color-2:#2c8cff;
+    --color-3:#6baeff;
+    --color-4:#333333
 }
 /******************** GENERAL 0 ********************/ 
 *{padding:0;margin:0}
@@ -36,6 +36,12 @@ nav{display:none;clear:both;height:100vh}
 #nav-list>li:nth-of-type(1){border-top:1px solid rgba(0,0,0,.1)}
 #nav-list>li:nth-of-type(5){border:none}
 #nav-list>li a{text-decoration:none;color:var(--color-1)}
+/******************** WRAPPER > TRANSITION - SECTION ********************/
+.wrapper{position:relative;width:100%;height:100vh;background-color:var(--color-4)}
+.transition{height:20vh;background-color:var(--color-4)}
+.section{height:80vh;position:relative;width:100%;display:flex;flex-direction:column;opacity:0}
+@keyframes section-alpha {from {opacity:0} to {opacity:1}}
+.section-anim-alpha{animation:section-alpha 2s forwards}  
 /******************** SCROLL BUTTON 0 ********************/
 @keyframes opaque{0% {opacity: 0} 100% {opacity:1}} 
 @keyframes transp{0% {opacity:1} 100% {opacity:0}}
@@ -45,7 +51,15 @@ nav{display:none;clear:both;height:100vh}
 .scroll__move-down{animation:opaque 1s forwards, moveUp 1s forwards}  
 .scroll__button{position:fixed;bottom:12px;right:24px;width:64px;height:64px;z-index:99;cursor:pointer;opacity:0;border:6px solid salmon;border-radius:50%;display:flex;justify-content:center;}
 .scroll__button:hover{opacity:1}
-.scroll__icon{font-size:4rem;color:salmon;line-height:.7}
+.scroll__icon{font-size:4rem;color:salmon;line-height:.8}
+/* DEBUG PER LO SCROLL */
+.debug__line-scroll-up{display:none;position:absolute;top:0;z-index:1000;width:100%;height:20px;background-color:blue}
+.debug__line-scroll-bot{display:none;position:absolute;top:0;z-index:1000;width:100%;height:20px;background-color:red}
+.debug__blue{color:blue}
+.debug__red{color:red}
+.debug__wrapper-offsetTop{display:none;z-index:500;position:absolute;top:0;left:0;padding:20px 0;font-size:.9rem;background-color:yellow}
+.debug__black{font-weight:bold;color:#000}
+/* END DEBUG PER LO SCROLL */
 }
 @media(min-width:230px){ }
 @media(min-width:320px){ 
@@ -59,8 +73,8 @@ header {height:100px;opacity:0}
 #logo-link{height:100%}
 #logo-img{height:50%}
 .toggleNav{display:none}
-nav{width:70%}
-nav{display:block;height:100%;position:absolute;top:0;right:5rem;z-index:200} 
+nav{width:80%}
+nav{display:block;height:100%;position:absolute;top:0;right:2rem;z-index:200} 
 #nav-list{width:100%;height:100%;display:flex;justify-content:space-around;align-items:center} 
 #nav-list>li:nth-of-type(1){border-top:none}
 #nav-list>li{display:inline;margin:0;padding:4px;border:none} 
@@ -80,9 +94,12 @@ nav{display:block;height:100%;position:absolute;top:0;right:5rem;z-index:200}
 @keyframes bottom-alpha {0% {opacity:0.5} 100% {opacity:1}} 
 /* END NAVBAR STYLE ANIMATIONS NOT ON PAGE REFRESH [JS] */
 }
-@media(min-width:992px){nav{width:50%}}
-@media(min-width:1200px){}
+@media(min-width:992px){
+nav{width:70%}
+}
+@media(min-width:1200px){nav{width:60%}}
 
 
 
 
+        

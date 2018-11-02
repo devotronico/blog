@@ -1,5 +1,8 @@
 function contact(data, div) {
 
+
+
+
     div.id = "contact-box"; // aggiunge 'id' al contenitore senza canvas
 
 
@@ -18,30 +21,30 @@ function contact(data, div) {
     contactContent.setAttribute('action', '/home/contact'); 
     div.appendChild(contactContent);
         
-    for (let i=0; i<data.contact.length; i++) {
-        let element = document.createElement(data.contact[i].tag); // CREA TAG INPUT PER OGNI ELEMENTO DEL FORM
+    for (let i=0; i<data.length; i++) {
+        let element = document.createElement(data[i].tag); // CREA TAG INPUT PER OGNI ELEMENTO DEL FORM
         if ( i < 5) { 
             // crea tag LABEL
             let label = document.createElement('label');
-            label.setAttribute('for', data.contact[i].field);
-            label.innerHTML = data.contact[i].field;
+            label.setAttribute('for', data[i].field);
+            label.innerHTML = data[i].field;
             contactContent.appendChild(label); 
         
             // crea tag INPUT
             element.classList.add("contact__input"); // aggiunge la classe 'content'
-            element.setAttribute('type', data.contact[i].type);   
-            element.setAttribute('name', data.contact[i].field);    
-            element.setAttribute('placeholder', data.contact[i].field); 
-            element.setAttribute('maxlength', data.contact[i].textLen[i]); 
+            element.setAttribute('type', data[i].type);   
+            element.setAttribute('name', data[i].field);    
+            element.setAttribute('placeholder', data[i].field); 
+            element.setAttribute('maxlength', data[i].textLen[i]); 
             if ( i==4) { //attributi aggiuntivi solo per il tag TEXTAREA 
                 element.setAttribute('rows', '3');  
                 element.setAttribute('cols', '50'); 
             }
         } else { // attributi esclusivi per il bottone SUBMIT
            
-            element.setAttribute('type', data.contact[i].type);  
+            element.setAttribute('type', data[i].type);  
             element.setAttribute('id', 'contact-btn');    
-            element.setAttribute('value', data.contact[i].field); 
+            element.setAttribute('value', data[i].field); 
         }
         contactContent.appendChild(element); 
     }

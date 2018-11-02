@@ -1,60 +1,62 @@
-{
-    "project": [
-        {
-            "title": "Meteo",
-            "icon": "<i class='fas fa-sun'></i>",
-            "info": "Previsioni del meteo ogni 3 ore per 5 giorni-Previsioni del meteo",
-            "link": "https://github.com/redeluni/meteo",
-            "linkText": "visita"
-        },
-        {
-            "title": "Network",
-            "icon": "<i class='fab fa-connectdevelop'></i>",
-            "info": "Prototipo di un social network-Prototipo di un social network",
-            "link": "https://memeinfection.com",
-            "linkText": "visita"
-        },
-        {
-            "title": "Ninja Bit",
-            "icon": "<i class='fas fa-gamepad'></i>",
-            "info": "Un videogame che mescola uno stile grafico 8bit con un gameplay moderno",
-            "link": "/home/download",
-            "linkText": "scarica"
-        },
-        {
-            "title": "Phone App",
-            "icon": "<i class='fab fa-android'></i>",
-            "info": "App per smartphone pubblicato sul play store android",
-            "link": "https://www.apkmonk.com/app/com.Manzi_Development.the_hidden_canvas/",
-            "linkText": "visita"
-        },
-        {
-            "title": "Wordpress",
-            "icon": "<i class='fab fa-wordpress'></i>",
-            "info": "Sito con negozio online creato con Wordpress e WooCommerce",
-            "link": "https://github.com/redeluni/wp-site",
-            "linkText": "visita"
-        },
-        {
-            "title": "Angular",
-            "icon": "<i class='fab fa-angular'></i>",
-            "info": "Vari script e test sul framework di Google",
-            "link": "https://stackblitz.com/@redeluni",
-            "linkText": "visita"
-        },
-        {
-            "title": "Cryptocoin",
-            "icon": "<i class='fab fa-bitcoin'></i>",
-            "info": "Bitcoin, Ethereum, Dash, Monero, Ripple, Litecoin, e tante altre",
-            "link": "https://github.com/redeluni/cryptocoin",
-            "linkText": "visita"
-        },
-        {
-            "title": "Database",
-            "icon": "<i class='fas fa-database'></i>",
-            "info": "Database con funzioni di ricerca, crea, modifica, cancella, dati",
-            "link": "https://github.com/redeluni/database",
-            "linkText": "visita"
-        }
-    ]
-}
+
+[
+    {
+        "title": "Meteo",
+        "icon": "<i class='fas fa-sun'></i>",
+        "info": "Previsioni del meteo ogni 3 ore per 5 giorni-Previsioni del meteo",
+        "link": "https://github.com/redeluni/meteo",
+        "linkText": "visita"
+    },
+    {
+        "title": "Network",
+        "icon": "<i class='fab fa-connectdevelop'></i>",
+        "info": "Prototipo di un social network-Prototipo di un social network",
+        "link": "https://memeinfection.com",
+        "linkText": "visita"
+    },
+    {
+        "title": "Ninja Bit",
+        "icon": "<i class='fas fa-gamepad'></i>",
+        "info": "Un videogame che mescola uno stile grafico 8bit con un gameplay moderno",
+        "link": "/home/download",
+        "linkText": "scarica"
+    },
+    {
+        "title": "Phone App",
+        "icon": "<i class='fab fa-android'></i>",
+        "info": "App per smartphone pubblicato sul play store android",
+        "link": "https://www.apkmonk.com/app/com.Manzi_Development.the_hidden_canvas/",
+        "linkText": "visita"
+    },
+    {
+        "title": "Wordpress",
+        "icon": "<i class='fab fa-wordpress'></i>",
+        "info": "Sito con negozio online creato con Wordpress e WooCommerce",
+        "link": "https://github.com/redeluni/wp-site",
+        "linkText": "visita"
+    },
+    {
+        "title": "Angular",
+        "icon": "<i class='fab fa-angular'></i>",
+        "info": "Vari script e test sul framework di Google",
+        "link": "https://stackblitz.com/@redeluni",
+        "linkText": "visita"
+    },
+    {
+        "title": "Cryptocoin",
+        "icon": "<i class='fab fa-bitcoin'></i>",
+        "info": "Bitcoin, Ethereum, Dash, Monero, Ripple, Litecoin, e tante altre",
+        "link": "https://github.com/redeluni/cryptocoin",
+        "linkText": "visita"
+    },
+    {
+        "title": "Database",
+        "icon": "<i class='fas fa-database'></i>",
+        "info": "Database con funzioni di ricerca, crea, modifica, cancella, dati",
+        "link": "https://github.com/redeluni/database",
+        "linkText": "visita"
+    }
+]
+
+
+

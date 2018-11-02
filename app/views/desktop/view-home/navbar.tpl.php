@@ -14,6 +14,7 @@
     </div>
     <nav>
         <ul id="nav-list">
+            <li class="liNavLink"><a class="aNavLink" href="#portfolio">portfolio</a></li>
             <li class="liNavLink"><a class="aNavLink" href="#project">projects</a></li>
             <li class="liNavLink"><a class="aNavLink" href="#skill">skills</a></li>
             <li class="liNavLink"><a class="aNavLink" href="#contact">contact</a></li>
@@ -22,6 +23,7 @@
         </ul>
     </nav>
 </header>
-<div id='risoluzione'></div>
-<div class="scroll__button"><div class="scroll__icon">&#9651;</div></div>
 <!-- END NAVBAR HOME -->
+<!-- SCROLL -->
+<div class="scroll__button"><div class="scroll__icon">&#9651;</div></div>
+<!-- END SCROLL -->

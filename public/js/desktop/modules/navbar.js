@@ -10,7 +10,10 @@ let scrollButton = document.querySelector('.scroll__button');
 function navbarRefresh(){
    
     console.log('REFRESH');
-   
+    // console.log('document.body.scrollTop: '+document.body.scrollTop);
+    // console.log('document.documentElement.scrollTop: '+document.documentElement.scrollTop);
+    // console.log('window.pageYOffset: '+window.pageYOffset);
+    // console.log('window.scrollY: '+window.scrollY);
     if ( window.innerWidth >= 768 ) {
         if ( window.scrollY > offset ) { // se lo scroll NON è in cima(TOP) ma si trova più in basso
 
@@ -75,6 +78,8 @@ function navbarScroll(){
     }
 }
 // END NAVBAR EFFECT ON SCROLL ----------|----------|----------|----------|----------|----------|----------
+
+
 
 
 
@@ -225,6 +230,9 @@ for (var i=0; i<mqls.length; i++){
 
 
 /********** END RESIZE ********** END RESIZE ********** END RESIZE ********** END RESIZE ********** END RESIZE **********/
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 function skill(data, div) {
 
+
     // DEVICON --> http://konpa.github.io/devicon/ <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
     let head = document.querySelector('head'); // il link deve essere inserito nel tag head del documento html
     let devicon = document.createElement('link');
@@ -27,12 +28,12 @@ function skill(data, div) {
    
 
     // LOOP PER GENERARE LE CARD
-    for (let i=0; i<data.skill.length; i++) {
+    for (let i=0; i<data.length; i++) {
       
         // Icone
         let skillIcon = document.createElement("div"); // crea contenitore del titolo
         skillIcon.classList.add("skill-icon"); // aggiunge classe al contenitore senza canvas
-        skillIcon.innerHTML = "<i class='devicon-"+data.skill[i].icon+"-plain colored'></i>"; // aggiunge il testo al contenitore del titolo
+        skillIcon.innerHTML = "<i class='devicon-"+data[i].icon+"-plain colored'></i>"; // aggiunge il testo al contenitore del titolo
         //skillIcon.innerHTML = "<i class='devicon-"+icon[i]+"-plain colored'></i>"; // aggiunge il testo al contenitore del titolo
     
         skillContent.appendChild(skillIcon); // appende al contenitore 'skill-container' i figli 'skill-icon'

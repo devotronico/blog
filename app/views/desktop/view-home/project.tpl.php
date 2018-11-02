@@ -1,8 +1,8 @@
 <!-- PROJECT -->
-<div class="wrapper">
+<div class="wrapper wrapper__project">
     <div class="debug__wrapper-offsetTop"></div>
     <div class="transition"></div>
-    <div class="section section-0" id="project"></div>
+    <div class="section" id="project"></div>
 </div>
 <!-- END PROJECT -->
 

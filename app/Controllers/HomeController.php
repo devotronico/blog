@@ -14,7 +14,6 @@ class HomeController extends Controller
         parent::__construct(); 
         $this->conn = $conn; // otteniamo la connessione con la quale possiamo fare le query al database
         $this->page = 'home'; 
-     //   $this->grid = 'container-fluid';
     }
 
 
@@ -27,13 +26,14 @@ public function home(){
     $photo = $this->device.'.photo';
     $files=[
        
-        $this->device.'.navbar',
-        $this->device.'.cover',
-        $this->device.'.project',
-        $this->device.'.skills', 
-        $this->device.'.contact',
-        $this->device.'.about',
-        $this->device.'.footer'
+        'navbar',
+        'cover',
+        'portfolio',
+        'project',
+        'skills', 
+        'contact',
+        'about',
+        'footer'
         ];
     
     $this->content = View($this->device,'home', $files, compact('photo'));

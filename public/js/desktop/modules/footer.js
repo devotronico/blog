@@ -36,12 +36,12 @@ if ( fontawesome == null ) { // se il link fontawesome non è stato ancora creat
     div.appendChild(footerTitle); // appende il contenitore del TITOLO
     
     
-    for (let i=0; i<data.footer.length; i++) {
+    for (let i=0; i<data.length; i++) {
         let element = document.createElement('a'); // CREA TAG INPUT PER OGNI ELEMENTO DEL FORM
         element.classList.add('footer-icon');
-        element.setAttribute('href', 'https://'+data.footer[i].socialAddress);
+        element.setAttribute('href', 'https://'+data[i].socialAddress);
         element.setAttribute('target', '_blank');
-        element.innerHTML = data.footer[i].icon; 
+        element.innerHTML = data[i].icon; 
         footerContent.appendChild(element); 
     }
 }

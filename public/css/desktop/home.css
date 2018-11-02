@@ -1,68 +1,42 @@
 @media(min-width:0){
-/* DEBUG PER LO SCROLL */
-.debug__line-scroll-up{display:none;position:absolute;top:0;z-index:1000;width:100%;height:20px;background-color:blue}
-.debug__line-scroll-bot{display:none;position:absolute;top:0;z-index:1000;width:100%;height:20px;background-color:red}
-.debug__blue{color:blue}
-.debug__red{color:red}
-.debug__wrapper-offsetTop{display:none;z-index:500;position:absolute;top:0;left:0;padding:20px 0;font-size:.9rem;background-color:yellow}
-.debug__black{font-weight:bold;color:#000}
-/* END DEBUG PER LO SCROLL */
-
-/* WRAPPER > TRANSITION - SECTION > COL */
-.wrapper{position:relative;width:100%;height:100vh;background-color:var(--color-4)}
-.transition{height:20vh;background-color:var(--color-4)}
-.section{height:80vh;position:relative;width:100%;display:flex;flex-direction:column;background-color:#666;opacity:0}
-@keyframes section-alpha {from {opacity:0} to {opacity:1}}
-.section-anim-alpha{animation:section-alpha 2s forwards}  
-
-.col-0, .col-1, .col-2, .col-3, .col-4{width:100%;height:100%}
-.col-canvas-0, .col-canvas-1, .col-canvas-2, .col-canvas-3{height:100%}
-
-.section-title{height:4%;display:flex;justify-content:center;align-items:center}
-.section-title > p{font-size:1.4rem}
-.content{width:100%;height:96%}
-/* END WRAPPER > TRANSITION - SECTION > COL */
-/* MESSAGE */
-#message{position:absolute;height:100vh;width:100vw;top:0;left:0;z-index:300;display:flex;justify-content:center;align-items:center;background-color:transparent}
-#message-form{padding:1rem;text-align:center;background-color:var(--color-1)} 
-#message-btn{margin:1rem;width:50px;height:50px;border:none;border-radius:100%;color:var(--color-1);background-color:#3399ff} 
 /****************** COVER 0 ****************/
-#cover{height:100vh;}
+#cover{height:100vh}
 /* LOADER / GIF CARICAMENTO */
-.loader{z-index: 500;position: fixed;top:0;left:0;width:100%;height:100%;display: flex;justify-content: center;align-items: center;background-color: #fff; }
-/* .loader{z-index: 500;position: absolute;width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;background-color: #fff; } */
+.loader{z-index:500;position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background-color:#fff}
 .loader.hidden{animation: fadeOut .1s forwards}
 @keyframes fadeOut {0% {opacity: 1; } 100% {opacity: 0; visibility: hidden }} 
 /* END LOADER / GIF CARICAMENTO */
 /* gif */
-#cover__animation-gif {position: absolute;width: 100%;height: 100%;}
+#cover__animation-gif {position:absolute;width:100%;height:100%}
 /* contenuto foto titolo e bottone */
 #cover__wrapper{height:100vh;display:flex;flex-direction:column;background-color:var(--color-4)}
-
 /* foto */
 #cover__box-photo{flex-basis:50%;display:flex;justify-content:center;align-items:center}
 #cover__photo{border-radius:50%;width:200px;opacity:.5}
-/* #cover__photo{border-radius:50%;width:200px;box-shadow:0px 8px 20px 0px rgba(0,0,0,.7);} */
-/* .cover__photo__animation{animation: photoFadeIn .1s forwards}
-@keyframes photoFadeIn {0% {opacity:0}100%{opacity:.5}} */
-/* info */
 #cover__box-info{flex-basis:50%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;height:100%}
 #cover__text{z-index:100;font-size:1.8rem;font-weight:bolder;text-align:center;color:var(--color-1)}
-.cover__btn{z-index:1;text-decoration:none;margin-top:.5rem;padding:.3rem .4rem;box-shadow:0px 8px 20px 0px rgba(0,0,0,.7);font-weight:bolder;font-size:1.4rem;border-radius:.2rem;color:var(--color-1);background-color:rgba(255,255,255,.2);
-} 
-/*********ABOUT*0*******/  
-.wrapper-about{height:100% !important} 
-.section-3{height:100% !important} 
-#about-box{background-color:var(--color-1)}
-#about__title > p{color:var(--color-2)}
-#about-content{display:flex;flex-direction:column;justify-content:center;font-size:.8rem}
-.about__subtitle{margin-top:.5rem}
-.about__info-left{padding:1rem}
-.about__info-right{padding:1rem}
-/*********PORTFOLIO*0*******/  
-#project-box{background-color:var(--color-2)}
-#project-title > p{color:var(--color-1)}
-#project-content{display:flex;flex-direction:column;justify-content:space-around}
+.cover__btn{z-index:1;text-decoration:none;margin-top:.5rem;padding:.3rem .4rem;box-shadow:0px 8px 20px 0px rgba(0,0,0,.7);font-weight:bolder;font-size:1.4rem;border-radius:.2rem;color:var(--color-1);background-color:rgba(255,255,255,.2)} 
+/****************** END COVER 0 ****************/
+/****************** PORTFOLIO 0 ****************/  
+#portfolio-box{width:100%;height:100%;background-color:var(--color-2)}
+#portfolio-title {height:4%;display:flex;justify-content:center;align-items:center}
+#portfolio-title > p{font-size:1.4rem;color:var(--color-1)}
+#portfolio-content{width:100%;height:96%;display:flex;flex-direction:column;justify-content:space-around}
+.col-canvas-portfolio{height:100%}
+/* CARD */
+.portfolio-card{flex-basis:97%;text-align:center;color:var(--color-4);border:1px solid rgba(0,0,0,.1)}
+.portfolio-card__head{padding:.2rem 0;font-size:1rem;border-bottom:1px solid rgba(0,0,0,.1);background-color:#f6f6f6}
+.portfolio-card__icon{font-size:1.5rem;color:var(--color-2);background-color:var(--color-1)}
+.portfolio-card__body{height:90px;overflow:hidden;background-color:var(--color-1)}
+.portfolio-card__text{padding:0 .4rem;font-size:.9rem}
+.portfolio-card__link{display:block;padding:.2rem;text-decoration:none;font-size:.9rem;color:var(--color-2);background-color:#f6f6f6}
+.portfolio-card__link:hover{text-decoration:none;color:var(--color-3)}
+/****************** END PORTFOLIO 0 ****************/  
+/****************** PROJECT 0 ****************/  
+#project-box{width:100%;height:100%;background-color:var(--color-2)}
+#project-title {height:4%;display:flex;justify-content:center;align-items:center}
+#project-title > p{font-size:1.4rem;color:var(--color-1)}
+#project-content{width:100%;height:96%;display:flex;flex-direction:column;justify-content:space-around}
 .project-card{max-height:100%;text-align:center;color:var(--color-4);border:1px solid rgba(0,0,0,.1)}
 .project-card__head{padding:.2rem 0;font-size:.9rem;border-bottom:1px solid rgba(0,0,0,.1);background-color:#f6f6f6}
 .project-card__icon{font-size:1.5rem;color:var(--color-2);background-color:var(--color-1)}
@@ -70,159 +44,281 @@
 .project-card__text{display:none}
 .project-card__link{display:block;padding:.2rem;text-decoration:none;font-size:.9rem;color:var(--color-2);background-color:#f6f6f6}
 .project-card__link:hover{text-decoration:none;color:var(--color-3)}
-/*********SKILL*0*******/ 
-#skill-box{background-color:var(--color-1)} 
-#skill-title{color:var(--color-2)}
-#skill-content{display:flex;flex-wrap:wrap;align-content:flex-start}
+.col-canvas-project{height:100%}
+/****************** END PROJECT 0 ****************/
+/****************** SKILL 0 ****************/ 
+#skill-box{width:100%;height:100%;background-color:var(--color-1)} 
+#skill-title{height:4%;display:flex;justify-content:center;align-items:center;color:var(--color-2)}
+#skill-title > p{font-size:1.4rem}
+#skill-content{width:100%;height:96%;display:flex;flex-wrap:wrap;align-content:flex-start}
 .skill-icon{flex-basis:100%;font-size:2.1rem;text-align:center} 
-/*********CONTACT*0*******/ 
-#contact-box{background-color:var(--color-2)}
-#contact-title{color:var(--color-1)}
-#contact-content{width:95%;margin:0 auto}
+.col-canvas-skill{height:100%}
+/****************** END SKILL 0 ****************/
+/****************** CONTACT 0 ****************/ 
+#contact-box{width:100%;height:100%;background-color:var(--color-2)}
+#contact-title{height:4%;display:flex;justify-content:center;align-items:center;color:var(--color-1)}
+#contact-title > p{font-size:1.4rem}
+#contact-content{width:100%;height:96%;width:95%;margin:0 auto}
 label{display:none;color:var(--color-1)}
 .contact__input{display:block;width:100%;margin-bottom:1rem;padding:1rem 0;border:none;font-size:1rem;line-height:1;text-indent:1rem}
 .contact__input:focus{border-color:#000}
 textarea{width:100%;padding:1rem 0;text-indent:1rem;font:400 1rem Arial}
 #contact-btn{display:block;width:60%;margin:1rem auto 0;padding:10px;border:none;text-align:center;text-decoration:none;font-size:1rem;color:#8c929b;background-color:var(--color-1)}
 #contact-btn:hover{color:var(--color-4);background-color:#eeeeee}
-/*********ABOUT*0********/ 
-/*********FOOTER*0********/ 
-#footer-box{background-color:var(--color-1)}
-#footer-title{color:var(--color-2)}
-#footer-content{display:flex;flex-direction:column;justify-content:space-around;align-items:center}
+.col-canvas-contact{height:100%}
+/****************** END CONTACT 0 ****************/
+/****************** ABOUT 0 ****************/ 
+.wrapper__about{height:auto}  
+#about{width:100%;height:auto;background-color:#fff}
+#about-box{width:100%;min-height:100%}
+#about-title{height:4%;display:flex;justify-content:center;align-items:center}
+#about-title > p{font-size:1.4rem}
+#about-content{width:100%;min-height:96%}
+.about__info-left, .about__info-right{padding:20px}  
+.about__text{margin-bottom:1rem} 
+/****************** END ABOUT 0 ****************/
+/****************** FOOTER 0 ****************/ 
+#footer-box{width:100%;height:100%;background-color:var(--color-1)}
+#footer-title{height:4%;display:flex;justify-content:center;align-items:center;color:var(--color-2)}
+#footer-title > p{font-size:1rem}
+#footer-content{width:100%;height:96%;display:flex;flex-direction:column;justify-content:space-around;align-items:center}
 .footer-icon{width:50px;height:50px;text-align:center;border-radius:50%;border:4px solid var(--color-3);color:var(--color-3)} 
 .footer-icon > i{font-size:2rem;line-height:1.5} 
 .footer-icon:hover{border-color:var(--color-2);color:var(--color-2)}
 #footer-copyright{font-size:1rem}
 #footer-year{display:none}
-}  
+/****************** END FOOTER 0 ****************/
+}/* ########## 260 ########## 260 ########## 260 ########## 260 ########## 260 ########## 260 ########## 260 ########## */  
 @media(min-width:260px){
-/*********COVER*260*******/
+/****************** COVER 260 ****************/
 #cover__text{font-size:2rem}
 .cover__btn{padding:.3rem 1rem;font-size:1.7rem} 
-/*********PORTFOLIO*260*******/  
+/****************** END COVER 260 ****************/
+/****************** PORTFOLIO 260 ****************/  
+#portfolio-content{flex-direction:row;flex-wrap:wrap;align-items:flex-start;align-content:space-around}
+/* CARD */
+.portfolio-card__icon{font-size:1.8rem}
+.portfolio-card__body{height:68px;}
+.portfolio-card__link{padding:0.3rem;text-decoration:none;font-size:1rem;}
+/****************** END PORTFOLIO 260 ****************/  
+/****************** PROJECT 260 ****************/  
 #project-content{flex-direction:row;flex-wrap:wrap;align-items:flex-start;align-content:space-around}
 .project-card{flex-basis:40%;min-height:130px}
 .project-card__icon{min-height:50px;padding-top:20px;font-size:2rem}
 .project-card__link{display:block;padding:0.3rem;text-decoration:none;font-size:1rem;color:var(--color-2)}
 .project-card__link:hover{text-decoration:none;color:var(--color-3)}
-/*********SKILL*260*******/ 
-/*********CONTACT*260*******/ 
+/****************** END PROJECT 260 ****************/ 
+/****************** SKILL 260 ****************/ 
+/****************** END SKILL 260 ****************/
+/****************** CONTACT 260 ****************/ 
+/****************** ABOUT 260 ****************/ 
+/****************** END ABOUT 260 ****************/
 #contact-content{width:90%}
-/*********FOOTER*260********/ 
+/****************** END CONTACT 260 ****************/
+/****************** FOOTER 260 ****************/ 
 #footer-year{display:inline-block}
-}
+#footer-title > p{font-size:1.4rem}
+/****************** END FOOTER 260 ****************/
+}/* ########## 320 ########## 320 ########## 320 ########## 320 ########## 320 ########## 320 ########## 320 ########## */
 @media(min-width:320px){ /* ATTIVAZIONE DEI CANVAS ******************************************************************************/
-
-/* CONTAINER > TRANSITION - SECTION > ROW > COL */
-.section-title{height:10%}
-.section-title > p{font-size:2rem}
-.section-0, .section-1, .section-2{flex-direction:row}
-.content{width:100%;height:90%}
-
-/* VERTICAL CANVAS */
-.col-vertical-canvas{width:20%;height:100%;}
-.col-vertical{width:80%}
-
-.col-canvas-0{order:1}
-.col-0{order:2}
-.col-canvas-1{order:2}
-.col-1{order:1}
-.col-canvas-2{order:1}
-.col-2{order:2}
-
-.col-canvas-0, .col-canvas-2{border-right:10px solid var(--color-1)} 
-.col-canvas-1{border-left:10px solid  var(--color-2)} 
-/* END VERTICAL CANVAS  */
-
-/* HORIZONTAL CANVAS  */
-.col-horizontal, .col-horizontal-canvas{width:100%;height:50%}
-.col-canvas-3{order:2}
-.col-3{order:1}  
-/* END HORIZONTAL CANVAS  */
-/* END CONTAINER > TRANSITION - SECTION > ROW > COL */
-/*********MESSAGE*320*******/ 
-#message-form{padding:5rem;border-radius:.25rem} 
-/*********ABOUT*320*******/ 
-#about-content{flex-direction:row}
-/*********PORTFOLIO*320*******/ 
+/****************** COVER 320 ****************/
+/****************** END COVER 320 ****************/
+/****************** PORTFOLIO 320 ****************/ 
+#portfolio{flex-direction:row}
+#portfolio-box{width:80%;order:2}
+#portfolio-title{height:10%}
+#portfolio-title > p{font-size:2rem}
+.col-canvas-portfolio{order:1;width:20%;height:100%;border-right:10px solid var(--color-1)}
+#portfolio-content{width:100%;height:90%;align-items:center}
+/* CARD */
+/****************** END PORTFOLIO 320 ****************/
+/****************** PROJECT 320 ****************/ 
+#project{flex-direction:row}
+#project-box{width:80%;order:1}
+#project-title{height:10%}
+#project-title > p{font-size:2rem}
+#project-content{width:100%;height:90%}
 .project-card{flex-basis:46%}
 .project-card__link{padding:0.4rem}
-/********SKILLS*320***************/  
+.col-canvas-project{order:2;width:20%;height:100%;border-right:10px solid var(--color-1)}
+/****************** END PROJECT 320 ****************/ 
+/****************** SKILL 320 ****************/ 
+#skill{flex-direction:row}
+#skill-box{order:2;width:80%}
+#skill-title{height:10%}
+#skill-title > p{font-size:2rem}
+#skill-content{width:100%;height:90%}
 .skill-icon{flex-basis:50%;font-size:4rem} 
-/*********CONTACT*320*******/ 
+.col-canvas-skill{order:1;width:20%;height:100%;border-right:10px solid var(--color-1)}
+/****************** END SKILL 320 ****************/ 
+/****************** CONTACT 320 ****************/ 
+#contact{flex-direction:row}
+#contact-box{order:1;width:80%}
+#contact-title{height:10%}
+#contact-title > p{font-size:2rem}
+#contact-content{width:100%;height:90%}
 .contact__input{margin-bottom:1.5rem;padding:1.5rem 0;font-size:1.5rem;border-radius:.25rem}
-/* input{margin-bottom:1.5rem;padding:1.5rem 0;font-size:1.5rem;border-radius:.25rem} */
 textarea{border-radius:.25rem;font:400 1.5rem Arial}
 #contact-btn{width:20%;margin:1.5rem auto;border-radius:.25rem;font-size:1.5rem} 
-}
+.col-canvas-contact{order:2;width:20%;height:100%}
+/****************** END CONTACT 320 ****************/
+/****************** ABOUT 320 ****************/ 
+#about-box{order:1}  
+#about-title{height:10%}
+#about-title > p{font-size:2rem}
+#about-content{width:100%;min-height:90%;display:flex;justify-content:center;flex-direction:row}
+/****************** END ABOUT 320 ****************/ 
+/****************** FOOTER 320 ****************/ 
+#footer-box{width:100%;height:50%}
+#footer-title{height:10%}
+#footer-title > p{font-size:2rem}
+#footer-content{width:100%;height:90%}
+.col-canvas-footer{width:100%;height:50%}
+/****************** END FOOTER 320 ****************/
+}/* ########## 576 ########## 576 ########## 576 ########## 576 ########## 576 ########## 576 ########## 576 ########## */
 @media(min-width:576px){
-/********COVER*576**********/    
-/********PORTFOLIO*576**********/   
-/* #project{line-height:1.2} */
+/****************** COVER 576 ****************/
+/****************** END COVER 576 ****************/
+/****************** PORTFOLIO 576 ****************/   
+/* CARD */
+.portfolio-card{flex-basis:47%}
+.portfolio-card__head{padding:.5rem 0;font-size:1.2rem}
+.portfolio-card__icon{padding:1rem;font-size:2rem}
+.portfolio-card__body{height:150px}
+.portfolio-card__link{font-size:1.2rem} 
+/****************** END PORTFOLIO 576 ****************/
+/****************** PROJECT 576 ****************/   
 .project-card{flex-basis:24%}
 .project-card__head{padding:.5rem 0}
 .project-card__icon{padding:.5rem 0 0 0}
 .project-card__text{display:block;height:130px;padding:.5rem;font-size:.9rem}
 .project-card__link{font-size:1.2rem} 
-/********SKILLS*576***************/  
-.skill-icon{flex-basis:33%;font-size:5.5rem} 
-/***********CONTACT*576***********/
+/****************** END PROJECT 576 ****************/
+/****************** SKILL 576 ****************/ 
+.skill-icon{flex-basis:33%;font-size:5.5rem}
+/****************** END SKILL 576 ****************/
+/****************** CONTACT 576 ****************/ 
 #contact-content{width:70%}
-}
+/****************** END CONTACT 576 ****************/
+/****************** ABOUT 576 ****************/ 
+/****************** END ABOUT 576 ****************/
+/****************** FOOTER 576 ****************/ 
+/****************** END FOOTER 576 ****************/
+}/* ########## 768 ########## 768 ########## 768 ########## 768 ########## 768 ########## 768 ########## 768 ########## */
 @media(min-width:768px){   
-/*********CANVAS*E*SECTION*320*****/  
-.col-canvas-0{width:30%}
-.col-0{width:70%}
-.col-canvas-1{width:30%}
-.col-1{width:70%}
-.col-canvas-2{width:30%}
-.col-2{width:70%}
-/********END*CANVAS*E*SECTION*320*****/ 
-/********COVER*768**********/
+/****************** COVER 768 ****************/
 #cover__wrapper{flex-direction:row;}
 #cover__photo{width:300px}
 #cover__box-info{justify-content: center}
 #cover__text{font-size:2.5rem}
 .cover__btn{font-size:2rem} 
-/********PORTFOLIO*768px**********/     
-/* #project{line-height:1.3} */
+/****************** END COVER 768 ****************/
+/****************** PORTFOLIO 768 ****************/   
+#portfolio-box{width:70%}
+.col-canvas-portfolio{width:30%}  
+/* CARD */
+.portfolio-card{flex-basis:23%}
+.portfolio-card__icon{padding:.6rem;font-size:2.2rem}
+.portfolio-card__body{height:300px}
+/****************** END PORTFOLIO 768 ****************/
+/****************** PROJECT 768 ****************/   
+#project-box{width:70%}
+.col-canvas-project{width:30%}  
 .project-card__icon{padding:0.6rem;font-size:2.5rem}
-/********SKILLS*768***************/      
+/****************** END PROJECT 768 ****************/
+/****************** SKILL 768 ****************/ 
+#skill-box{width:70%}
 #skill-content{align-content:space-around}
 .skill-icon{font-size:3.5rem} 
 .skill-icon > i{padding:8px;border:1px solid rgba(0,0,0,.1);border-radius:8px;transition:all .5s} 
 .skill-icon > i:hover{border-color:rgba(0,0,0,.5);border-radius:0}
-/***********CONTACT*768***********/
-/***********FOOTER*768***********/
+.col-canvas-skill{width:30%}
+/****************** END SKILL 768 ****************/
+/****************** CONTACT 768 ****************/ 
+#contact-box{width:70%}
+.col-canvas-contact{width:30%}
+/****************** END CONTACT 768 ****************/
+/****************** ABOUT 768 ****************/ 
+/****************** END ABOUT 768 ****************/
+/****************** FOOTER 768 ****************/ 
 #footer-content{flex-direction:row;justify-content:space-around;align-items:center}
 .footer-icon{width:70px;height:70px;border:8px solid var(--color-3)} 
 .footer-icon > i{font-size:3rem;line-height:1.5} 
 #footer-copyright{font-size:2rem}
-}
+/****************** END FOOTER 768 ****************/
+}/* ########## 992 ########## 992 ########## 992 ########## 992 ########## 992 ########## 992 ########## 992 ########## */
 @media(min-width:992px){
-/********COVER*992**********/    
-/********PORTFOLIO*992**********/  
+/****************** COVER 992 ****************/
+/****************** END COVER 992 ****************/
+/****************** PORTFOLIO 992 ****************/  
+/* CARD */
+.portfolio-card__head{padding:.5rem;font-size:1.2rem}
+.portfolio-card__icon{padding:1rem 0 0 0;font-size:2.8rem}
+.portfolio-card__text{padding:1rem .5rem;font-size:1rem}
+.portfolio-card__link{padding:.5rem;font-size:1.3rem}
+/****************** END PORTFOLIO 992 ****************/ 
+/****************** PROJECT 992 ****************/  
 .project-card{flex-basis:23%}    
 .project-card__icon{font-size:3rem}
 .project-card__text{height:90px}
-/********SKILLS*992***************/      
-.skill-icon{flex-basis:25%;font-size:5rem} 
-/***********CONTACT*992***********/
-}
+/****************** END PROJECT 992 ****************/
+/****************** SKILL 992 ****************/ 
+.skill-icon{flex-basis:25%;font-size:5rem}
+/****************** END SKILL 992 ****************/
+/****************** CONTACT 992 ****************/ 
+/****************** END CONTACT 992 ****************/
+/****************** ABOUT 992 ****************/
+/****************** END ABOUT 992 ****************/
+/****************** FOOTER 992 ****************/
+/****************** END FOOTER 992 ****************/
+}/* ########## 1200 ########## 1200 ########## 1200 ########## 1200 ########## 1200 ########## 1200 ########## 1200 ########## */
 @media(min-width:1200px){   
-/********COVER*1200**********/ 
-/********ABAUT*1200**********/ 
-#about-content{font-size:1rem}
-/********PORTFOLIO*1200**********/ 
-/* #project{line-height:1.5} */
+/****************** COVER 1200 ****************/
+/****************** END COVER 1200 ****************/
+/****************** PORTFOLIO 1200 ****************/ 
+/* CARD */
+.portfolio-card__head{padding:.7rem;font-size:1.6rem}
+.portfolio-card__icon{padding:1.3rem 0 0 0;font-size:3.2rem}
+.portfolio-card__text{padding:1.3rem .8rem;font-size:1.1rem}
+.portfolio-card__link{padding:.6rem;font-size:1.4rem}
+/****************** END PORTFOLIO 1200 ****************/
+/****************** PROJECT 1200 ****************/ 
 .project-card{flex-basis:23%}
 .project-card__head{padding:.6rem;font-size:1.4rem}
 .project-card__text{height:75px;padding:0 .8rem .5rem .8rem}
 .project-card__link{padding:.4rem;font-size:1.3rem}
-/********SKILLS*1200***************/   
+/****************** END PROJECT 1200 ****************/ 
+/****************** SKILL 1200 ****************/ 
 .skill-icon{font-size:6rem} 
-/***********CONTACT*1200***********/ 
+/****************** END SKILL 1200 ****************/
+/****************** CONTACT 1200 ****************/ 
 #contact-content{width:45%}
+/****************** END CONTACT 1200 ****************/
+/****************** ABOUT 1200 ****************/ 
+#about-content{font-size:1rem}
+/****************** END ABOUT 1200 ****************/ 
+/****************** FOOTER 1200 ****************/
+/****************** END FOOTER 1200 ****************/
+}/* ########## 1600 ########## 1600 ########## 1600 ########## 1600 ########## 1600 ########## 1600 ########## 1600 ########## */
+@media(min-width:1600px){   
+/****************** COVER 1600 ****************/
+/****************** END COVER 1600 ****************/
+/****************** PORTFOLIO 1600 ****************/ 
+/* CARD */
+.portfolio-card__head{padding:.8rem;font-size:1.8rem}
+.portfolio-card__icon{padding:1.5rem 0 0 0;font-size:3.5rem}
+.portfolio-card__text{padding:1.5rem 1rem; font-size:1.2rem}
+.portfolio-card__link{padding:.7rem;font-size:1.5rem}
+/****************** END PORTFOLIO 1600 ****************/
+/****************** PROJECT 1600 ****************/ 
+/****************** END PROJECT 1600 ****************/ 
+/****************** SKILL 1600 ****************/ 
+/****************** END SKILL 1600 ****************/ 
+/****************** CONTACT 1600 ****************/ 
+/****************** END CONTACT 1600 ****************/ 
+/****************** ABOUT 1600 ****************/ 
+/****************** END ABOUT 1600 ****************/ 
+/****************** FOOTER 1600 ****************/ 
+/****************** END FOOTER 1600 ****************/ 
 }
 
