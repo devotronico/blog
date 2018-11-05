@@ -2,7 +2,7 @@
 <header>  
   <div id="navbar">
     <a href="/" id="logo-link">
-      <img id="logo-img" src="/img/logo.svg" alt="logo">
+      <img id="logo-img" src="/img/logo/logo.svg" alt="logo">
     </a>
     <div class="toggleNav"></div>
   </div>

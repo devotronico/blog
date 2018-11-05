@@ -47,15 +47,19 @@ public function contact() {
 
     $message = "Grazie per averci contattato, risponderemo il prima possibile";
     $photo = $this->device.'.photo';
+
+
     $files=[
        
-        $this->device.'.navbar-home',
-        $this->device.'.message',
-        $this->device.'.cover',
-        $this->device.'.portfolio',
-        $this->device.'.skills', 
-        $this->device.'.contact',
-        $this->device.'.footer'
+        'navbar',
+        'message',
+        'cover',
+        'portfolio',
+        'project',
+        'skills', 
+        'contact',
+        'about',
+        'footer'
         ];
 
     $this->content = View($this->device, 'home', $files, compact('photo', 'message'));  

@@ -1,4 +1,9 @@
 @media(min-width:0){
+/******************MESSAGE 0 ****************/
+#message{position:absolute;height:100vh;width:100vw;top:0;left:0;z-index:2000;display:flex;justify-content:center;align-items:center;background-color:transparent}
+#message-form{padding:1rem;text-align:center;background-color:#fff} 
+#message-btn{margin:1rem;width:50px;height:50px;border:none;border-radius:100%;color:#fff;background-color:#3399ff} 
+/****************** END MESSAGE 0 ****************/
 /****************** COVER 0 ****************/
 #cover{height:100vh}
 /* LOADER / GIF CARICAMENTO */
@@ -15,7 +20,7 @@
 #cover__photo{border-radius:50%;width:200px;opacity:.5}
 #cover__box-info{flex-basis:50%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;height:100%}
 #cover__text{z-index:100;font-size:1.8rem;font-weight:bolder;text-align:center;color:var(--color-1)}
-.cover__btn{z-index:1;text-decoration:none;margin-top:.5rem;padding:.3rem .4rem;box-shadow:0px 8px 20px 0px rgba(0,0,0,.7);font-weight:bolder;font-size:1.4rem;border-radius:.2rem;color:var(--color-1);background-color:rgba(255,255,255,.2)} 
+.cover__btn{z-index:1;text-decoration:none;margin-top:.5rem;padding:.3rem .4rem;box-shadow:0 8px 20px 0 rgba(0,0,0,.7);font-weight:bolder;font-size:1.4rem;border-radius:.2rem;color:var(--color-1);background-color:rgba(255,255,255,.2)} 
 /****************** END COVER 0 ****************/
 /****************** PORTFOLIO 0 ****************/  
 #portfolio-box{width:100%;height:100%;background-color:var(--color-2)}
@@ -64,7 +69,7 @@ label{display:none;color:var(--color-1)}
 .contact__input:focus{border-color:#000}
 textarea{width:100%;padding:1rem 0;text-indent:1rem;font:400 1rem Arial}
 #contact-btn{display:block;width:60%;margin:1rem auto 0;padding:10px;border:none;text-align:center;text-decoration:none;font-size:1rem;color:#8c929b;background-color:var(--color-1)}
-#contact-btn:hover{color:var(--color-4);background-color:#eeeeee}
+#contact-btn:hover{color:var(--color-4);background-color:#eee}
 .col-canvas-contact{height:100%}
 /****************** END CONTACT 0 ****************/
 /****************** ABOUT 0 ****************/ 
@@ -99,13 +104,13 @@ textarea{width:100%;padding:1rem 0;text-indent:1rem;font:400 1rem Arial}
 /* CARD */
 .portfolio-card__icon{font-size:1.8rem}
 .portfolio-card__body{height:68px;}
-.portfolio-card__link{padding:0.3rem;text-decoration:none;font-size:1rem;}
+.portfolio-card__link{padding:.3rem;text-decoration:none;font-size:1rem;}
 /****************** END PORTFOLIO 260 ****************/  
 /****************** PROJECT 260 ****************/  
 #project-content{flex-direction:row;flex-wrap:wrap;align-items:flex-start;align-content:space-around}
 .project-card{flex-basis:40%;min-height:130px}
 .project-card__icon{min-height:50px;padding-top:20px;font-size:2rem}
-.project-card__link{display:block;padding:0.3rem;text-decoration:none;font-size:1rem;color:var(--color-2)}
+.project-card__link{display:block;padding:.3rem;text-decoration:none;font-size:1rem;color:var(--color-2)}
 .project-card__link:hover{text-decoration:none;color:var(--color-3)}
 /****************** END PROJECT 260 ****************/ 
 /****************** SKILL 260 ****************/ 
@@ -121,6 +126,9 @@ textarea{width:100%;padding:1rem 0;text-indent:1rem;font:400 1rem Arial}
 /****************** END FOOTER 260 ****************/
 }/* ########## 320 ########## 320 ########## 320 ########## 320 ########## 320 ########## 320 ########## 320 ########## */
 @media(min-width:320px){ /* ATTIVAZIONE DEI CANVAS ******************************************************************************/
+/****************** MESSAGE 320 ****************/
+#message-form{padding:5rem;border-radius:.25rem} 
+/****************** END MESSAGE 320 ****************/
 /****************** COVER 320 ****************/
 /****************** END COVER 320 ****************/
 /****************** PORTFOLIO 320 ****************/ 
@@ -139,7 +147,7 @@ textarea{width:100%;padding:1rem 0;text-indent:1rem;font:400 1rem Arial}
 #project-title > p{font-size:2rem}
 #project-content{width:100%;height:90%}
 .project-card{flex-basis:46%}
-.project-card__link{padding:0.4rem}
+.project-card__link{padding:.4rem}
 .col-canvas-project{order:2;width:20%;height:100%;border-right:10px solid var(--color-1)}
 /****************** END PROJECT 320 ****************/ 
 /****************** SKILL 320 ****************/ 
@@ -224,7 +232,7 @@ textarea{border-radius:.25rem;font:400 1.5rem Arial}
 /****************** PROJECT 768 ****************/   
 #project-box{width:70%}
 .col-canvas-project{width:30%}  
-.project-card__icon{padding:0.6rem;font-size:2.5rem}
+.project-card__icon{padding:.6rem;font-size:2.5rem}
 /****************** END PROJECT 768 ****************/
 /****************** SKILL 768 ****************/ 
 #skill-box{width:70%}

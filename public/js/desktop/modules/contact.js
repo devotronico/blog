@@ -35,7 +35,7 @@ function contact(data, div) {
             element.setAttribute('type', data[i].type);   
             element.setAttribute('name', data[i].field);    
             element.setAttribute('placeholder', data[i].field); 
-            element.setAttribute('maxlength', data[i].textLen[i]); 
+            element.setAttribute('maxlength', data[i].textLen); 
             if ( i==4) { //attributi aggiuntivi solo per il tag TEXTAREA 
                 element.setAttribute('rows', '3');  
                 element.setAttribute('cols', '50'); 

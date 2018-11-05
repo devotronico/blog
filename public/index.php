@@ -22,12 +22,11 @@ echo session_id();
 
 
 
-// DA LOCALE
+// DA LOCALE------------------------------------------------------------------------------------------------------------
 // Considerato che vogliamo che il punto di ingresso deve essere nella sottoCartella:  'nomesito\public\index.php'
 
-// apriamo il terminale spostiamoci nella cartella superiore del nostro progetto,
-// dal terminale digitiamo il comando:   cd .. 
-// se siamo in locale e utilizziamo xampp, la cartella superiore è /htdocs/
+// Spostiamoci nella cartella superiore del nostro progetto, dal terminale digitiamo il comando:   cd .. 
+// se utilizziamo xampp, la cartella superiore è /htdocs/
 // A questo punto da terminale digitiamo il comando:  php -S localhost:3000 -t nomesito/public
 // Nel browser digitiamo:   http://localhost:3000
 

@@ -3,7 +3,7 @@
     <img id="cover__animation-gif">
     <div id="cover__wrapper">
         <div id="cover__box-photo">
-            <img id='cover__photo' src='/img/<?=$photo?>.jpg'>  
+            <img id='cover__photo' src='/img/photo/<?=$photo?>.jpg'>  
         </div>
         <div id="cover__box-info">
             <p id="cover__text">web developer</p>
