@@ -27,7 +27,7 @@
         "field": "scrivi",
         "tag": "textarea",
         "type": "text",
-        "textLen": "64"
+        "textLen": "300"
     },
     {
         "field": "invia",
