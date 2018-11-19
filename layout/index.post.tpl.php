@@ -8,8 +8,8 @@
     <meta name="description" content="Il mio sito e blog personale che parla di programmazione">
     <meta name="author" content="Daniele Manzi"> 
     <link rel="icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="/css/<?=$this->navbar?>.css">
-    <link rel="stylesheet" href="/css/<?=$this->style?>.css">
+    <link rel="stylesheet" href="/css/<?=$this->device?>/<?=$this->navbar?>.css">
+    <link rel="stylesheet" href="/css/<?=$this->device?>/<?=$this->style?>.css">
     <title>Il mio sito</title>
   </head>
   <body>

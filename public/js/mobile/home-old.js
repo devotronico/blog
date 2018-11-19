@@ -1,15 +1,11 @@
-import{ request } from "./modules/request.js";
-import{ portfolio } from "./modules/portfolio.js";
-import{ project } from "./modules/project.js";
-import{ skill } from "./modules/skill.js";
-import{ contact } from "./modules/contact.js";
-import{ about } from "./modules/about.js";
-import{ footer } from "./modules/footer.js";
-import{ navbarRefresh, navbarClick, navbarScroll, navbarResize } from "./modules/navbar.js";
-import{ navbarTouch } from "./modules/navbar-mobile.js";
-import{ scrollButtonRefresh, scrollButtonClick, scrollButtonScrolling } from "./modules/scrollButton.js";
-
-
+import{request} from "./modules/request.js";
+import{portfolio} from "./modules/portfolio.js";
+import{project} from "./modules/project.js";
+import{skill} from "./modules/skill.js";
+import{contact} from "./modules/contact.js";
+import{about} from "./modules/about.js";
+import{footer} from "./modules/footer.js";
+import{navbarRefresh, navbarClick, navbarScroll, navbarResize} from "./modules/navbar.js";
 //document.addEventListener("DOMContentLoaded", function (event) {
 
 
@@ -36,6 +32,7 @@ for (let i=0; i<containerList.length; i++) {
 
 // console.dir('altezza con scroll 1 : '+document.scrollingElement.scrollTop+' e num: '+num);
 // console.dir('altezza con scroll 2 : '+window.scrollY+' e num: '+num);
+
 
 function loadSection(){
     
@@ -66,6 +63,23 @@ function loadSection(){
     
             initSection(section[num].direction, section[num].fn, section[num].name, section[num].color1, section[num].color2);
         } 
+
+   
+        if ( section[num].name != 'about') { // se non c'è il canvas (in about non c'è il canvas)
+        /*
+            // SELEZIONA CANVAS E BALL 
+            if ( !play ) {
+                //indexOfBall(section[num].name); // disattiva l'animazione a questa palla
+              
+                //animate(play);  // disattiva l'animazione a questa palla
+                if ( window.innerWidth >= 320 ) { 
+                    play = true;
+                    //animate(play);
+                }
+            }
+            // END SELEZIONA CANVAS E BALL 
+            */
+        }
     }
 }
 
@@ -84,48 +98,28 @@ function initSection(direction, sectionFunction, sectionString, color1, color2 )
 //========================================================================================================================
 
 // SCROLL ----------------------------------------------------------------------------------------
-document.addEventListener('scroll', function() {
+document.addEventListener('scroll', scrollFunc); // evento scroll
 
+function scrollFunc() { // funzione di scroll
+    
     loadSection();
     navbarScroll();
-    scrollButtonScrolling();
+}// chiude funzione scrollFunc
 
-}); // evento scroll
-
-
-
-
-
-// Controlla se utilizziamo un dispositivo mobile o il desktop
-function isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-};
 
 
 
 // CLICK ----------------------------------------------------------------------
-if ( isMobileDevice() ) {
+document.addEventListener('click', function(e){
 
-    document.addEventListener('touchstart', function(e){
+    navbarClick(e);
+    //navbarEffect();
+    play = !play;
+    //indexOfBall(section[num].name); // e.target.id può restituire uno dei seguenti valori: 'portfolio', 'project', 'skill', 'contact', 'footer'
 
-         console.log('touchstart'); 
-        navbarTouch(e);
-        scrollButtonClick(e);
-        }, {passive: false}); // mouseenter
-        
-}
-else {
-
-    
-    document.addEventListener('click', function(e){
-         console.log('desktop');  
-        
-        navbarClick(e);
-        scrollButtonClick(e);
-    });
-   
-}
- // END CLICK ----------------------------------------------------------------------
+    //animate(play);
+});
+// END CLICK ----------------------------------------------------------------------
 
 
 
@@ -139,6 +133,7 @@ else {
 */
 window.addEventListener('resize', function(){
     navbarResize();
+    //canvasResize();
 });
 // END RESIZE ----------------------------------------------------------------------
 
@@ -147,7 +142,6 @@ window.addEventListener('resize', function(){
 //REFRESH
 loadSection();  // carica la sezione attuale al refresh della pagina
 navbarRefresh();
-scrollButtonRefresh();
 /*
 // Carica gif della cover
 let downloadingImage = new Image(); // crea elemento immagine
