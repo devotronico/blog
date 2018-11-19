@@ -17,22 +17,19 @@ body{min-height:100%;height:auto;background-color:var(--color-2)}
 #box-sign{display:none} 
 #container{display:block;background-color:var(--color-1)} 
 /******************** NAVBAR 0 ********************/ 
+
 header{width:100vw;min-height:8vh;position:fixed;top:0;left:0;width:100vw;z-index:200;background-color:var(--color-2);opacity:1}
 #logo-link{height:8vh;padding:0;margin-left:3%;display:flex;align-items:center;float:left} 
 #logo-img{height:50%}
-/* MENU */
 .toggleNav{display:flex;justify-content:center;align-items:center;text-align:center;width:70px;height:8vh;font-family:Arial,Helvetica,sans-serif;float:right}
 .toggleNav:before{content:"\2261";font-size:3rem;line-height:4rem;color:var(--color-1)}
 .toggleNav.open:before{font-size:2.2rem;content:'\2716';line-height:4rem;color:var(--color-1)}
-/* LISTA */
 nav{display:none;clear:both;height:92vh}
-#nav__list{height:80%;list-style-type:none;margin:0;padding:0;display:flex;flex-flow:column}
-/*  ITEM */
+#nav__list{height:100%;list-style-type:none;margin:0;padding:0;display:flex;flex-flow:column}
 .nav__item, .nav__item-page{flex-grow:1;display:flex}
 .nav__item:nth-of-type(1){border-top:1px solid rgba(0,0,0,.1)}
 .nav__item{border-bottom:1px solid rgba(0,0,0,.1)}
 .nav__item-page{border:none}
-/* LINK */
 .nav__link, .nav__link-page{text-decoration:none;flex-grow:1;text-align:center;display:flex;justify-content:center;align-items:center;font-size:1.5rem;color:var(--color-1)}
 /******************** WRAPPER > TRANSITION - SECTION ********************/
 .wrapper{position:relative;width:100%;min-height:100vh;background-color:var(--color-4)}

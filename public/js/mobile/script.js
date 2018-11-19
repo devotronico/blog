@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
         case '/' : 
         case '/home/contact':
-
+        element.setAttribute('type', 'module');   // element.src = " example.js" ;
         element.setAttribute('src', '/js/mobile/home.js');   
         break;
 

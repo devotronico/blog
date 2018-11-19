@@ -14,6 +14,7 @@
   <body>
     <div id='box-sign'><h6 id='sign'>DANIELE MANZI</h6></div>
     <div id="container"><?=$this->content?></div>
+  <!-- <script src="/js/jquery.js"></script>   -->
   <script src="/js/<?=$this->script?>.js"></script> 
   </body>
 </html>

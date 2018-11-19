@@ -1,16 +1,16 @@
 <!-- COVER -->
-<div id="cover">
-    <div id="cover-container">
-        <div id="cover-box-image">
-            <img id='cover-foto' src='/img/photo/<?=$photo?>.jpg'> 
+<div class="wrapper__cover">
+    <div class="section" id="cover">
+        <div id="cover__box-photo">
+            <img id='cover__photo' src='/img/photo/mobile.photo.jpg'> 
         </div>
-        <div id="cover-box-info">
-            <p id="cover-text">web developer</p>
-            <a class="cover-btn" href="#contact">Contact</a>
+        <div id="cover__box-info">
+            <p id="cover__text">web developer</p>
+            <a class="cover__btn" href="#contact">Contattami</a>
         </div>
     </div>
 </div>
-<!-- FINE COVER -->
+<!-- END COVER -->
 
 
 
